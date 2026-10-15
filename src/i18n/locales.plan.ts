@@ -1,0 +1,111 @@
+import type { Dictionary } from './locales';
+
+// Emergency Plan screen and the SOS link to it. French is a DRAFT: a native speaker and a health professional must check it.
+
+export const PLAN_EN: Dictionary = {
+  'sos.plan': 'My emergency plan',
+  'plan.title': 'Emergency Plan',
+  'plan.intro': 'Make your plan now, while things are calm. It is saved on this phone only and works with no internet.',
+  'plan.call': 'Call {number}',
+  'plan.note.set':
+    'This is the emergency number you chose in Settings. It may not reach help in every area. If it does not work where you live, use your own plan below.',
+  'plan.route.label': 'How to get to help',
+  'plan.route.placeholder':
+    'e.g. The health post is at the market, about 3 km. Take the main road. A motorbike takes about 20 minutes.',
+  'plan.list.title': 'Who and where ({count})',
+  'plan.list.empty': 'Nothing added yet. Add the nearest clinic, someone with a vehicle, and a person you trust.',
+  'plan.type.clinic': 'Clinic or hospital',
+  'plan.type.transport': 'Ambulance or transport',
+  'plan.type.chw': 'Community health worker',
+  'plan.type.family': 'Family, friend or neighbour',
+  'plan.type.other': 'Other',
+  'plan.btn.call': 'Call',
+  'plan.btn.whatsapp': 'WhatsApp: I need help',
+  'plan.btn.sms': 'SMS: I need help',
+  'plan.btn.remove': 'Remove',
+  'plan.confirm.remove': 'Remove {name} from your plan?',
+  'plan.form.title': 'Add to my plan',
+  'plan.form.type': 'What is it',
+  'plan.form.name': 'Name or place',
+  'plan.form.name.placeholder': 'e.g. Market health post, Musa (motorbike)',
+  'plan.form.phone': 'Phone (optional)',
+  'plan.form.phone.placeholder': 'Add the country code, for example +229 or +234, to use WhatsApp',
+  'plan.form.note': 'Note (optional)',
+  'plan.form.note.placeholder': 'e.g. 3 km, open all night, costs about 2,000',
+  'plan.form.add': 'Add',
+  'plan.err.name': 'Enter a name or a place.',
+  'plan.err.phone': 'Enter a phone number with 2 to 15 digits, or leave it empty.',
+  'plan.status.locating': 'Getting your location...',
+  'plan.status.opening.whatsapp':
+    'Opening WhatsApp with the text ready. Press send yourself. Healing cannot send it for you.',
+  'plan.status.opening.sms':
+    'Opening your messages with the text ready. Press send yourself. Healing cannot send it for you.',
+  'plan.status.nolocation': ' Your location was unavailable, so the message has no map link.',
+  'plan.msg.location': 'I need help. My location: {link}',
+  'plan.msg.nolocation': 'I need help. Please call me now.',
+  'plan.share': 'Share my plan',
+  'plan.share.title': 'My emergency plan',
+  'plan.share.closed': 'Share sheet closed.',
+  'plan.share.copied': 'Plan copied. Paste it into a message.',
+  'plan.share.failed': 'Could not share on this device.',
+  'plan.text.header': 'MY EMERGENCY PLAN',
+  'plan.text.number': 'National emergency number: {number}',
+  'plan.text.route': 'How to get to help:',
+  'plan.footer':
+    'Healing cannot send help or alert anyone by itself. You press the buttons, and the call or message goes from your own phone. Ask people before you add their number.',
+};
+
+export const PLAN_FR: Dictionary = {
+  'sos.plan': 'Mon plan d’urgence',
+  'plan.title': 'Plan d’urgence',
+  'plan.intro':
+    'Préparez votre plan dès maintenant, pendant que tout va bien. Il est enregistré uniquement sur ce téléphone et fonctionne sans internet.',
+  'plan.call': 'Appeler le {number}',
+  'plan.note.set':
+    'C’est le numéro d’urgence que vous avez choisi dans les Paramètres. Il ne permet pas toujours d’obtenir de l’aide dans toutes les zones. S’il ne fonctionne pas là où vous vivez, utilisez votre propre plan ci-dessous.',
+  'plan.route.label': 'Comment aller chercher de l’aide',
+  'plan.route.placeholder':
+    'Ex. : Le centre de santé est près du marché, à environ 3 km. Prenez la route principale. En moto, il faut environ 20 minutes.',
+  'plan.list.title': 'Qui et où ({count})',
+  'plan.list.empty':
+    'Rien n’a encore été ajouté. Ajoutez le centre de santé le plus proche, quelqu’un qui a un véhicule et une personne de confiance.',
+  'plan.type.clinic': 'Clinique ou hôpital',
+  'plan.type.transport': 'Ambulance ou transport',
+  'plan.type.chw': 'Agent de santé communautaire',
+  'plan.type.family': 'Famille, ami ou voisin',
+  'plan.type.other': 'Autre',
+  'plan.btn.call': 'Appeler',
+  'plan.btn.whatsapp': 'WhatsApp : j’ai besoin d’aide',
+  'plan.btn.sms': 'SMS : j’ai besoin d’aide',
+  'plan.btn.remove': 'Retirer',
+  'plan.confirm.remove': 'Retirer {name} de votre plan ?',
+  'plan.form.title': 'Ajouter à mon plan',
+  'plan.form.type': 'De quoi s’agit-il',
+  'plan.form.name': 'Nom ou lieu',
+  'plan.form.name.placeholder': 'Ex. : Centre de santé du marché, Musa (moto)',
+  'plan.form.phone': 'Téléphone (facultatif)',
+  'plan.form.phone.placeholder': 'Ajoutez l’indicatif du pays, par exemple +229 ou +234, pour utiliser WhatsApp',
+  'plan.form.note': 'Note (facultatif)',
+  'plan.form.note.placeholder': 'Ex. : 3 km, ouvert toute la nuit, coûte environ 2 000',
+  'plan.form.add': 'Ajouter',
+  'plan.err.name': 'Saisissez un nom ou un lieu.',
+  'plan.err.phone': 'Saisissez un numéro de 2 à 15 chiffres, ou laissez le champ vide.',
+  'plan.status.locating': 'Recherche de votre position...',
+  'plan.status.opening.whatsapp':
+    'Ouverture de WhatsApp avec le message prêt. Appuyez vous-même sur envoyer. Healing ne peut pas l’envoyer à votre place.',
+  'plan.status.opening.sms':
+    'Ouverture de vos messages avec le texte prêt. Appuyez vous-même sur envoyer. Healing ne peut pas l’envoyer à votre place.',
+  'plan.status.nolocation': ' Votre position n’était pas disponible, le message ne contient donc pas de lien de carte.',
+  'plan.msg.location': 'J’ai besoin d’aide. Ma position : {link}',
+  'plan.msg.nolocation': 'J’ai besoin d’aide. Appelez-moi tout de suite, s’il vous plaît.',
+  'plan.share': 'Partager mon plan',
+  'plan.share.title': 'Mon plan d’urgence',
+  'plan.share.closed': 'Fenêtre de partage fermée.',
+  'plan.share.copied': 'Plan copié. Collez-le dans un message.',
+  'plan.share.failed': 'Impossible de partager sur cet appareil.',
+  'plan.text.header': 'MON PLAN D’URGENCE',
+  'plan.text.number': 'Numéro d’urgence national : {number}',
+  'plan.text.route': 'Comment aller chercher de l’aide :',
+  'plan.footer':
+    'Healing ne peut pas envoyer de secours ni alerter quelqu’un tout seul. C’est vous qui appuyez sur les boutons, et l’appel ou le message part de votre propre téléphone. Demandez aux personnes avant d’ajouter leur numéro.',
+};

@@ -1,0 +1,63 @@
+import type { Dictionary } from './locales';
+
+// Vital charts. French is a DRAFT: a native speaker and a health professional must check it.
+
+export const CH_EN: Dictionary = {
+  'chart.empty.title': 'No readings yet',
+  'chart.empty.text':
+    'Your pulse, blood pressure, temperature and steadiness results will appear here after you run a health check.',
+  'chart.empty.btn': 'Run a health check',
+  'chart.tile.pulse': 'Pulse',
+  'chart.tile.bp': 'Blood pressure',
+  'chart.tile.temp': 'Temperature',
+  'chart.tile.move': 'Movement',
+  'chart.latest': 'Latest {label}',
+  'chart.pulse.title': 'Pulse over time',
+  'chart.pulse.aria': 'Pulse readings, lowest {lo}, highest {hi} beats per minute',
+  'chart.pulse.range': 'Lowest {lo} · Highest {hi} bpm · readings shown: {count}',
+  'chart.pulse.dates': 'From {from} to {to}',
+  'chart.legend.typed': 'typed in by you',
+  'chart.legend.camera': 'phone camera estimate (can be off by several beats)',
+  'chart.all.title': 'All readings ({count})',
+  'chart.src.fingertip': 'Phone camera estimate',
+  'chart.src.motion': 'Steadiness test',
+  'chart.src.manual': 'Entered by you',
+  'chart.part.pulse': '{n} bpm',
+  'chart.part.bp': '{s}/{d} mmHg',
+  'chart.part.temp': '{n}°C',
+  'chart.part.move': 'movement {n}',
+  'chart.del.q': 'Delete all readings from this device?',
+  'chart.del.yes': 'Yes, delete',
+  'chart.del.keep': 'Keep',
+  'chart.del.btn': 'Delete all readings',
+};
+
+export const CH_FR: Dictionary = {
+  'chart.empty.title': 'Aucune mesure pour le moment',
+  'chart.empty.text':
+    'Vos résultats de pouls, de tension, de température et de stabilité apparaîtront ici après un contrôle de santé.',
+  'chart.empty.btn': 'Faire un contrôle de santé',
+  'chart.tile.pulse': 'Pouls',
+  'chart.tile.bp': 'Tension',
+  'chart.tile.temp': 'Température',
+  'chart.tile.move': 'Mouvement',
+  'chart.latest': 'Dernière mesure : {label}',
+  'chart.pulse.title': 'Pouls au fil du temps',
+  'chart.pulse.aria': 'Mesures du pouls, minimum {lo}, maximum {hi} battements par minute',
+  'chart.pulse.range': 'Minimum {lo} · Maximum {hi} battements/min · mesures affichées : {count}',
+  'chart.pulse.dates': 'Du {from} au {to}',
+  'chart.legend.typed': 'saisi par vous',
+  'chart.legend.camera': 'estimation avec l’appareil photo du téléphone (peut se tromper de plusieurs battements)',
+  'chart.all.title': 'Toutes les mesures ({count})',
+  'chart.src.fingertip': 'Estimation avec l’appareil photo',
+  'chart.src.motion': 'Test de stabilité',
+  'chart.src.manual': 'Saisi par vous',
+  'chart.part.pulse': '{n} battements/min',
+  'chart.part.bp': '{s}/{d} mmHg',
+  'chart.part.temp': '{n} °C',
+  'chart.part.move': 'mouvement {n}',
+  'chart.del.q': 'Supprimer toutes les mesures de cet appareil ?',
+  'chart.del.yes': 'Oui, supprimer',
+  'chart.del.keep': 'Garder',
+  'chart.del.btn': 'Supprimer toutes les mesures',
+};
