@@ -1,27 +1,54 @@
-🌿 Healing by VisionAce
-​Healing is the flagship health and accessibility platform developed under VisionAce. Engineered for low-resource and offline environments, Healing bridges the gap between individual health tracking and support networks—delivering offline diagnostic tools, caregiver integration, and multi-language accessibility straight to users without requiring continuous internet connectivity.
+# Healing by VisionAce
 
-​🚀 Live Demo & Repository
-​Live Deployment: healing-qqzf.vercel.app
-​Developer / Founder: Ebuka Chukwu Alex
-​Parent Organization: VisionAce
+Healing is a free, offline-first health guidance and records app, built for communities with limited access to clinics and unreliable internet.
 
-​✨ Key Features
+**Live prototype:** https://healing-qqzf.vercel.app
 
-​📡 Offline-First Architecture: Built to operate seamlessly without an active internet connection, preserving user privacy and local data storage.
+> **Prototype.** Not reviewed by clinicians. Healing does not diagnose, and it does not replace a clinic or emergency services. In an emergency, call your local emergency number.
 
-​👥 Caregiver & Family Sync: Dedicated care coordination suite featuring family health tracking, structured caregiving guides, and actionable emergency safety plans.
+## What it does
 
-​🫀 Sensor-Based Diagnostics: Utilizes native device camera and motion hardware for fingertip pulse estimation and hand steadiness evaluation.
+- **Works offline after the first visit.** The app is saved on the phone with a service worker, so it opens with no signal.
+- **Symptom urgency check.** Plain guidance on how urgent a symptom may be, with a red alert and a one-tap call button for danger signs.
+- **Emergency plan.** Nearby clinics, the people who can get you there, directions in your own words, and one-tap call, WhatsApp and SMS options.
+- **Health checks (estimates).** A pulse estimate from the phone camera and fingertip, a hand steadiness test using motion sensors, and manual entry of readings. Camera results are estimates and can vary by phone and lighting.
+- **Pregnancy warning signs.** Checks blood pressure and symptoms against commonly used warning limits, with guidance to seek care.
+- **Records on your phone.** Symptom logs, check-ins, voice notes, readings, medicines, appointments, a mood journal and family health history.
+- **Doctor summary.** Choose which records to include, then print or save as PDF, or download a text file.
+- **Backup and restore.** Export your records to a file, and add them back later.
+- **Privacy.** A PIN lock, a privacy screen that explains what is saved and what leaves the phone, and an option to erase everything.
+- **Languages.** English and French are fully translated. Hausa, Igbo and Yoruba cover the emergency and setup lines only, and those translations are drafts.
+- **Accessibility.** Large text, a Read Screen button that uses the phone's voices, and voice input for symptoms where the browser supports it.
 
-​🌍 Multilingual & Accessible UI: Dynamic language toggling (English, French, Hausa, Igbo, Yoruba) paired with integrated screen-reader support and text resizing.
+## Status
 
-​📋 Doctor Summary Generator: Aggregates health logs, symptom trends, and medical notes into printable PDF/text summaries ready for clinical visits.
+**Built and in testing:** PIN lock, privacy screen and erase option, offline install.
 
-​🚨 Emergency Protocol: Instant access to localized emergency contact directories and crisis management workflows.
+**Not built yet:**
+- Cloud sync between devices
+- A caregiver portal
+- Medication interaction checking
+- Disease detection or diagnosis
+- A hosted news service
 
-​🛠 Tech Stack
-​Frontend Framework: React, TypeScript
-​Styling: Tailwind CSS
-​Deployment: Vercel
-​State & Offline Storage: LocalStorage / IndexedDB
+**Needs review:** health rules, danger-sign lists, the health articles and translations need review by clinicians and native speakers.
+
+## Running locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Configuration
+
+- **News (optional):** set `VITE_NEWS_URL` in a `.env.local` file to point to a news server. Without it, the news section shows "not set up yet".
+- **Secrets:** never commit `.env.local` or any file containing keys. Anything starting with `VITE_` is visible to every visitor, so keep private keys out of it.
+
+## Tech stack
+
+React, TypeScript, Vite, Tailwind CSS, localStorage, a service worker, deployed on Vercel.
+
+## Licence
+
+Not yet decided. All rights reserved by VisionAce until a licence is chosen.
