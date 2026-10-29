@@ -52,3 +52,4 @@ React, TypeScript, Vite, Tailwind CSS, localStorage, a service worker, deployed 
 ## Licence
 
 Not yet decided. All rights reserved by VisionAce until a licence is chosen.
+                                                  
