@@ -8,6 +8,7 @@ import FirstRun from './components/FirstRun';
 import { I18nProvider, useI18n } from './i18n/I18nProvider';
 import { getEmergencyNumber } from './i18n/regions';
 import type { SectionId } from './sections';
+import PinGate from './components/PinGate';
 
 const LOGO_SRC = '/healing-logo.jpeg';
 const SETUP_KEY = 'healing_setup_done';
@@ -95,6 +96,7 @@ function Shell() {
           <div className="space-y-3">
             <h1 className="text-4xl font-light tracking-tight">{t('welcome.title')}</h1>
             <p className="text-xs font-medium uppercase tracking-widest text-slate-400">by VisionAce</p>
+            <p className="text-sm text-slate-300">{t('welcome.tagline')}</p>
           </div>
           <button
             type="button"
@@ -156,7 +158,9 @@ function Shell() {
 export default function App() {
   return (
     <I18nProvider>
-      <Shell />
+      <PinGate>
+        <Shell />
+      </PinGate>
     </I18nProvider>
   );
 }

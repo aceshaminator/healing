@@ -10,6 +10,7 @@ import { TRK_EN, TRK_FR } from './locales.tracker';
 import { CARE_EN, CARE_FR } from './locales.care';
 import { REC_EN, REC_FR } from './locales.records';
 import { SICK_EN, SICK_FR } from './locales.sick';
+import { NEXT_EN, NEXT_FR } from './locales.next';
 export type Dictionary = Record<string, string>;
 
 // English is the full set. Every other language may be partial: missing lines show in English.
@@ -212,8 +213,8 @@ const uk: Dictionary = {
 };
 
 export const DICTIONARIES: Record<string, Dictionary> = {
-  en: { ...en, ...NAV_EN, ...PLAN_EN, ...CHECKS_EN, ...MAT_EN, ...VIT_EN, ...CH_EN, ...TRK_EN, ...CARE_EN, ...REC_EN, ...INFO_EN, ...SICK_EN },
-  fr: { ...fr, ...FR_CORE, ...NAV_FR, ...PLAN_FR, ...CHECKS_FR, ...MAT_FR, ...VIT_FR, ...CH_FR, ...TRK_FR, ...CARE_FR, ...REC_FR, ...INFO_FR, ...SICK_FR },
+  en: { ...en, ...NAV_EN, ...PLAN_EN, ...CHECKS_EN, ...MAT_EN, ...VIT_EN, ...CH_EN, ...TRK_EN, ...CARE_EN, ...REC_EN, ...INFO_EN, ...SICK_EN, ...NEXT_EN },
+  fr: { ...fr, ...FR_CORE, ...NAV_FR, ...PLAN_FR, ...CHECKS_FR, ...MAT_FR, ...VIT_FR, ...CH_FR, ...TRK_FR, ...CARE_FR, ...REC_FR, ...INFO_FR, ...SICK_FR, ...NEXT_FR },
   ha: HA,
   ig: IG,
   yo: YO,

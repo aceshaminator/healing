@@ -77,6 +77,7 @@ export const SECTIONS: SectionDef[] = [
     modules: [
       { file: 'SettingsScreen.tsx', labelKey: 'mod.settings' },
       { file: 'OfflineManager.tsx', labelKey: 'mod.backup' },
+      { file: 'PrivacySettings.tsx', labelKey: 'mod.privacy' },
     ],
   },
 ];
