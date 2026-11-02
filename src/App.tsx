@@ -78,8 +78,8 @@ function Shell() {
 
   if (!setupDone) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#070D1F] p-4 pb-24 text-slate-100">
-        <div className="w-full max-w-md space-y-6 rounded-3xl border border-emerald-400/20 bg-[#0B132B] p-8 shadow-xl">
+      <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
+        <div className="w-full max-w-md space-y-6 rounded-3xl border border-emerald-400/20 bg-surface p-8 shadow-xl">
           <Logo className="mx-auto h-16 w-16" />
           <FirstRun onDone={finishSetup} />
         </div>
@@ -90,8 +90,8 @@ function Shell() {
 
   if (!inPortal) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#070D1F] p-4 pb-24 text-slate-100">
-        <div className="w-full max-w-md space-y-8 rounded-3xl border border-emerald-400/20 bg-[#0B132B] p-8 text-center shadow-xl">
+      <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
+        <div className="w-full max-w-md space-y-8 rounded-3xl border border-emerald-400/20 bg-surface p-8 text-center shadow-xl">
           <Logo className="mx-auto h-16 w-16" />
           <div className="space-y-3">
             <h1 className="text-4xl font-light tracking-tight">{t('welcome.title')}</h1>
@@ -112,7 +112,7 @@ function Shell() {
   }
 
   return (
-    <div className="min-h-screen bg-[#070D1F] text-slate-100">
+    <div className="min-h-screen bg-canvas text-ink">
       <div className="mx-auto max-w-2xl space-y-8 px-4 pb-28 pt-6">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-5">
           <div className="flex items-center gap-3">

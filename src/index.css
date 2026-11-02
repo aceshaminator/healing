@@ -1,16 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme inline {
+  --color-canvas: rgb(var(--canvas));
+  --color-surface: rgb(var(--surface));
+  --color-line: rgb(var(--line));
+  --color-ink: rgb(var(--ink));
+  --color-muted: rgb(var(--muted));
+  --color-brand: rgb(var(--brand));
+  --color-danger: rgb(var(--danger));
+  --color-warn: rgb(var(--warn));
+}
+
+:root {
+  color-scheme: dark;
+  --canvas: 7 13 31;
+  --surface: 11 19 43;
+  --line: 51 65 85;
+  --ink: 241 245 249;
+  --muted: 148 163 184;
+  --brand: 45 212 191;
+  --danger: 239 68 68;
+  --warn: 251 191 36;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --canvas: 248 250 252;
+  --surface: 255 255 255;
+  --line: 203 213 225;
+  --ink: 15 23 42;
+  --muted: 71 85 105;
+  --brand: 15 118 110;
+  --danger: 220 38 38;
+  --warn: 180 83 9;
+}
+
 input::placeholder,
 textarea::placeholder {
-  color: #94a3b8 !important;
+  color: rgb(var(--muted)) !important;
   opacity: 1;
 }
 
 input,
 textarea,
 select {
-  border: 1px solid #334155;
+  border: 1px solid rgb(var(--line));
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
@@ -18,6 +52,6 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #2dd4bf;
-  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.22);
+  border-color: rgb(var(--brand));
+  box-shadow: 0 0 0 3px rgb(var(--brand) / 0.22);
 }
