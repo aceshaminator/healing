@@ -19,7 +19,7 @@ export default function Home({ onOpen }: { onOpen: (id: SectionId) => void }) {
               onClick={() => onOpen(s.id)}
               // Emergency appears at once; the other tiles follow one after another.
               style={{ animationDelay: `${i * 70}ms` }}
-              className={`rise flex flex-col justify-between gap-4 rounded-3xl border-2 bg-surface p-4 text-left transition hover:bg-canvas ${
+              className={`rise flex flex-col justify-between gap-4 rounded-3xl border-2 bg-surface p-4 text-left transition active:scale-[0.98] hover:bg-canvas
                 wide ? 'col-span-2 min-h-[120px]' : 'min-h-[160px]'
               } ${s.accent}`}
             >

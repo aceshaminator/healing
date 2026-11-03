@@ -12,6 +12,16 @@
   --brand: 45 212 191;
   --danger: 239 68 68;
   --warn: 251 191 36;
+  --tone-red: 252 165 165;
+  --tone-red-line: 248 113 113;
+  --tone-amber: 252 211 77;
+  --tone-amber-line: 251 191 36;
+  --tone-green: 110 231 183;
+  --tone-green-line: 52 211 153;
+  --tone-cyan: 103 232 249;
+  --tone-cyan-line: 34 211 238;
+  --tone-slate: 226 232 240;
+  --tone-slate-line: 148 163 184;
 }
 
 [data-theme='light'] {
@@ -24,6 +34,16 @@
   --brand: 15 118 110;
   --danger: 220 38 38;
   --warn: 180 83 9;
+  --tone-red: 185 28 28;
+  --tone-red-line: 239 68 68;
+  --tone-amber: 180 83 9;
+  --tone-amber-line: 245 158 11;
+  --tone-green: 4 120 87;
+  --tone-green-line: 16 185 129;
+  --tone-cyan: 14 116 144;
+  --tone-cyan-line: 6 182 212;
+  --tone-slate: 51 65 85;
+  --tone-slate-line: 100 116 139;
 }
 
 input::placeholder,
@@ -54,6 +74,8 @@ select:focus {
   transition: none !important;
   scroll-behavior: auto !important;
 }
+
+/* The end state is left unset on purpose, so hover and press effects keep working after the entrance. */
 @keyframes healing-rise {
   from {
     opacity: 0;
@@ -61,7 +83,6 @@ select:focus {
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 

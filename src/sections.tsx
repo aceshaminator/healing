@@ -26,7 +26,7 @@ export const SECTIONS: SectionDef[] = [
     titleKey: 'tile.emergency',
     descKey: 'tile.emergency.desc',
     Icon: PhoneCall,
-    accent: 'border-red-400/60 text-red-300',
+    accent: 'border-tone-red-line/60 text-tone-red',
     modules: [{ file: 'EmergencyPlan.tsx', labelKey: 'mod.plan' }],
   },
   {
@@ -34,7 +34,7 @@ export const SECTIONS: SectionDef[] = [
     titleKey: 'tile.sick',
     descKey: 'tile.sick.desc',
     Icon: Stethoscope,
-    accent: 'border-amber-400/50 text-amber-300',
+    accent: 'border-tone-amber-line/50 text-tone-amber',
     modules: [
       { file: 'SickFlow.tsx', labelKey: 'mod.sickflow' },
       { file: 'MaternalCare.tsx', labelKey: 'mod.pregnancy' },
@@ -45,7 +45,7 @@ export const SECTIONS: SectionDef[] = [
     titleKey: 'tile.health',
     descKey: 'tile.health.desc',
     Icon: HeartPulse,
-    accent: 'border-emerald-400/50 text-emerald-300',
+    accent: 'border-tone-green-line/50 text-tone-green',
     modules: [
       { file: 'SensorVitalsScreening.tsx', labelKey: 'mod.vitals' },
       { file: 'VitalCharts.tsx', labelKey: 'mod.charts' },
@@ -61,7 +61,7 @@ export const SECTIONS: SectionDef[] = [
     titleKey: 'tile.learn',
     descKey: 'tile.learn.desc',
     Icon: BookOpen,
-    accent: 'border-cyan-400/50 text-cyan-300',
+    accent: 'border-tone-cyan-line/50 text-tone-cyan',
     modules: [
       { file: 'ArticlesFeed.tsx', labelKey: 'mod.info' },
       { file: 'OutbreakRadar.tsx', labelKey: 'mod.outbreak', status: 'soon' },
@@ -73,7 +73,7 @@ export const SECTIONS: SectionDef[] = [
     titleKey: 'tile.settings',
     descKey: 'tile.settings.desc',
     Icon: Settings,
-    accent: 'border-slate-400/50 text-slate-200',
+    accent: 'border-tone-slate-line/50 text-tone-slate',
     modules: [
       { file: 'SettingsScreen.tsx', labelKey: 'mod.settings' },
       { file: 'OfflineManager.tsx', labelKey: 'mod.backup' },
