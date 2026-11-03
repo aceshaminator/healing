@@ -92,9 +92,9 @@ function Shell() {
   if (!inPortal) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
-        <div className="w-full max-w-md space-y-8 rounded-3xl border border-emerald-400/20 bg-surface p-8 text-center shadow-xl">
+        <div className="rise w-full max-w-md space-y-8 rounded-3xl border border-emerald-400/20 bg-surface p-8 text-center shadow-xl">
           <Logo className="mx-auto h-16 w-16" />
-          <div className="space-y-3">
+          <div  className="space-y-3 rise rise-2">
             <h1 className="text-4xl font-light tracking-tight">{t('welcome.title')}</h1>
             <p className="text-xs font-medium uppercase tracking-widest text-slate-400">by VisionAce</p>
             <p className="text-sm text-slate-300">{t('welcome.tagline')}</p>
@@ -102,7 +102,7 @@ function Shell() {
           <button
             type="button"
             onClick={() => setInPortal(true)}
-            className="min-h-[52px] w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 px-6 py-4 text-sm font-bold uppercase tracking-wide text-slate-900 shadow-lg shadow-emerald-500/20 transition hover:brightness-110"
+            className="rise rise-3 min-h-[52px] w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 px-6 py-4 text-sm font-bold uppercase tracking-wide text-slate-900 shadow-lg shadow-emerald-500/20 transition hover:brightness-110"
           >
             {t('welcome.enter')}
           </button>
