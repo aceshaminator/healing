@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider';
 import { PICKABLE, PLANNED_LANGUAGES } from '../i18n/languages';
 import { COUNTRIES, OTHER, getCountryCode, getEmergencyNumber, saveRegion, validNumber } from '../i18n/regions';
+import { getMotionPref, getThemePref, setMotionPref, setThemePref } from '../theme';
+import type { MotionPref, ThemePref } from '../theme';
 
 const REGION_KEYS: Record<string, string> = {
   Africa: 'set.region.africa',
@@ -13,6 +15,18 @@ const REGION_KEYS: Record<string, string> = {
 const fieldClass =
   'min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
 
+const THEME_OPTIONS: { value: ThemePref; key: string }[] = [
+  { value: 'dark', key: 'disp.theme.dark' },
+  { value: 'light', key: 'disp.theme.light' },
+  { value: 'system', key: 'disp.theme.system' },
+];
+
+const MOTION_OPTIONS: { value: MotionPref; key: string }[] = [
+  { value: 'system', key: 'disp.motion.system' },
+  { value: 'reduce', key: 'disp.motion.reduce' },
+  { value: 'full', key: 'disp.motion.full' },
+];
+
 export default function SettingsScreen() {
   const { lang, setLang, t } = useI18n();
   const [country, setCountry] = useState(getCountryCode());
@@ -20,6 +34,8 @@ export default function SettingsScreen() {
   // Messages are kept as translation keys, so they change language with the app.
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [theme, setTheme] = useState<ThemePref>(getThemePref());
+  const [motion, setMotion] = useState<MotionPref>(getMotionPref());
 
   const selected = COUNTRIES.find((c) => c.code === country);
 
@@ -147,6 +163,56 @@ export default function SettingsScreen() {
         <p className="text-xs leading-relaxed text-slate-300">
           {t('set.current', { number: getEmergencyNumber() })}
         </p>
+      </section>
+
+      <section className="space-y-5 rounded-2xl border border-line bg-surface p-5 text-ink">
+        <h2 className="text-lg font-bold">{t('disp.title')}</h2>
+
+        <div>
+          <p className="mb-2 text-sm font-semibold">{t('disp.theme')}</p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {THEME_OPTIONS.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                aria-pressed={theme === o.value}
+                onClick={() => {
+                  setTheme(o.value);
+                  setThemePref(o.value);
+                }}
+                className={`min-h-[48px] rounded-xl border px-3 py-2 text-sm font-semibold transition ${
+                  theme === o.value ? 'border-brand bg-brand/10' : 'border-line hover:border-muted'
+                }`}
+              >
+                {t(o.key)}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-muted">{t('disp.theme.note')}</p>
+        </div>
+
+        <div>
+          <p className="mb-2 text-sm font-semibold">{t('disp.motion')}</p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {MOTION_OPTIONS.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                aria-pressed={motion === o.value}
+                onClick={() => {
+                  setMotion(o.value);
+                  setMotionPref(o.value);
+                }}
+                className={`min-h-[48px] rounded-xl border px-3 py-2 text-sm font-semibold transition ${
+                  motion === o.value ? 'border-brand bg-brand/10' : 'border-line hover:border-muted'
+                }`}
+              >
+                {t(o.key)}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-muted">{t('disp.motion.note')}</p>
+        </div>
       </section>
     </div>
   );
