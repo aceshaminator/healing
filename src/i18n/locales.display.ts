@@ -12,6 +12,10 @@ export const DISP_EN: Dictionary = {
   'disp.motion.reduce': 'Reduce motion',
   'disp.motion.full': 'Allow motion',
   'disp.motion.note': 'Reduce motion turns off animations and transitions across the app.',
+  'app.update.title': 'A new version of Healing is ready.',
+  'app.update.body': 'Finish what you are doing first. Your saved records stay on this phone.',
+  'app.update.now': 'Update now',
+  'app.update.later': 'Later',
 };
 
 export const DISP_FR: Dictionary = {
@@ -26,4 +30,8 @@ export const DISP_FR: Dictionary = {
   'disp.motion.reduce': 'Réduire les animations',
   'disp.motion.full': 'Autoriser les animations',
   'disp.motion.note': "Réduire les animations désactive les animations et les transitions dans toute l'application.",
+  'app.update.title': 'Une nouvelle version de Healing est disponible.',
+  'app.update.body': "Terminez d'abord ce que vous faites. Vos données enregistrées restent sur ce téléphone.",
+  'app.update.now': 'Mettre à jour',
+  'app.update.later': 'Plus tard',
 };

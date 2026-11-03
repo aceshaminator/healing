@@ -9,6 +9,7 @@ import { I18nProvider, useI18n } from './i18n/I18nProvider';
 import { getEmergencyNumber } from './i18n/regions';
 import type { SectionId } from './sections';
 import PinGate from './components/PinGate';
+import UpdateBar from './components/UpdateBar';
 
 const LOGO_SRC = '/healing-logo.jpeg';
 const SETUP_KEY = 'healing_setup_done';
@@ -161,6 +162,7 @@ export default function App() {
       <PinGate>
         <Shell />
       </PinGate>
+      <UpdateBar />
     </I18nProvider>
   );
 }

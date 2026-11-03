@@ -62,3 +62,8 @@ self.addEventListener('fetch', (event) => {
     }),
   );
 });
+
+// The app can ask a waiting copy to take over (the person taps "Update now").
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
