@@ -105,9 +105,9 @@ function planText(plan: Plan, number: string, t: TFn, typeLabel: (value: string)
 }
 
 const fieldClass =
-  'min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-900 px-3.5 py-2.5 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-line/20 px-3.5 py-2.5 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 const actionBtn =
-  'flex min-h-[44px] items-center justify-center rounded-lg border border-slate-500 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-700 disabled:opacity-60';
+  'flex min-h-[44px] items-center justify-center rounded-lg border border-muted/50 bg-line/40 px-3 py-2 text-sm font-semibold text-ink transition hover:bg-line/70 disabled:opacity-60';
 
 export default function EmergencyPlan() {
   const { t } = useI18n();
@@ -198,14 +198,14 @@ export default function EmergencyPlan() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 text-slate-100">
-      <div className="border-b border-slate-700 pb-4">
-        <h2 className="text-xl font-bold text-red-300">{t('plan.title')}</h2>
-        <p className="mt-1 text-sm text-slate-300">{t('plan.intro')}</p>
+    <div className="mx-auto max-w-3xl space-y-6 text-ink">
+      <div className="border-b border-line pb-4">
+        <h2 className="text-xl font-bold text-tone-red">{t('plan.title')}</h2>
+        <p className="mt-1 text-sm text-ink/80">{t('plan.intro')}</p>
       </div>
 
       {/* National number */}
-      <section className="space-y-3 rounded-2xl border border-red-500/50 bg-red-950/40 p-5">
+      <section className="space-y-3 rounded-2xl border border-danger/50 bg-danger/15 p-5">
         <a
           href={`tel:${number}`}
           className="flex min-h-[56px] items-center justify-center rounded-xl bg-red-600 px-4 py-4 text-lg font-bold text-white transition hover:bg-red-500"
@@ -218,25 +218,25 @@ export default function EmergencyPlan() {
               <a
                 key={x.number}
                 href={`tel:${x.number}`}
-                className="flex min-h-[48px] items-center justify-center rounded-xl border border-red-400/60 px-3 py-2 text-sm font-semibold text-red-100 transition hover:bg-red-900/40"
+                className="flex min-h-[48px] items-center justify-center rounded-xl border border-tone-red-line/60 px-3 py-2 text-sm font-semibold text-ink transition hover:bg-danger/15"
               >
                 {t(x.labelKey)}: {x.number}
               </a>
             ))}
           </div>
         )}
-        <p className="text-sm leading-relaxed text-red-50">{numberIsSet() ? t('plan.note.set') : t('sos.unset')}</p>
+        <p className="text-sm leading-relaxed text-ink">{numberIsSet() ? t('plan.note.set') : t('sos.unset')}</p>
       </section>
 
       {status && (
-        <p role="status" className="rounded-xl border border-slate-600 bg-slate-950 p-3 text-sm text-slate-100">
+        <p role="status" className="rounded-xl border border-muted/40 bg-surface p-3 text-sm text-ink">
           {status}
         </p>
       )}
 
       {/* How to get to help */}
-      <section className="space-y-2 rounded-2xl border border-slate-700 bg-[#0B132B] p-5">
-        <label htmlFor="plan-route" className="block text-base font-bold text-emerald-300">
+      <section className="space-y-2 rounded-2xl border border-line bg-surface p-5">
+        <label htmlFor="plan-route" className="block text-base font-bold text-tone-green">
           {t('plan.route.label')}
         </label>
         <textarea
@@ -251,23 +251,23 @@ export default function EmergencyPlan() {
 
       {/* People and places */}
       <section className="space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-ink">
           {t('plan.list.title', { count: plan.entries.length })}
         </h3>
         {plan.entries.length === 0 ? (
-          <p className="rounded-2xl border border-slate-700 bg-[#0B132B] p-6 text-center text-sm text-slate-300">
+          <p className="rounded-2xl border border-line bg-surface p-6 text-center text-sm text-ink/80">
             {t('plan.list.empty')}
           </p>
         ) : (
           plan.entries.map((entry) => (
-            <div key={entry.id} className="space-y-3 rounded-2xl border border-slate-700 bg-[#0B132B] p-4">
+            <div key={entry.id} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
               <div>
-                <span className="rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-200">
+                <span className="rounded border border-tone-green-line/40 bg-tone-green-line/10 px-2 py-0.5 text-xs font-semibold text-tone-green">
                   {typeLabel(entry.type)}
                 </span>
-                <p className="mt-2 text-base font-bold text-slate-100">{entry.name}</p>
-                {entry.phone && <p className="font-mono text-sm text-slate-300">{entry.phone}</p>}
-                {entry.note && <p className="mt-1 text-sm text-slate-200">{entry.note}</p>}
+                <p className="mt-2 text-base font-bold text-ink">{entry.name}</p>
+                {entry.phone && <p className="font-mono text-sm text-ink/80">{entry.phone}</p>}
+                {entry.note && <p className="mt-1 text-sm text-ink">{entry.note}</p>}
               </div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {entry.phone && (
@@ -288,7 +288,7 @@ export default function EmergencyPlan() {
                 <button
                   type="button"
                   onClick={() => handleRemove(entry)}
-                  className="flex min-h-[44px] items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-red-300"
+                  className="flex min-h-[44px] items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-ink/80 transition hover:bg-line/40 hover:text-tone-red"
                 >
                   {t('plan.btn.remove')}
                 </button>
@@ -299,10 +299,10 @@ export default function EmergencyPlan() {
       </section>
 
       {/* Add form */}
-      <form onSubmit={handleAdd} noValidate className="space-y-4 rounded-2xl border border-slate-700 bg-[#0B132B] p-5">
-        <h3 className="text-sm font-bold text-emerald-300">{t('plan.form.title')}</h3>
+      <form onSubmit={handleAdd} noValidate className="space-y-4 rounded-2xl border border-line bg-surface p-5">
+        <h3 className="text-sm font-bold text-tone-green">{t('plan.form.title')}</h3>
         <div>
-          <label htmlFor="plan-type" className="mb-1 block text-sm font-semibold text-slate-200">
+          <label htmlFor="plan-type" className="mb-1 block text-sm font-semibold text-ink">
             {t('plan.form.type')}
           </label>
           <select id="plan-type" value={type} onChange={(e) => setType(e.target.value)} className={fieldClass}>
@@ -314,7 +314,7 @@ export default function EmergencyPlan() {
           </select>
         </div>
         <div>
-          <label htmlFor="plan-name" className="mb-1 block text-sm font-semibold text-slate-200">
+          <label htmlFor="plan-name" className="mb-1 block text-sm font-semibold text-ink">
             {t('plan.form.name')}
           </label>
           <input
@@ -327,7 +327,7 @@ export default function EmergencyPlan() {
           />
         </div>
         <div>
-          <label htmlFor="plan-phone" className="mb-1 block text-sm font-semibold text-slate-200">
+          <label htmlFor="plan-phone" className="mb-1 block text-sm font-semibold text-ink">
             {t('plan.form.phone')}
           </label>
           <input
@@ -341,7 +341,7 @@ export default function EmergencyPlan() {
           />
         </div>
         <div>
-          <label htmlFor="plan-note" className="mb-1 block text-sm font-semibold text-slate-200">
+          <label htmlFor="plan-note" className="mb-1 block text-sm font-semibold text-ink">
             {t('plan.form.note')}
           </label>
           <input
@@ -354,7 +354,7 @@ export default function EmergencyPlan() {
           />
         </div>
         {error && (
-          <p role="alert" className="text-sm text-amber-200">
+          <p role="alert" className="text-sm text-tone-amber">
             {error}
           </p>
         )}
@@ -370,7 +370,7 @@ export default function EmergencyPlan() {
         <button type="button" onClick={sharePlan} className={`${actionBtn} w-full`}>
           {t('plan.share')}
         </button>
-        <p className="text-xs leading-relaxed text-slate-300">{t('plan.footer')}</p>
+        <p className="text-xs leading-relaxed text-ink/80">{t('plan.footer')}</p>
       </div>
     </div>
   );
