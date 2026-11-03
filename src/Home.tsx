@@ -7,9 +7,9 @@ export default function Home({ onOpen }: { onOpen: (id: SectionId) => void }) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold text-slate-100">{t('home.title')}</h2>
+      <h2 className="rise text-2xl font-semibold text-ink">{t('home.title')}</h2>
       <div className="grid grid-cols-2 gap-3">
-        {SECTIONS.map((s) => {
+        {SECTIONS.map((s, i) => {
           const Icon = s.Icon;
           const wide = s.id === 'emergency';
           return (
@@ -17,14 +17,16 @@ export default function Home({ onOpen }: { onOpen: (id: SectionId) => void }) {
               key={s.id}
               type="button"
               onClick={() => onOpen(s.id)}
-              className={`flex flex-col justify-between gap-4 rounded-3xl border-2 bg-[#0B132B] p-4 text-left transition hover:bg-slate-900 ${
+              // Emergency appears at once; the other tiles follow one after another.
+              style={{ animationDelay: `${i * 70}ms` }}
+              className={`rise flex flex-col justify-between gap-4 rounded-3xl border-2 bg-surface p-4 text-left transition hover:bg-canvas ${
                 wide ? 'col-span-2 min-h-[120px]' : 'min-h-[160px]'
               } ${s.accent}`}
             >
               <Icon className="h-9 w-9" aria-hidden="true" />
               <span>
-                <span className="block text-lg font-bold text-slate-100">{t(s.titleKey)}</span>
-                <span className="mt-1 block text-sm leading-snug text-slate-300">{t(s.descKey)}</span>
+                <span className="block text-lg font-bold text-ink">{t(s.titleKey)}</span>
+                <span className="mt-1 block text-sm leading-snug text-ink/80">{t(s.descKey)}</span>
               </span>
             </button>
           );
