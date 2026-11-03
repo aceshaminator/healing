@@ -69,10 +69,10 @@ const SEVERITIES: Severity[] = ['Mild', 'Moderate', 'Severe'];
 const RANK: Record<Severity, number> = { Mild: 1, Moderate: 2, Severe: 3 };
 
 const BADGE: Record<Urgency, { key: string; cls: string }> = {
-  emergency: { key: 'urg.badge.emergency', cls: 'bg-red-500/20 text-red-300 border-red-500/40' },
-  soon: { key: 'urg.badge.soon', cls: 'bg-red-500/20 text-red-300 border-red-500/40' },
-  monitor: { key: 'urg.badge.monitor', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
-  none: { key: 'urg.badge.none', cls: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' },
+  emergency: { key: 'urg.badge.emergency', cls: 'bg-danger/15 text-tone-red border-danger/40' },
+  soon: { key: 'urg.badge.soon', cls: 'bg-danger/15 text-tone-red border-danger/40' },
+  monitor: { key: 'urg.badge.monitor', cls: 'bg-warn/15 text-tone-amber border-warn/40' },
+  none: { key: 'urg.badge.none', cls: 'bg-tone-green-line/15 text-tone-green border-tone-green-line/40' },
 };
 
 // Saved values stay in English underneath, so older entries and backups keep working.
@@ -149,9 +149,9 @@ function formatWhen(value: string, lang: string) {
   }
 }
 
-const card = 'rounded-2xl border border-slate-700 bg-[#0B132B] p-6';
+const card = 'rounded-2xl border border-line bg-surface p-6';
 const fieldClass =
-  'min-h-[48px] w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-lg border border-muted/40 bg-line/20 px-3 py-2 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void }) {
   const { t, lang } = useI18n();
@@ -342,7 +342,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
   );
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 text-slate-100">
+    <div className="mx-auto max-w-3xl space-y-6 text-ink">
       {/* Tabs */}
       <div className="flex gap-2" role="group">
         <button
@@ -350,7 +350,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           aria-pressed={tab === 'new'}
           onClick={() => setTab('new')}
           className={`min-h-[48px] flex-1 rounded-xl border px-3 py-2 text-sm font-bold transition ${
-            tab === 'new' ? 'border-emerald-400 bg-emerald-500/20 text-emerald-100' : 'border-slate-600 text-slate-200'
+            tab === 'new' ? 'border-brand bg-brand/20 text-ink' : 'border-muted/40 text-ink'
           }`}
         >
           {t('sick.tab.new')}
@@ -360,7 +360,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           aria-pressed={tab === 'history'}
           onClick={() => setTab('history')}
           className={`min-h-[48px] flex-1 rounded-xl border px-3 py-2 text-sm font-bold transition ${
-            tab === 'history' ? 'border-emerald-400 bg-emerald-500/20 text-emerald-100' : 'border-slate-600 text-slate-200'
+            tab === 'history' ? 'border-brand bg-brand/20 text-ink' : 'border-muted/40 text-ink'
           }`}
         >
           {t('sick.tab.history', { count: items.length })}
@@ -370,8 +370,8 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
       {tab === 'new' && step === 1 && (
         <div className={`${card} space-y-5`}>
           <div>
-            <h3 className="text-lg font-bold text-white">{t('sick.step1')}</h3>
-            <p className="mt-1 text-sm text-slate-300">{t('sick.tap')}</p>
+            <h3 className="text-lg font-bold text-ink">{t('sick.step1')}</h3>
+            <p className="mt-1 text-sm text-ink/80">{t('sick.tap')}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -385,13 +385,13 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                   onClick={() => toggleChip(c.id)}
                   className={`flex min-h-[56px] items-center justify-between gap-3 rounded-xl border p-4 text-left transition ${
                     selected
-                      ? 'border-emerald-400 bg-emerald-400/10 text-white'
-                      : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-slate-500'
+                      ? 'border-brand bg-brand/10 text-ink'
+                      : 'border-line bg-line/20 text-ink hover:border-muted'
                   }`}
                 >
                   <span className="text-sm font-medium">{t(`sym.${c.id}`)}</span>
                   {c.critical && (
-                    <span className="shrink-0 rounded-md bg-red-500/20 px-2 py-0.5 text-xs text-red-300">
+                    <span className="shrink-0 rounded-md bg-danger/15 px-2 py-0.5 text-xs text-tone-red">
                       {t('urg.cat.critical')}
                     </span>
                   )}
@@ -401,7 +401,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="sick-other" className="block text-sm font-semibold text-slate-200">
+            <label htmlFor="sick-other" className="block text-sm font-semibold text-ink">
               {t('sick.other.label')}
             </label>
             <div className="flex items-start gap-3">
@@ -429,14 +429,14 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
               )}
             </div>
             {voiceMsg && (
-              <p role="status" aria-live="polite" className="text-sm font-medium text-teal-200">
+              <p role="status" aria-live="polite" className="text-sm font-medium text-brand">
                 {t(voiceMsg)}
               </p>
             )}
             {voiceSupported ? (
-              <p className="text-xs leading-relaxed text-slate-300">{t('voice.privacy')}</p>
+              <p className="text-xs leading-relaxed text-ink/80">{t('voice.privacy')}</p>
             ) : (
-              <p className="text-xs text-amber-200">{t('voice.unsupported')}</p>
+              <p className="text-xs text-tone-amber">{t('voice.unsupported')}</p>
             )}
           </div>
 
@@ -449,7 +449,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
               {t('urg.next')}
             </button>
           </div>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-ink/80">
             {t('urg.notListed')}{' '}
             <a href={`tel:${emergencyNumber}`} className="font-semibold underline">
               {t('sos.call', { number: emergencyNumber })}
@@ -460,10 +460,10 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
 
       {tab === 'new' && step === 2 && (
         <div className={`${card} space-y-6`}>
-          <h3 className="text-lg font-bold text-white">{t('sick.step2')}</h3>
+          <h3 className="text-lg font-bold text-ink">{t('sick.step2')}</h3>
 
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-200">{t('chk.severity.label')}</p>
+            <p className="text-sm font-semibold text-ink">{t('chk.severity.label')}</p>
             <div className="grid grid-cols-3 gap-3">
               {SEVERITIES.map((s) => (
                 <button
@@ -473,8 +473,8 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                   onClick={() => setSeverity(s)}
                   className={`min-h-[48px] rounded-xl border py-3 text-sm font-bold transition ${
                     severity === s
-                      ? 'border-emerald-400 bg-emerald-400/10 text-white'
-                      : 'border-slate-700 bg-slate-900 text-slate-300'
+                      ? 'border-brand bg-brand/10 text-ink'
+                      : 'border-line bg-line/20 text-ink/80'
                   }`}
                 >
                   {t(`sev.${s.toLowerCase()}`)}
@@ -484,14 +484,14 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-200">{t('urg.fever.q')}</p>
+            <p className="text-sm font-semibold text-ink">{t('urg.fever.q')}</p>
             <div className="flex gap-3">
               <button
                 type="button"
                 aria-pressed={fever}
                 onClick={() => setFever(true)}
                 className={`min-h-[48px] flex-1 rounded-xl border py-3 text-sm font-bold transition ${
-                  fever ? 'border-amber-400 bg-amber-400/20 text-amber-200' : 'border-slate-700 bg-slate-900 text-slate-300'
+                  fever ? 'border-warn bg-warn/20 text-tone-amber' : 'border-line bg-line/20 text-ink/80'
                 }`}
               >
                 {t('urg.fever.yes')}
@@ -501,7 +501,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                 aria-pressed={!fever}
                 onClick={() => setFever(false)}
                 className={`min-h-[48px] flex-1 rounded-xl border py-3 text-sm font-bold transition ${
-                  !fever ? 'border-slate-500 bg-slate-800 text-white' : 'border-slate-700 bg-slate-900 text-slate-300'
+                  !fever ? 'border-muted/60 bg-line/50 text-ink' : 'border-line bg-line/20 text-ink/80'
                 }`}
               >
                 {t('urg.fever.no')}
@@ -510,7 +510,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="sick-days" className="block text-sm font-semibold text-slate-200">
+            <label htmlFor="sick-days" className="block text-sm font-semibold text-ink">
               {t('urg.duration.label', { count: days, unit: t(days === 1 ? 'urg.day' : 'urg.days') })}
             </label>
             <input
@@ -520,12 +520,12 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
               max="21"
               value={days}
               onChange={(e) => setDays(Number(e.target.value))}
-              className="w-full accent-emerald-400"
+              className="w-full accent-brand"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="sick-notes" className="block text-sm font-semibold text-slate-200">
+            <label htmlFor="sick-notes" className="block text-sm font-semibold text-ink">
               {t('chk.notes.label')}
             </label>
             <textarea
@@ -542,7 +542,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="min-h-[48px] rounded-xl bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200 transition hover:bg-slate-700"
+              className="min-h-[48px] rounded-xl bg-line/40 px-4 py-2 text-sm font-bold text-ink transition hover:bg-line/70"
             >
               ← {t('common.back')}
             </button>
@@ -561,9 +561,9 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
         <div className={`${card} space-y-6`}>
           {!result.hasInfo ? (
             <div className="space-y-4">
-              <h3 className="text-base font-bold text-white">{t('urg.noinfo.title')}</h3>
-              <p className="text-sm text-slate-300">{t('urg.noinfo.body')}</p>
-              <p className="text-sm text-slate-300">{t('urg.noinfo.sos')}</p>
+              <h3 className="text-base font-bold text-ink">{t('urg.noinfo.title')}</h3>
+              <p className="text-sm text-ink/80">{t('urg.noinfo.body')}</p>
+              <p className="text-sm text-ink/80">{t('urg.noinfo.sos')}</p>
               {callButton}
               <button
                 type="button"
@@ -576,36 +576,36 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
           ) : (
             <>
               {result.panel === 'selfharm' && (
-                <div role="alert" className="space-y-3 rounded-xl border border-red-500/60 bg-red-950/50 p-4 text-red-50">
+                <div role="alert" className="space-y-3 rounded-xl border border-danger/60 bg-danger/15 p-4 text-ink">
                   <p className="text-base font-bold">{t('adv.selfharm.title')}</p>
                   <p className="text-sm leading-relaxed">{t('adv.selfharm.body', { number: emergencyNumber })}</p>
                   {callButton}
                 </div>
               )}
               {result.panel === 'emergency' && (
-                <div role="alert" className="space-y-3 rounded-xl border border-red-500/50 bg-red-500/15 p-4">
-                  <p className="text-sm font-bold text-red-200">{t('urg.emergency.title')}</p>
-                  <p className="text-sm text-red-100">{t('urg.emergency.body', { number: emergencyNumber })}</p>
+                <div role="alert" className="space-y-3 rounded-xl border border-danger/50 bg-danger/15 p-4">
+                  <p className="text-sm font-bold text-tone-red">{t('urg.emergency.title')}</p>
+                  <p className="text-sm text-ink">{t('urg.emergency.body', { number: emergencyNumber })}</p>
                   {callButton}
                 </div>
               )}
               {result.panel === 'severe' && (
-                <div role="status" className="space-y-2 rounded-xl border border-amber-400/60 bg-amber-950/40 p-4 text-amber-50">
+                <div role="status" className="space-y-2 rounded-xl border border-warn/60 bg-warn/15 p-4 text-ink">
                   <p className="text-base font-bold">{t('adv.severe.title')}</p>
                   <p className="text-sm leading-relaxed">{t('adv.severe.body', { number: emergencyNumber })}</p>
                 </div>
               )}
               {result.panel === 'worse' && (
-                <div role="status" className="space-y-2 rounded-xl border border-amber-400/60 bg-amber-950/40 p-4 text-amber-50">
+                <div role="status" className="space-y-2 rounded-xl border border-warn/60 bg-warn/15 p-4 text-ink">
                   <p className="text-base font-bold">{t('adv.worse.title')}</p>
                   <p className="text-sm leading-relaxed">{t('adv.worse.body')}</p>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700 pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white">{t('urg.result.title')}</h3>
-                  <p className="text-sm text-slate-300">{t('urg.result.sub')}</p>
+                  <h3 className="text-base font-bold text-ink">{t('urg.result.title')}</h3>
+                  <p className="text-sm text-ink/80">{t('urg.result.sub')}</p>
                 </div>
                 <span
                   className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${BADGE[result.urgency].cls}`}
@@ -614,12 +614,12 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                 </span>
               </div>
 
-              <div className="space-y-1 rounded-xl border border-slate-700 bg-slate-900 p-4">
-                <p className="text-xs uppercase tracking-wider text-slate-300">{t('urg.entered')}</p>
+              <div className="space-y-1 rounded-xl border border-line bg-line/20 p-4">
+                <p className="text-xs uppercase tracking-wider text-ink/80">{t('urg.entered')}</p>
                 {result.symptomText && (
-                  <p className="text-base font-bold text-white">{t('chk.entry.symptoms', { list: result.symptomText })}</p>
+                  <p className="text-base font-bold text-ink">{t('chk.entry.symptoms', { list: result.symptomText })}</p>
                 )}
-                <p className="text-sm text-slate-300">
+                <p className="text-sm text-ink/80">
                   {severityKey(result.severity) ? t(severityKey(result.severity) as string) : result.severity} ·{' '}
                   {result.days} {t(result.days === 1 ? 'urg.day' : 'urg.days')} ·{' '}
                   {t('urg.fever.line', { answer: result.fever ? t('urg.yes') : t('urg.no') })}
@@ -628,10 +628,10 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
 
               {result.noteKeys.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-slate-200">{t('urg.means')}</h4>
+                  <h4 className="text-sm font-bold text-ink">{t('urg.means')}</h4>
                   <ul className="space-y-2">
                     {result.noteKeys.map((key) => (
-                      <li key={key} className="rounded-lg border border-slate-700 bg-slate-900 p-3 text-sm text-slate-200">
+                      <li key={key} className="rounded-lg border border-line bg-line/20 p-3 text-sm text-ink">
                         {t(key)}
                       </li>
                     ))}
@@ -639,10 +639,10 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                 </div>
               )}
 
-              <p className="rounded-lg border border-slate-700 p-3 text-xs leading-relaxed text-slate-300">
+              <p className="rounded-lg border border-line p-3 text-xs leading-relaxed text-ink/80">
                 {t('urg.disclaimer')}
               </p>
-              <p role="status" className="text-sm font-semibold text-emerald-300">
+              <p role="status" className="text-sm font-semibold text-tone-green">
                 {t('sick.saved')}
               </p>
 
@@ -650,7 +650,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                 <button
                   type="button"
                   onClick={() => onNavigate('maternalcare')}
-                  className="min-h-[48px] w-full rounded-xl border border-slate-500 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                  className="min-h-[48px] w-full rounded-xl border border-muted/50 px-4 py-3 text-sm font-semibold text-ink transition hover:bg-line/40"
                 >
                   {t('sick.pregnant.link')}
                 </button>
@@ -660,14 +660,14 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                 <button
                   type="button"
                   onClick={() => setTab('history')}
-                  className="min-h-[48px] rounded-xl border border-slate-500 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                  className="min-h-[48px] rounded-xl border border-muted/50 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-line/40"
                 >
                   {t('sick.view.history')}
                 </button>
                 <button
                   type="button"
                   onClick={startNew}
-                  className="min-h-[48px] rounded-xl bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200 transition hover:bg-slate-700"
+                  className="min-h-[48px] rounded-xl bg-line/40 px-4 py-2 text-sm font-bold text-ink transition hover:bg-line/70"
                 >
                   {t('urg.new')}
                 </button>
@@ -680,24 +680,26 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
       {tab === 'history' && (
         <div className="space-y-3">
           {items.length === 0 ? (
-            <div className="rounded-2xl border border-slate-700 bg-slate-900 p-8 text-center text-sm text-slate-300">
+            <div className="rounded-2xl border border-line bg-line/20 p-8 text-center text-sm text-ink/80">
               {t('sick.history.empty')}
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.key} className="space-y-2 rounded-xl border border-slate-700 bg-slate-900 p-4">
+              <div key={item.key} className="space-y-2 rounded-xl border border-line bg-line/20 p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="text-base font-bold text-slate-100">{item.title}</h4>
-                      <span className="rounded-full border border-slate-600 px-2 py-0.5 text-xs font-medium text-slate-200">
+                      <h4 className="text-base font-bold text-ink">{item.title}</h4>
+                      <span className="rounded-full border border-muted/40 px-2 py-0.5 text-xs font-medium text-ink">
                         {item.severityLabel}
                       </span>
                       {item.tag && (
-                        <span className="rounded-full border border-cyan-500/40 px-2 py-0.5 text-xs text-cyan-200">{item.tag}</span>
+                        <span className="rounded-full border border-tone-cyan-line/40 px-2 py-0.5 text-xs text-tone-cyan">
+                          {item.tag}
+                        </span>
                       )}
                       {item.fever && (
-                        <span className="rounded-full border border-amber-400/50 px-2 py-0.5 text-xs text-amber-200">
+                        <span className="rounded-full border border-warn/50 px-2 py-0.5 text-xs text-tone-amber">
                           {t('sick.fever.tag')}
                         </span>
                       )}
@@ -709,19 +711,19 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
                         </span>
                       )}
                     </div>
-                    <span className="mt-1 block text-xs text-slate-300">{item.meta}</span>
+                    <span className="mt-1 block text-xs text-ink/80">{item.meta}</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => removeItem(item)}
                     aria-label={t('trk.delete.aria', { name: item.title })}
-                    className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-red-300"
+                    className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-ink/80 hover:bg-line/40 hover:text-tone-red"
                   >
                     ✕
                   </button>
                 </div>
                 {item.notes && (
-                  <p className="rounded-md border border-slate-700 bg-slate-950/60 p-2.5 text-sm text-slate-100">{item.notes}</p>
+                  <p className="rounded-md border border-line bg-line/10 p-2.5 text-sm text-ink">{item.notes}</p>
                 )}
               </div>
             ))
@@ -729,7 +731,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
         </div>
       )}
 
-      <p className="text-xs leading-relaxed text-slate-300">{t('trk.disclaimer')}</p>
+      <p className="text-xs leading-relaxed text-ink/80">{t('trk.disclaimer')}</p>
     </div>
   );
 }
