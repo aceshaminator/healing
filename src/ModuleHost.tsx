@@ -23,13 +23,13 @@ class Guard extends React.Component<
   render() {
     if (!this.state.failed) return this.props.children;
     return (
-      <div className="rounded-2xl border border-amber-400/40 bg-amber-400/10 p-5 text-sm text-amber-100">
+      <div className="rounded-2xl border border-warn/40 bg-warn/10 p-5 text-sm text-ink">
         <p className="font-semibold">{this.props.title}</p>
-        <p className="mt-1 text-amber-200/80">{this.props.body}</p>
+        <p className="mt-1 text-ink/80">{this.props.body}</p>
         <button
           type="button"
           onClick={this.props.onBack}
-          className="mt-4 min-h-[44px] rounded-xl border border-amber-300/50 px-4 py-2 text-sm font-semibold"
+          className="mt-4 min-h-[44px] rounded-xl border border-warn/50 px-4 py-2 text-sm font-semibold"
         >
           {this.props.ok}
         </button>
@@ -39,7 +39,7 @@ class Guard extends React.Component<
 }
 
 const barBtn =
-  'min-h-[44px] rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-100 transition hover:bg-slate-800';
+  'min-h-[44px] rounded-xl border border-muted/40 bg-surface px-3 py-2 text-sm font-medium text-ink transition hover:bg-canvas';
 
 export default function ModuleHost({ section, onClose }: { section: SectionId | null; onClose: () => void }) {
   const { t, lang } = useI18n();
@@ -151,17 +151,12 @@ export default function ModuleHost({ section, onClose }: { section: SectionId | 
   const showBack = !!active && current.modules.length > 1;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
-      className="fixed inset-0 z-40 overflow-y-auto bg-[#070D1F] text-slate-100"
-    >
-      <div className="mx-auto max-w-3xl px-4 py-5">
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-700 pb-4">
+    <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-40 overflow-y-auto bg-canvas text-ink">
+      {/* pb-28 keeps the last lines of every screen clear of the floating SOS button. */}
+      <div className="mx-auto max-w-3xl px-4 pb-28 pt-5">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-line pb-4">
           <h2 className="text-lg font-semibold">{title}</h2>
           <div className="flex flex-wrap items-center gap-2">
-            <SosButton />
             <button type="button" onClick={readScreen} className={barBtn}>
               {t('common.readScreen')}
             </button>
@@ -180,7 +175,7 @@ export default function ModuleHost({ section, onClose }: { section: SectionId | 
         </div>
 
         {storageError && (
-          <div role="alert" className="mb-4 rounded-xl border border-red-500/50 bg-red-500/15 p-3 text-sm text-red-100">
+          <div role="alert" className="mb-4 rounded-xl border border-danger/50 bg-danger/15 p-3 text-sm text-ink">
             <p className="font-bold">{t('app.storage.title')}</p>
             <p className="mt-1">{t('app.storage.body')}</p>
           </div>
@@ -200,24 +195,22 @@ export default function ModuleHost({ section, onClose }: { section: SectionId | 
           ) : (
             <>
               {opening && (
-                <p role="status" className="mb-4 rounded-xl border border-slate-600 bg-slate-900 p-3 text-sm text-slate-100">
+                <p role="status" className="mb-4 rounded-xl border border-muted/40 bg-surface p-3 text-sm text-ink">
                   {t('common.opening', { name: opening })}
                 </p>
               )}
-              {note && (
-                <p className="mb-4 rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">{note}</p>
-              )}
+              {note && <p className="mb-4 rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm text-ink">{note}</p>}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {current.modules.map((m) => (
                   <button
                     key={m.file}
                     type="button"
                     onClick={() => openModule(m.file, m.labelKey)}
-                    className="flex min-h-[64px] items-center justify-between gap-2 rounded-2xl border border-slate-600 bg-[#0B132B] px-4 py-4 text-left text-base font-semibold text-slate-100 transition hover:border-emerald-400/60 hover:bg-slate-900"
+                    className="flex min-h-[64px] items-center justify-between gap-2 rounded-2xl border border-muted/40 bg-surface px-4 py-4 text-left text-base font-semibold text-ink transition hover:border-brand/60 hover:bg-canvas"
                   >
                     <span>{t(m.labelKey)}</span>
                     {m.status && (
-                      <span className="shrink-0 rounded-full border border-amber-400/50 px-2 py-0.5 text-xs font-semibold text-amber-300">
+                      <span className="shrink-0 rounded-full border border-warn/50 px-2 py-0.5 text-xs font-semibold text-tone-amber">
                         {t('common.soon')}
                       </span>
                     )}
@@ -227,6 +220,11 @@ export default function ModuleHost({ section, onClose }: { section: SectionId | 
             </>
           )}
         </div>
+      </div>
+
+      {/* One SOS button, always bottom-right, on every screen. */}
+      <div className="fixed right-4 z-50" style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}>
+        <SosButton />
       </div>
     </div>
   );
