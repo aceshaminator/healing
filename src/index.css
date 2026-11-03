@@ -1,15 +1,6 @@
-@import "tailwindcss";
-
-@theme inline {
-  --color-canvas: rgb(var(--canvas));
-  --color-surface: rgb(var(--surface));
-  --color-line: rgb(var(--line));
-  --color-ink: rgb(var(--ink));
-  --color-muted: rgb(var(--muted));
-  --color-brand: rgb(var(--brand));
-  --color-danger: rgb(var(--danger));
-  --color-warn: rgb(var(--warn));
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   color-scheme: dark;
@@ -54,4 +45,12 @@ select:focus {
   outline: none;
   border-color: rgb(var(--brand));
   box-shadow: 0 0 0 3px rgb(var(--brand) / 0.22);
+}
+
+[data-reduce-motion='true'] *,
+[data-reduce-motion='true'] *::before,
+[data-reduce-motion='true'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
 }
