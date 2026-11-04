@@ -24,15 +24,15 @@ export default function WellnessRecommendations() {
   const [activeTab, setActiveTab] = useState<TabId>('move');
 
   return (
-    <div className="space-y-6 rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-xl">
-      <div className="border-b border-slate-700 pb-4">
-        <h2 className="flex items-center gap-2 text-xl font-bold text-cyan-300">
-          <Sparkles className="h-5 w-5 text-cyan-300" aria-hidden="true" /> {t('well.title')}
+    <div className="space-y-6 rounded-2xl border border-line bg-surface p-6 shadow-xl">
+      <div className="border-b border-line pb-4">
+        <h2 className="flex items-center gap-2 text-xl font-bold text-tone-cyan">
+          <Sparkles className="h-5 w-5 text-tone-cyan" aria-hidden="true" /> {t('well.title')}
         </h2>
-        <p className="mt-1 text-sm text-slate-300">{t('well.intro')}</p>
+        <p className="mt-1 text-sm text-ink/80">{t('well.intro')}</p>
       </div>
 
-      <div className="flex flex-wrap gap-2 border-b border-slate-700 pb-3">
+      <div className="flex flex-wrap gap-2 border-b border-line pb-3">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -42,7 +42,7 @@ export default function WellnessRecommendations() {
             className={`flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
               activeTab === tab.id
                 ? 'bg-cyan-500 text-slate-950'
-                : 'border border-slate-600 bg-slate-950 text-slate-200 hover:text-white'
+                : 'border border-muted/40 bg-canvas text-ink hover:bg-line/40'
             }`}
           >
             <span aria-hidden="true">{tab.icon}</span> {t(tab.key)}
@@ -52,18 +52,18 @@ export default function WellnessRecommendations() {
 
       {activeTab === 'move' && (
         <div className="space-y-4">
-          <p className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">{t('well.skip')}</p>
+          <p className="rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm text-ink">{t('well.skip')}</p>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {MOVE_IDS.map((n) => (
-              <div key={n} className="space-y-3 rounded-xl border border-slate-700 bg-slate-950 p-5">
+              <div key={n} className="space-y-3 rounded-xl border border-line bg-canvas p-5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="rounded-md bg-cyan-500/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-cyan-300">
+                  <span className="rounded-md bg-tone-cyan-line/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-tone-cyan">
                     {t(`well.move.${n}.level`)}
                   </span>
-                  <span className="text-xs text-slate-300">{t(`well.move.${n}.time`)}</span>
+                  <span className="text-xs text-ink/80">{t(`well.move.${n}.time`)}</span>
                 </div>
-                <h3 className="text-base font-bold text-slate-100">{t(`well.move.${n}.title`)}</h3>
-                <p className="text-sm leading-relaxed text-slate-200">{t(`well.move.${n}.desc`)}</p>
+                <h3 className="text-base font-bold text-ink">{t(`well.move.${n}.title`)}</h3>
+                <p className="text-sm leading-relaxed text-ink/90">{t(`well.move.${n}.desc`)}</p>
               </div>
             ))}
           </div>
@@ -73,10 +73,10 @@ export default function WellnessRecommendations() {
       {activeTab === 'reading' && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {READING.map((item) => (
-            <div key={item.id} className="space-y-2 rounded-xl border border-slate-700 bg-slate-950 p-5">
-              <span className="text-xs font-semibold text-cyan-300">{item.author}</span>
-              <h3 className="text-base font-bold text-slate-100">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-slate-200">{t(`well.read.${item.id}.desc`)}</p>
+            <div key={item.id} className="space-y-2 rounded-xl border border-line bg-canvas p-5">
+              <span className="text-xs font-semibold text-tone-cyan">{item.author}</span>
+              <h3 className="text-base font-bold text-ink">{item.title}</h3>
+              <p className="text-sm leading-relaxed text-ink/90">{t(`well.read.${item.id}.desc`)}</p>
             </div>
           ))}
         </div>
@@ -85,9 +85,9 @@ export default function WellnessRecommendations() {
       {activeTab === 'wisdom' && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {WISDOM_IDS.map((n) => (
-            <div key={n} className="space-y-2 rounded-xl border border-slate-700 bg-slate-950 p-5">
-              <h3 className="text-base font-bold text-slate-100">{t(`well.wis.${n}.title`)}</h3>
-              <p className="text-sm leading-relaxed text-slate-200">{t(`well.wis.${n}.desc`)}</p>
+            <div key={n} className="space-y-2 rounded-xl border border-line bg-canvas p-5">
+              <h3 className="text-base font-bold text-ink">{t(`well.wis.${n}.title`)}</h3>
+              <p className="text-sm leading-relaxed text-ink/90">{t(`well.wis.${n}.desc`)}</p>
             </div>
           ))}
         </div>
