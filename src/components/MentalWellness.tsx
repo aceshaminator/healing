@@ -68,13 +68,13 @@ function HelpLinks() {
       </a>
       {isNigeria() ? (
         <>
-          <p className="text-xs text-slate-300">{t('mw.help.surpin')}</p>
+          <p className="text-xs text-ink/80">{t('mw.help.surpin')}</p>
           <div className="flex flex-wrap gap-2">
             {HELPLINES.map((h) => (
               <a
                 key={h.tel}
                 href={`tel:${h.tel}`}
-                className="flex min-h-[44px] items-center rounded-xl border border-slate-500 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                className="flex min-h-[44px] items-center rounded-xl border border-muted/50 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-line/40"
               >
                 {h.display}
               </a>
@@ -82,7 +82,7 @@ function HelpLinks() {
           </div>
         </>
       ) : (
-        <p className="text-xs leading-relaxed text-slate-300">{t('mw.help.other')}</p>
+        <p className="text-xs leading-relaxed text-ink/80">{t('mw.help.other')}</p>
       )}
     </div>
   );
@@ -101,7 +101,7 @@ export default function MentalWellness() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     } catch {
-      /* ignore */
+      window.dispatchEvent(new CustomEvent('healing:storage-error', { detail: { key: 'mood-journal' } }));
     }
   }, [entries]);
 
@@ -131,33 +131,33 @@ export default function MentalWellness() {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-6 rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-xl">
-        <div className="border-b border-slate-700 pb-4">
-          <h2 className="flex items-center gap-2 text-xl font-bold text-cyan-300">
+      <div className="space-y-6 rounded-2xl border border-line bg-surface p-6 shadow-xl">
+        <div className="border-b border-line pb-4">
+          <h2 className="flex items-center gap-2 text-xl font-bold text-tone-cyan">
             <span aria-hidden="true">🧠</span> {t('mw.title')}
           </h2>
-          <p className="mt-1 text-sm text-slate-300">{t('mw.sub')}</p>
+          <p className="mt-1 text-sm text-ink/80">{t('mw.sub')}</p>
         </div>
 
         {/* Always visible */}
-        <div className="rounded-xl border border-slate-600 bg-slate-950 p-4">
-          <h3 className="text-sm font-bold text-slate-100">{t('mw.help.title')}</h3>
-          <p className="mt-1 text-xs leading-relaxed text-slate-300">{t('mw.help.body', { number: emergencyNumber })}</p>
+        <div className="rounded-xl border border-muted/40 bg-canvas p-4">
+          <h3 className="text-sm font-bold text-ink">{t('mw.help.title')}</h3>
+          <p className="mt-1 text-xs leading-relaxed text-ink/80">{t('mw.help.body', { number: emergencyNumber })}</p>
           <HelpLinks />
         </div>
 
-        <form onSubmit={handleSave} className="space-y-4 rounded-2xl border border-slate-700 bg-slate-950 p-6">
-          <h3 className="text-base font-bold text-slate-100">{t('mw.new')}</h3>
+        <form onSubmit={handleSave} className="space-y-4 rounded-2xl border border-line bg-canvas p-6">
+          <h3 className="text-base font-bold text-ink">{t('mw.new')}</h3>
 
           <div>
-            <label htmlFor="mood" className="mb-1 block text-sm font-semibold text-slate-200">
+            <label htmlFor="mood" className="mb-1 block text-sm font-semibold text-ink">
               {t('mw.mood')}
             </label>
             <select
               id="mood"
               value={mood}
               onChange={(e) => setMood(e.target.value)}
-              className="min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-slate-100 focus:border-cyan-400 focus:outline-none"
+              className="min-h-[48px] w-full rounded-xl border border-muted/40 bg-surface px-4 py-3 text-ink focus:border-tone-cyan-line focus:outline-none"
             >
               {MOODS.map((m) => (
                 <option key={m.value} value={m.value}>
@@ -168,7 +168,7 @@ export default function MentalWellness() {
           </div>
 
           <div>
-            <label htmlFor="score" className="mb-1 block text-sm font-semibold text-slate-200">
+            <label htmlFor="score" className="mb-1 block text-sm font-semibold text-ink">
               {t('mw.score', { score })}
             </label>
             <input
@@ -178,12 +178,12 @@ export default function MentalWellness() {
               max="5"
               value={score}
               onChange={(e) => setScore(Number(e.target.value))}
-              className="w-full cursor-pointer accent-cyan-400"
+              className="w-full cursor-pointer accent-tone-cyan-line"
             />
           </div>
 
           <div>
-            <label htmlFor="reflection" className="mb-1 block text-sm font-semibold text-slate-200">
+            <label htmlFor="reflection" className="mb-1 block text-sm font-semibold text-ink">
               {t('mw.reflection')}
             </label>
             <textarea
@@ -193,7 +193,7 @@ export default function MentalWellness() {
               placeholder={t('mw.reflection.ph')}
               value={reflection}
               onChange={(e) => setReflection(e.target.value)}
-              className="w-full resize-none rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-base text-slate-100 placeholder-slate-400 focus:border-cyan-400 focus:outline-none"
+              className="w-full resize-none rounded-xl border border-muted/40 bg-surface px-4 py-3 text-base text-ink placeholder-muted focus:border-tone-cyan-line focus:outline-none"
             />
           </div>
 
@@ -206,14 +206,14 @@ export default function MentalWellness() {
         </form>
 
         {support === 'urgent' && (
-          <div role="alert" className="rounded-xl border border-red-500/60 bg-red-950/60 p-4">
-            <p className="text-sm font-bold text-red-100">{t('mw.urgent.title')}</p>
-            <p className="mt-1 text-sm leading-relaxed text-red-50">{t('mw.urgent.body', { number: emergencyNumber })}</p>
+          <div role="alert" className="rounded-xl border border-danger/60 bg-danger/15 p-4">
+            <p className="text-sm font-bold text-ink">{t('mw.urgent.title')}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink">{t('mw.urgent.body', { number: emergencyNumber })}</p>
             <HelpLinks />
             <button
               type="button"
               onClick={() => setSupport(null)}
-              className="mt-3 min-h-[44px] rounded-lg px-3 text-xs font-medium text-red-100 underline"
+              className="mt-3 min-h-[44px] rounded-lg px-3 text-xs font-medium text-ink underline"
             >
               {t('adv.close')}
             </button>
@@ -221,13 +221,13 @@ export default function MentalWellness() {
         )}
 
         {support === 'gentle' && (
-          <div role="status" className="rounded-xl border border-cyan-400/40 bg-cyan-950/40 p-4">
-            <p className="text-sm font-bold text-cyan-100">{t('mw.gentle.title')}</p>
-            <p className="mt-1 text-sm leading-relaxed text-slate-100">{t('mw.gentle.body', { number: emergencyNumber })}</p>
+          <div role="status" className="rounded-xl border border-tone-cyan-line/40 bg-tone-cyan-line/10 p-4">
+            <p className="text-sm font-bold text-ink">{t('mw.gentle.title')}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink">{t('mw.gentle.body', { number: emergencyNumber })}</p>
             <button
               type="button"
               onClick={() => setSupport(null)}
-              className="mt-3 min-h-[44px] rounded-lg px-3 text-xs font-medium text-cyan-100 underline"
+              className="mt-3 min-h-[44px] rounded-lg px-3 text-xs font-medium text-ink underline"
             >
               {t('adv.close')}
             </button>
@@ -235,34 +235,34 @@ export default function MentalWellness() {
         )}
 
         <div className="space-y-3">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-ink">
             {t('mw.history', { count: entries.length })}
           </h3>
           {entries.length === 0 ? (
-            <p className="text-sm italic text-slate-300">{t('mw.empty')}</p>
+            <p className="text-sm italic text-ink/80">{t('mw.empty')}</p>
           ) : (
             entries.map((item) => (
-              <div key={item.id} className="flex flex-col gap-2 rounded-xl border border-slate-700 bg-slate-950 p-4">
+              <div key={item.id} className="flex flex-col gap-2 rounded-xl border border-line bg-canvas p-4">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-cyan-300">{moodLabel(item.mood)}</span>
-                    <span className="rounded-lg border border-slate-600 bg-slate-900 px-2.5 py-1 text-xs text-slate-200">
+                    <span className="font-bold text-tone-cyan">{moodLabel(item.mood)}</span>
+                    <span className="rounded-lg border border-muted/40 bg-surface px-2.5 py-1 text-xs text-ink">
                       {t('mw.entry.score', { score: item.score })}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-300">{showDate(item.date, lang)}</span>
+                    <span className="text-xs text-ink/80">{showDate(item.date, lang)}</span>
                     <button
                       type="button"
                       onClick={() => deleteEntry(item.id)}
                       aria-label={t('mw.delete.aria')}
-                      className="min-h-[44px] min-w-[44px] rounded-lg text-sm font-bold text-slate-300 transition hover:bg-slate-800 hover:text-red-300"
+                      className="min-h-[44px] min-w-[44px] rounded-lg text-sm font-bold text-ink/80 transition hover:bg-line/40 hover:text-tone-red"
                     >
                       ✕
                     </button>
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed text-slate-100">{item.text}</p>
+                <p className="text-sm leading-relaxed text-ink">{item.text}</p>
               </div>
             ))
           )}
