@@ -3,7 +3,7 @@ import { clearVitals, loadVitals } from '../lib/vitals';
 import type { VitalReading } from '../lib/vitals';
 import { useI18n } from '../i18n/I18nProvider';
 
-const card = 'rounded-2xl border border-slate-700 bg-[#0B132B] p-5';
+const card = 'rounded-2xl border border-line bg-surface p-5';
 
 type TFn = (key: string, vars?: Record<string, string | number>) => string;
 
@@ -68,23 +68,30 @@ function PulseChart({ points, ariaLabel }: { points: Point[]; ariaLabel: string 
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={ariaLabel} className="w-full">
-      <line x1={L} y1={T} x2={W - R} y2={T} stroke="#1e293b" strokeWidth="1" />
-      <line x1={L} y1={(T + H - B) / 2} x2={W - R} y2={(T + H - B) / 2} stroke="#1e293b" strokeWidth="1" />
-      <line x1={L} y1={H - B} x2={W - R} y2={H - B} stroke="#475569" strokeWidth="1" />
-      <text x={L - 6} y={T + 4} textAnchor="end" fontSize="10" fill="#cbd5e1">
+      <line x1={L} y1={T} x2={W - R} y2={T} className="stroke-line" strokeWidth="1" />
+      <line x1={L} y1={(T + H - B) / 2} x2={W - R} y2={(T + H - B) / 2} className="stroke-line" strokeWidth="1" />
+      <line x1={L} y1={H - B} x2={W - R} y2={H - B} className="stroke-muted/40" strokeWidth="1" />
+      <text x={L - 6} y={T + 4} textAnchor="end" fontSize="10" className="fill-ink/80">
         {Math.round(yMax)}
       </text>
-      <text x={L - 6} y={H - B + 4} textAnchor="end" fontSize="10" fill="#cbd5e1">
+      <text x={L - 6} y={H - B + 4} textAnchor="end" fontSize="10" className="fill-ink/80">
         {Math.round(yMin)}
       </text>
       {points.length > 1 && (
-        <polyline points={line} fill="none" stroke="#34d399" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <polyline
+          points={line}
+          fill="none"
+          className="stroke-tone-green-line"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
       )}
       {points.map((p, i) =>
         p.src === 'fingertip' ? (
-          <circle key={i} cx={x(i)} cy={y(p.v)} r="4" fill="#0B132B" stroke="#34d399" strokeWidth="2" />
+          <circle key={i} cx={x(i)} cy={y(p.v)} r="4" className="fill-surface stroke-tone-green-line" strokeWidth="2" />
         ) : (
-          <circle key={i} cx={x(i)} cy={y(p.v)} r="4" fill="#34d399" />
+          <circle key={i} cx={x(i)} cy={y(p.v)} r="4" className="fill-tone-green-line" />
         ),
       )}
     </svg>
@@ -135,8 +142,8 @@ export function VitalCharts({ onNavigate }: { onNavigate?: (tab: string) => void
   if (list.length === 0) {
     return (
       <div className={`${card} space-y-3 text-center`}>
-        <h2 className="text-lg font-bold text-white">{t('chart.empty.title')}</h2>
-        <p className="text-sm text-slate-300">{t('chart.empty.text')}</p>
+        <h2 className="text-lg font-bold text-ink">{t('chart.empty.title')}</h2>
+        <p className="text-sm text-ink/80">{t('chart.empty.text')}</p>
         {onNavigate && (
           <button
             type="button"
@@ -158,24 +165,24 @@ export function VitalCharts({ onNavigate }: { onNavigate?: (tab: string) => void
       <div className="grid grid-cols-2 gap-3">
         {tiles.map((tile) => (
           <div key={tile.label} className={card}>
-            <p className="text-xs uppercase tracking-wider text-slate-300">{t('chart.latest', { label: tile.label })}</p>
-            <p className="mt-1 text-xl font-bold text-white">{tile.value}</p>
+            <p className="text-xs uppercase tracking-wider text-ink/80">{t('chart.latest', { label: tile.label })}</p>
+            <p className="mt-1 text-xl font-bold text-ink">{tile.value}</p>
           </div>
         ))}
       </div>
 
       {points.length > 0 && (
         <div className={card}>
-          <h3 className="text-sm font-bold text-white">{t('chart.pulse.title')}</h3>
+          <h3 className="text-sm font-bold text-ink">{t('chart.pulse.title')}</h3>
           <PulseChart points={points} ariaLabel={t('chart.pulse.aria', { lo, hi })} />
-          <p className="mt-1 text-xs text-slate-300">{t('chart.pulse.range', { lo, hi, count: points.length })}</p>
-          <p className="text-xs text-slate-300">
+          <p className="mt-1 text-xs text-ink/80">{t('chart.pulse.range', { lo, hi, count: points.length })}</p>
+          <p className="text-xs text-ink/80">
             {t('chart.pulse.dates', {
               from: formatWhen(points[0].date, lang),
               to: formatWhen(points[points.length - 1].date, lang),
             })}
           </p>
-          <p className="mt-2 text-xs text-slate-300">
+          <p className="mt-2 text-xs text-ink/80">
             <span aria-hidden="true">●</span> {t('chart.legend.typed')} &nbsp; <span aria-hidden="true">○</span>{' '}
             {t('chart.legend.camera')}
           </p>
@@ -183,26 +190,26 @@ export function VitalCharts({ onNavigate }: { onNavigate?: (tab: string) => void
       )}
 
       <div className={`${card} space-y-3`}>
-        <h3 className="text-sm font-bold text-white">{t('chart.all.title', { count: list.length })}</h3>
+        <h3 className="text-sm font-bold text-ink">{t('chart.all.title', { count: list.length })}</h3>
         <ul className="space-y-2">
           {list.map((r) => (
-            <li key={r.id} className="rounded-lg border border-slate-700 bg-slate-900 p-3 text-sm">
+            <li key={r.id} className="rounded-lg border border-line bg-surface p-3 text-sm">
               <div className="flex items-start justify-between gap-3">
-                <span className="font-semibold text-emerald-300">{parts(r, t, lang).join(' · ')}</span>
-                <time className="shrink-0 text-xs text-slate-300">{formatWhen(r.date, lang)}</time>
+                <span className="font-semibold text-tone-green">{parts(r, t, lang).join(' · ')}</span>
+                <time className="shrink-0 text-xs text-ink/80">{formatWhen(r.date, lang)}</time>
               </div>
-              <p className="mt-1 text-xs text-slate-300">{t(SOURCE_KEYS[r.source])}</p>
+              <p className="mt-1 text-xs text-ink/80">{t(SOURCE_KEYS[r.source])}</p>
             </li>
           ))}
         </ul>
       </div>
 
-      <p className="rounded-lg border border-slate-700 p-3 text-xs leading-relaxed text-slate-300">{t('vit.seeDoctor')}</p>
+      <p className="rounded-lg border border-line p-3 text-xs leading-relaxed text-ink/80">{t('vit.seeDoctor')}</p>
 
       <div>
         {confirm ? (
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-sm text-slate-200">{t('chart.del.q')}</span>
+            <span className="text-sm text-ink">{t('chart.del.q')}</span>
             <button
               type="button"
               onClick={wipe}
@@ -213,7 +220,7 @@ export function VitalCharts({ onNavigate }: { onNavigate?: (tab: string) => void
             <button
               type="button"
               onClick={() => setConfirm(false)}
-              className="min-h-[44px] rounded-xl border border-slate-500 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+              className="min-h-[44px] rounded-xl border border-muted/50 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-line/40"
             >
               {t('chart.del.keep')}
             </button>
@@ -222,7 +229,7 @@ export function VitalCharts({ onNavigate }: { onNavigate?: (tab: string) => void
           <button
             type="button"
             onClick={() => setConfirm(true)}
-            className="min-h-[44px] rounded-xl border border-slate-500 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+            className="min-h-[44px] rounded-xl border border-muted/50 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-line/40"
           >
             {t('chart.del.btn')}
           </button>

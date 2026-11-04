@@ -212,7 +212,7 @@ ${name.trim() ? `<p class="meta">${esc(t('sum.namefield', { name: name.trim() })
 }
 
 const fieldClass =
-  'min-h-[44px] w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-400 focus:border-teal-400 focus:outline-none';
+  'min-h-[44px] w-full rounded-lg border border-muted/40 bg-canvas px-3 py-2 text-sm text-ink placeholder-muted focus:border-brand focus:outline-none';
 const actionBtn =
   'min-h-[48px] w-full rounded-lg px-4 py-3 text-sm font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50';
 
@@ -277,41 +277,41 @@ export function ExportReport({ onBack }: ExportReportProps) {
   ];
 
   return (
-    <div className="mx-auto max-w-md space-y-5 rounded-xl border border-slate-700 bg-slate-900 p-6 text-white">
+    <div className="mx-auto max-w-md space-y-5 rounded-xl border border-line bg-surface p-6 text-ink">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-xl font-bold">{t('sum.title')}</h2>
         {onBack && (
           <button
             type="button"
             onClick={onBack}
-            className="min-h-[44px] rounded-lg border border-slate-600 bg-slate-800 px-3 py-1 text-sm transition-colors hover:bg-slate-700"
+            className="min-h-[44px] rounded-lg border border-muted/40 bg-line/40 px-3 py-1 text-sm transition-colors hover:bg-line/70"
           >
             ← {t('common.back')}
           </button>
         )}
       </div>
 
-      <p className="text-sm leading-relaxed text-slate-300">{t('sum.intro')}</p>
+      <p className="text-sm leading-relaxed text-ink/80">{t('sum.intro')}</p>
 
       <fieldset className="space-y-2">
-        <legend className="mb-1 text-sm font-semibold text-slate-100">{t('sum.choose')}</legend>
+        <legend className="mb-1 text-sm font-semibold text-ink">{t('sum.choose')}</legend>
         {options.map((o) => (
-          <label key={o.key} className="flex min-h-[44px] items-center gap-3 text-sm text-slate-100">
+          <label key={o.key} className="flex min-h-[44px] items-center gap-3 text-sm text-ink">
             <input
               type="checkbox"
               checked={inc[o.key]}
               onChange={() => toggle(o.key)}
-              className="h-5 w-5 accent-teal-400"
+              className="h-5 w-5 accent-brand"
             />
             <span>
-              {o.label} <span className="text-slate-300">({o.count})</span>
+              {o.label} <span className="text-ink/80">({o.count})</span>
             </span>
           </label>
         ))}
       </fieldset>
 
       <div>
-        <label htmlFor="report-name" className="mb-1 block text-sm font-semibold text-slate-100">
+        <label htmlFor="report-name" className="mb-1 block text-sm font-semibold text-ink">
           {t('sum.name.label')}
         </label>
         <input
@@ -324,15 +324,15 @@ export function ExportReport({ onBack }: ExportReportProps) {
         />
       </div>
 
-      <div className="space-y-3 rounded-lg border border-slate-700 bg-slate-950 p-4">
-        <h3 className="text-sm font-bold text-slate-100">{t('sum.preview')}</h3>
+      <div className="space-y-3 rounded-lg border border-line bg-canvas p-4">
+        <h3 className="text-sm font-bold text-ink">{t('sum.preview')}</h3>
         {sections.length === 0 ? (
-          <p className="text-sm text-slate-300">{t('sum.preview.none')}</p>
+          <p className="text-sm text-ink/80">{t('sum.preview.none')}</p>
         ) : (
           sections.map((s) => (
             <div key={s.title}>
-              <p className="text-xs font-bold uppercase tracking-wider text-teal-300">{s.title}</p>
-              <ul className="mt-1 list-inside list-disc space-y-1 text-sm text-slate-100">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand">{s.title}</p>
+              <ul className="mt-1 list-inside list-disc space-y-1 text-sm text-ink">
                 {s.lines.map((l, i) => (
                   <li key={i}>{l}</li>
                 ))}
@@ -340,11 +340,11 @@ export function ExportReport({ onBack }: ExportReportProps) {
             </div>
           ))
         )}
-        <p className="text-xs text-slate-300">{t('sum.note')}</p>
+        <p className="text-xs text-ink/80">{t('sum.note')}</p>
       </div>
 
       {!hasContent && (
-        <p className="rounded-lg border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">{t('sum.empty')}</p>
+        <p className="rounded-lg border border-warn/40 bg-warn/10 p-3 text-sm text-ink">{t('sum.empty')}</p>
       )}
 
       <div className="space-y-3">
@@ -360,19 +360,19 @@ export function ExportReport({ onBack }: ExportReportProps) {
           type="button"
           onClick={handleDownload}
           disabled={!hasContent}
-          className={`${actionBtn} border border-slate-500 bg-slate-800 text-slate-100 hover:bg-slate-700`}
+          className={`${actionBtn} border border-muted/50 bg-line/40 text-ink hover:bg-line/70`}
         >
           {t('sum.btn.download')}
         </button>
       </div>
 
       {message && (
-        <p role="status" className="text-sm text-slate-200">
+        <p role="status" className="text-sm text-ink">
           {t(message.key)}
         </p>
       )}
 
-      <p className="text-xs leading-relaxed text-slate-300">{t('sum.footer')}</p>
+      <p className="text-xs leading-relaxed text-ink/80">{t('sum.footer')}</p>
     </div>
   );
 }

@@ -64,7 +64,7 @@ function showTime(iso: string, lang: string) {
 }
 
 const fieldClass =
-  'min-h-[44px] w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[44px] w-full rounded-lg border border-muted/40 bg-canvas px-3 py-2 text-sm text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export function MedicationTracker({ onBack }: MedicationTrackerProps) {
   const { t, lang } = useI18n();
@@ -128,16 +128,16 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
   return (
     <div className="space-y-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between rounded-2xl border border-slate-700 bg-slate-900 p-6">
+      <div className="flex items-center justify-between rounded-2xl border border-line bg-surface p-6">
         <div>
-          <h2 className="text-xl font-bold text-white">{t('med.title')}</h2>
-          <p className="mt-1 text-sm text-slate-300">{t('med.sub')}</p>
+          <h2 className="text-xl font-bold text-ink">{t('med.title')}</h2>
+          <p className="mt-1 text-sm text-ink/80">{t('med.sub')}</p>
         </div>
         {onBack && (
           <button
             type="button"
             onClick={onBack}
-            className="min-h-[44px] rounded-lg bg-slate-800 px-3 py-1.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-slate-700"
+            className="min-h-[44px] rounded-lg bg-line/40 px-3 py-1.5 text-sm font-semibold text-ink transition-colors hover:bg-line/70"
           >
             &larr; {t('common.back')}
           </button>
@@ -145,7 +145,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
       </div>
 
       {/* Safety notes */}
-      <div className="space-y-2 rounded-2xl border border-amber-400/40 bg-amber-400/10 p-4 text-sm leading-relaxed text-amber-100">
+      <div className="space-y-2 rounded-2xl border border-warn/40 bg-warn/10 p-4 text-sm leading-relaxed text-ink">
         <p>{t('med.safety.1')}</p>
         <p>{t('med.safety.2')}</p>
         <p>{t('med.safety.3', { number: emergencyNumber })}</p>
@@ -156,11 +156,11 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Form Column */}
-        <div className="h-fit rounded-2xl border border-slate-700 bg-slate-900 p-5">
-          <h3 className="mb-4 text-sm font-semibold text-emerald-300">{t('med.form.title')}</h3>
+        <div className="h-fit rounded-2xl border border-line bg-surface p-5">
+          <h3 className="mb-4 text-sm font-semibold text-tone-green">{t('med.form.title')}</h3>
           <form onSubmit={handleAddMedication} className="space-y-4">
             <div>
-              <label htmlFor="med-name" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="med-name" className="mb-1 block text-sm text-ink">
                 {t('med.name')}
               </label>
               <input
@@ -176,7 +176,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="med-dosage" className="mb-1 block text-sm text-slate-200">
+                <label htmlFor="med-dosage" className="mb-1 block text-sm text-ink">
                   {t('med.dosage')}
                 </label>
                 <input
@@ -190,7 +190,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
                 />
               </div>
               <div>
-                <label htmlFor="med-frequency" className="mb-1 block text-sm text-slate-200">
+                <label htmlFor="med-frequency" className="mb-1 block text-sm text-ink">
                   {t('med.freq')}
                 </label>
                 <select
@@ -209,7 +209,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
             </div>
 
             <div>
-              <label htmlFor="med-notes" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="med-notes" className="mb-1 block text-sm text-ink">
                 {t('med.notes')}
               </label>
               <textarea
@@ -233,10 +233,10 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
 
         {/* List Column */}
         <div className="space-y-3 lg:col-span-2">
-          <h3 className="text-sm font-semibold text-slate-200">{t('med.list.title', { count: medications.length })}</h3>
+          <h3 className="text-sm font-semibold text-ink">{t('med.list.title', { count: medications.length })}</h3>
 
           {medications.length === 0 ? (
-            <div className="rounded-2xl border border-slate-700 bg-slate-900 p-8 text-center text-sm text-slate-300">
+            <div className="rounded-2xl border border-line bg-surface p-8 text-center text-sm text-ink/80">
               {t('med.list.empty')}
             </div>
           ) : (
@@ -261,26 +261,26 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
                 return (
                   <div
                     key={med.id}
-                    className="flex flex-col gap-4 rounded-xl border border-slate-700 bg-slate-900 p-4 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-4 rounded-xl border border-line bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h4 className="text-base font-bold text-slate-100">{med.name}</h4>
-                        <span className="rounded-full border border-slate-600 bg-slate-800 px-2 py-0.5 text-xs text-emerald-300">
+                        <h4 className="text-base font-bold text-ink">{med.name}</h4>
+                        <span className="rounded-full border border-muted/40 bg-line/40 px-2 py-0.5 text-xs text-tone-green">
                           {med.dosage}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-300">
+                      <p className="text-sm text-ink/80">
                         {freqLabel(med.frequency)} •{' '}
                         <span className="italic">{med.notes === STORED_NO_NOTES ? t('med.nonotes') : med.notes}</span>
                       </p>
-                      <p className="text-sm font-semibold text-slate-100" aria-live="polite">
+                      <p className="text-sm font-semibold text-ink" aria-live="polite">
                         {status}
                       </p>
                       {last && !isWeekly && (
-                        <p className="text-xs text-slate-300">{t('med.lastlogged', { when: showTime(last, lang) })}</p>
+                        <p className="text-xs text-ink/80">{t('med.lastlogged', { when: showTime(last, lang) })}</p>
                       )}
-                      {target === null && <p className="text-xs text-amber-200">{t('med.checklabel')}</p>}
+                      {target === null && <p className="text-xs text-tone-amber">{t('med.checklabel')}</p>}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
@@ -290,8 +290,8 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
                         disabled={done}
                         className={`min-h-[44px] rounded-lg border px-3 py-1.5 text-sm font-semibold transition-colors ${
                           done
-                            ? 'cursor-not-allowed border-emerald-500/30 bg-emerald-500/20 text-emerald-200'
-                            : 'border-slate-500 bg-slate-800 text-slate-100 hover:bg-slate-700'
+                            ? 'cursor-not-allowed border-tone-green-line/30 bg-brand/20 text-tone-green'
+                            : 'border-muted/50 bg-line/40 text-ink hover:bg-line/70'
                         }`}
                       >
                         {done ? t('med.alldone') : t('med.log')}
@@ -300,7 +300,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
                         <button
                           type="button"
                           onClick={() => undoDose(med.id)}
-                          className="min-h-[44px] rounded-lg px-3 text-sm font-medium text-slate-200 underline hover:text-white"
+                          className="min-h-[44px] rounded-lg px-3 text-sm font-medium text-ink underline hover:text-ink"
                         >
                           {t('med.undo')}
                         </button>
@@ -309,7 +309,7 @@ export function MedicationTracker({ onBack }: MedicationTrackerProps) {
                         type="button"
                         onClick={() => handleDelete(med)}
                         aria-label={t('med.remove.aria', { name: med.name })}
-                        className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-red-300"
+                        className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-ink/80 hover:bg-line/40 hover:text-tone-red"
                       >
                         ✕
                       </button>

@@ -15,13 +15,13 @@ const DEBUG = false;
 type Mode = 'idle' | 'pulse' | 'motion';
 type Sample = { t: number; v: number };
 
-const card = 'rounded-2xl border border-slate-700 bg-[#0B132B] p-5';
+const card = 'rounded-2xl border border-line bg-surface p-5';
 const primary =
   'min-h-[48px] rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50';
 const ghost =
-  'min-h-[44px] rounded-xl border border-slate-600 px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-slate-800';
+  'min-h-[44px] rounded-xl border border-muted/40 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-line/40';
 const field =
-  'min-h-[48px] w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30';
+  'min-h-[48px] w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink placeholder-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30';
 
 function readConsent(): boolean {
   try {
@@ -328,14 +328,14 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <div className={card}>
-        <h2 className="text-xl font-bold text-white">{t('vit.title')}</h2>
-        <p className="mt-1 text-sm text-slate-300">{t('vit.intro')}</p>
-        <label className="mt-4 flex items-start gap-3 text-sm text-slate-200">
+        <h2 className="text-xl font-bold text-ink">{t('vit.title')}</h2>
+        <p className="mt-1 text-sm text-ink/80">{t('vit.intro')}</p>
+        <label className="mt-4 flex items-start gap-3 text-sm text-ink">
           <input
             type="checkbox"
             checked={agreed}
             onChange={(e) => toggleConsent(e.target.checked)}
-            className="mt-1 h-5 w-5 accent-emerald-400"
+            className="mt-1 h-5 w-5 accent-brand"
           />
           <span>{t('vit.consent')}</span>
         </label>
@@ -343,11 +343,11 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
 
       {busy && (
         <div className={`${card} space-y-3`} aria-live="polite">
-          <p className="text-sm font-semibold text-emerald-300">
+          <p className="text-sm font-semibold text-tone-green">
             {hint ? t(hint) : ''}
             {hintExtra}
           </p>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-line/40">
             <div className="h-full rounded-full bg-emerald-400 transition-all" style={{ width: `${Math.round(progress * 100)}%` }} />
           </div>
           <button type="button" onClick={cancel} className={ghost}>
@@ -357,7 +357,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       )}
 
       {error && (
-        <p role="alert" className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">
+        <p role="alert" className="rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm text-ink">
           {t(error)}
           {errorExtra}
         </p>
@@ -366,7 +366,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       {result && view && (
         <div className={`${card} space-y-3`} role="status">
           {view.urgent && (
-            <div role="alert" className="space-y-2 rounded-xl border border-red-500/50 bg-red-500/15 p-3 text-sm text-red-100">
+            <div role="alert" className="space-y-2 rounded-xl border border-danger/50 bg-danger/15 p-3 text-sm text-ink">
               <p className="font-bold">{t('vit.urgent.title')}</p>
               <p>{t('vit.urgent.body')}</p>
               <a
@@ -377,16 +377,16 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
               </a>
             </div>
           )}
-          <h3 className="text-base font-bold text-white">{t('vit.result.title')}</h3>
-          {quality === 'fair' && <p className="text-xs text-amber-200">{t('vit.quality.fair')}</p>}
+          <h3 className="text-base font-bold text-ink">{t('vit.result.title')}</h3>
+          {quality === 'fair' && <p className="text-xs text-tone-amber">{t('vit.quality.fair')}</p>}
           <ul className="space-y-2">
             {view.items.map((n, i) => (
-              <li key={i} className="rounded-lg border border-slate-700 bg-slate-900 p-3 text-sm text-slate-200">
+              <li key={i} className="rounded-lg border border-line bg-surface p-3 text-sm text-ink">
                 {t(n.key, n.vars)}
               </li>
             ))}
           </ul>
-          <p className="rounded-lg border border-slate-700 p-3 text-xs leading-relaxed text-slate-300">{t('vit.seeDoctor')}</p>
+          <p className="rounded-lg border border-line p-3 text-xs leading-relaxed text-ink/80">{t('vit.seeDoctor')}</p>
           {onNavigate && (
             <button type="button" onClick={() => onNavigate('vitalcharts')} className={ghost}>
               {t('vit.viewcharts')}
@@ -396,26 +396,26 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       )}
 
       <div className={`${card} space-y-3`}>
-        <h3 className="text-base font-bold text-white">{t('vit.pulse.title')}</h3>
-        <p className="text-sm text-slate-300">{t('vit.pulse.text', { seconds: SCAN_SECONDS })}</p>
+        <h3 className="text-base font-bold text-ink">{t('vit.pulse.title')}</h3>
+        <p className="text-sm text-ink/80">{t('vit.pulse.text', { seconds: SCAN_SECONDS })}</p>
         <button type="button" onClick={startPulse} disabled={!agreed || busy} className={primary}>
           {t('vit.pulse.start')}
         </button>
       </div>
 
       <div className={`${card} space-y-3`}>
-        <h3 className="text-base font-bold text-white">{t('vit.motion.title')}</h3>
-        <p className="text-sm text-slate-300">{t('vit.motion.text', { seconds: MOTION_SECONDS })}</p>
+        <h3 className="text-base font-bold text-ink">{t('vit.motion.title')}</h3>
+        <p className="text-sm text-ink/80">{t('vit.motion.text', { seconds: MOTION_SECONDS })}</p>
         <button type="button" onClick={startMotion} disabled={!agreed || busy} className={primary}>
           {t('vit.motion.start')}
         </button>
       </div>
 
       <form onSubmit={saveManual} className={`${card} space-y-3`}>
-        <h3 className="text-base font-bold text-white">{t('vit.manual.title')}</h3>
-        <p className="text-sm text-slate-300">{t('vit.manual.text')}</p>
+        <h3 className="text-base font-bold text-ink">{t('vit.manual.title')}</h3>
+        <p className="text-sm text-ink/80">{t('vit.manual.text')}</p>
         <div className="grid grid-cols-2 gap-3">
-          <label className="text-sm text-slate-200">
+          <label className="text-sm text-ink">
             {t('vit.f.pulse')}
             <input
               inputMode="numeric"
@@ -425,7 +425,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
               placeholder={t('vit.f.pulse.ph')}
             />
           </label>
-          <label className="text-sm text-slate-200">
+          <label className="text-sm text-ink">
             {t('vit.f.temp')}
             <input
               inputMode="decimal"
@@ -435,7 +435,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
               placeholder={t('vit.f.temp.ph')}
             />
           </label>
-          <label className="text-sm text-slate-200">
+          <label className="text-sm text-ink">
             {t('vit.f.sys')}
             <input
               inputMode="numeric"
@@ -445,7 +445,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
               placeholder={t('vit.f.sys.ph')}
             />
           </label>
-          <label className="text-sm text-slate-200">
+          <label className="text-sm text-ink">
             {t('vit.f.dia')}
             <input
               inputMode="numeric"

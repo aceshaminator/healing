@@ -156,7 +156,7 @@ function downloadReminder(a: Appointment, t: TFn): boolean {
 }
 
 const fieldClass =
-  'min-h-[44px] w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[44px] w-full rounded-lg border border-muted/40 bg-canvas px-3 py-2 text-sm text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
   const { t, lang } = useI18n();
@@ -223,13 +223,13 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
     const when = whenLabel(apt, t);
     const dateText = showDate(apt.date, lang);
     return (
-      <div key={apt.id} className="space-y-3 rounded-xl border border-slate-700 bg-slate-900 p-4">
+      <div key={apt.id} className="space-y-3 rounded-xl border border-line bg-surface p-4">
         <div className="flex items-start justify-between gap-2">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h4 className="text-base font-bold text-slate-100">{apt.doctorName}</h4>
+              <h4 className="text-base font-bold text-ink">{apt.doctorName}</h4>
               {apt.specialty && (
-                <span className="rounded-full border border-slate-600 bg-slate-800 px-2 py-0.5 text-xs text-slate-200">
+                <span className="rounded-full border border-muted/40 bg-line/40 px-2 py-0.5 text-xs text-ink">
                   {apt.specialty}
                 </span>
               )}
@@ -237,15 +237,15 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
                 <span
                   className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${
                     isUpcoming
-                      ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-200'
-                      : 'border-slate-600 text-slate-300'
+                      ? 'border-tone-green-line/50 bg-brand/10 text-tone-green'
+                      : 'border-muted/40 text-ink/80'
                   }`}
                 >
                   {when}
                 </span>
               )}
             </div>
-            <p className="mt-1 text-sm font-medium text-emerald-300">
+            <p className="mt-1 text-sm font-medium text-tone-green">
               {apt.time ? t('apt.line.time', { date: dateText, time: showTime(apt.time, lang) }) : dateText}
               {apt.location ? ` • ${apt.location}` : ''}
             </p>
@@ -254,21 +254,21 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
             type="button"
             onClick={() => handleDelete(apt)}
             aria-label={t('apt.delete.aria', { name: apt.doctorName })}
-            className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-red-300"
+            className="min-h-[44px] min-w-[44px] rounded-lg text-sm text-ink/80 hover:bg-line/40 hover:text-tone-red"
           >
             ✕
           </button>
         </div>
 
         {apt.notes && (
-          <p className="rounded-md border border-slate-700 bg-slate-950/60 p-2.5 text-sm text-slate-100">{apt.notes}</p>
+          <p className="rounded-md border border-line bg-canvas/60 p-2.5 text-sm text-ink">{apt.notes}</p>
         )}
 
         {isUpcoming && (
           <button
             type="button"
             onClick={() => handleReminder(apt)}
-            className="min-h-[44px] rounded-lg border border-slate-500 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-700"
+            className="min-h-[44px] rounded-lg border border-muted/50 bg-line/40 px-3 py-2 text-sm font-semibold text-ink transition hover:bg-line/70"
           >
             {t('apt.cal.btn')}
           </button>
@@ -280,23 +280,23 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
   return (
     <div className="space-y-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between rounded-2xl border border-slate-700 bg-slate-900 p-6">
+      <div className="flex items-center justify-between rounded-2xl border border-line bg-surface p-6">
         <div>
-          <h2 className="text-xl font-bold text-white">{t('apt.title')}</h2>
-          <p className="mt-1 text-sm text-slate-300">{t('apt.sub')}</p>
+          <h2 className="text-xl font-bold text-ink">{t('apt.title')}</h2>
+          <p className="mt-1 text-sm text-ink/80">{t('apt.sub')}</p>
         </div>
         {onBack && (
           <button
             type="button"
             onClick={onBack}
-            className="min-h-[44px] rounded-lg border border-slate-600 bg-slate-800 px-3 py-1.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-slate-700"
+            className="min-h-[44px] rounded-lg border border-muted/40 bg-line/40 px-3 py-1.5 text-sm font-semibold text-ink transition-colors hover:bg-line/70"
           >
             &larr; {t('common.back')}
           </button>
         )}
       </div>
 
-      <div className="space-y-2 rounded-2xl border border-amber-400/40 bg-amber-400/10 p-4 text-sm leading-relaxed text-amber-100">
+      <div className="space-y-2 rounded-2xl border border-warn/40 bg-warn/10 p-4 text-sm leading-relaxed text-ink">
         <p>{t('apt.notice.1')}</p>
         <p>{t('apt.notice.2', { number: emergencyNumber })}</p>
         <a href={`tel:${emergencyNumber}`} className="inline-flex min-h-[44px] items-center font-bold underline">
@@ -306,11 +306,11 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Form Column */}
-        <div className="h-fit rounded-2xl border border-slate-700 bg-slate-900 p-5">
-          <h3 className="mb-4 text-sm font-semibold text-emerald-300">{t('apt.form.title')}</h3>
+        <div className="h-fit rounded-2xl border border-line bg-surface p-5">
+          <h3 className="mb-4 text-sm font-semibold text-tone-green">{t('apt.form.title')}</h3>
           <form onSubmit={handleAddAppointment} noValidate className="space-y-4">
             <div>
-              <label htmlFor="apt-name" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="apt-name" className="mb-1 block text-sm text-ink">
                 {t('apt.doctor')}
               </label>
               <input
@@ -324,7 +324,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
             </div>
 
             <div>
-              <label htmlFor="apt-specialty" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="apt-specialty" className="mb-1 block text-sm text-ink">
                 {t('apt.specialty')}
               </label>
               <input
@@ -339,7 +339,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="apt-date" className="mb-1 block text-sm text-slate-200">
+                <label htmlFor="apt-date" className="mb-1 block text-sm text-ink">
                   {t('apt.date')}
                 </label>
                 <input
@@ -351,7 +351,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
                 />
               </div>
               <div>
-                <label htmlFor="apt-time" className="mb-1 block text-sm text-slate-200">
+                <label htmlFor="apt-time" className="mb-1 block text-sm text-ink">
                   {t('apt.time')}
                 </label>
                 <input
@@ -365,7 +365,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
             </div>
 
             <div>
-              <label htmlFor="apt-location" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="apt-location" className="mb-1 block text-sm text-ink">
                 {t('apt.place')}
               </label>
               <input
@@ -379,7 +379,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
             </div>
 
             <div>
-              <label htmlFor="apt-notes" className="mb-1 block text-sm text-slate-200">
+              <label htmlFor="apt-notes" className="mb-1 block text-sm text-ink">
                 {t('apt.notes')}
               </label>
               <textarea
@@ -393,7 +393,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
             </div>
 
             {error && (
-              <p role="alert" className="text-sm text-amber-200">
+              <p role="alert" className="text-sm text-tone-amber">
                 {error}
               </p>
             )}
@@ -410,15 +410,15 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
         {/* Appointments List Column */}
         <div className="space-y-5 lg:col-span-2">
           {message && (
-            <p role="status" className="rounded-xl border border-slate-600 bg-slate-950 p-3 text-sm text-slate-100">
+            <p role="status" className="rounded-xl border border-muted/40 bg-canvas p-3 text-sm text-ink">
               {message}
             </p>
           )}
 
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-slate-200">{t('apt.upcoming', { count: upcoming.length })}</h3>
+            <h3 className="text-sm font-semibold text-ink">{t('apt.upcoming', { count: upcoming.length })}</h3>
             {upcoming.length === 0 ? (
-              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-8 text-center text-sm text-slate-300">
+              <div className="rounded-2xl border border-line bg-surface p-8 text-center text-sm text-ink/80">
                 {t('apt.upcoming.empty')}
               </div>
             ) : (
@@ -428,7 +428,7 @@ export function AppointmentTracker({ onBack }: AppointmentTrackerProps) {
 
           {past.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-slate-200">{t('apt.past', { count: past.length })}</h3>
+              <h3 className="text-sm font-semibold text-ink">{t('apt.past', { count: past.length })}</h3>
               {past.map((a) => renderCard(a, false))}
             </div>
           )}
