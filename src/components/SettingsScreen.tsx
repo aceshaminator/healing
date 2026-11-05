@@ -13,7 +13,7 @@ const REGION_KEYS: Record<string, string> = {
 };
 
 const fieldClass =
-  'min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-canvas px-3 py-2 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 const THEME_OPTIONS: { value: ThemePref; key: string }[] = [
   { value: 'dark', key: 'disp.theme.dark' },
@@ -56,8 +56,8 @@ export default function SettingsScreen() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 text-slate-100">
-      <section className="space-y-3 rounded-2xl border border-slate-700 bg-[#0B132B] p-5">
+    <div className="mx-auto max-w-2xl space-y-6 text-ink">
+      <section className="space-y-3 rounded-2xl border border-line bg-surface p-5">
         <h2 className="text-lg font-bold">{t('lang.title')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {PICKABLE.map((l) => (
@@ -70,25 +70,25 @@ export default function SettingsScreen() {
               onClick={() => setLang(l.code)}
               className={`min-h-[56px] rounded-xl border px-4 py-3 text-left transition ${
                 lang === l.code
-                  ? 'border-emerald-400 bg-emerald-400/10'
-                  : 'border-slate-600 bg-slate-900 hover:border-slate-400'
+                  ? 'border-brand bg-brand/10'
+                  : 'border-muted/40 bg-surface hover:border-muted/60'
               }`}
             >
               <span className="block text-lg font-semibold">{l.native}</span>
-              {!l.reviewed && <span className="block text-xs text-amber-200">{t('set.draft')}</span>}
+              {!l.reviewed && <span className="block text-xs text-tone-amber">{t('set.draft')}</span>}
             </button>
           ))}
         </div>
-        <p className="text-xs leading-relaxed text-slate-300">{t('set.draft.note')}</p>
+        <p className="text-xs leading-relaxed text-ink/80">{t('set.draft.note')}</p>
 
-        <details className="rounded-xl border border-slate-700 bg-slate-950 p-3">
-          <summary className="min-h-[44px] cursor-pointer py-2 text-sm font-semibold text-slate-100">
+        <details className="rounded-xl border border-line bg-canvas p-3">
+          <summary className="min-h-[44px] cursor-pointer py-2 text-sm font-semibold text-ink">
             {t('set.planned')}
           </summary>
-          <p className="mb-3 text-xs text-slate-300">{t('set.planned.help')}</p>
+          <p className="mb-3 text-xs text-ink/80">{t('set.planned.help')}</p>
           {PLANNED_LANGUAGES.map((g) => (
-            <p key={g.region} className="mb-2 text-sm text-slate-200">
-              <span className="font-semibold text-slate-100">
+            <p key={g.region} className="mb-2 text-sm text-ink">
+              <span className="font-semibold text-ink">
                 {REGION_KEYS[g.region] ? t(REGION_KEYS[g.region]) : g.region}:{' '}
               </span>
               {g.names.join(', ')}
@@ -97,10 +97,10 @@ export default function SettingsScreen() {
         </details>
       </section>
 
-      <section className="space-y-4 rounded-2xl border border-slate-700 bg-[#0B132B] p-5">
+      <section className="space-y-4 rounded-2xl border border-line bg-surface p-5">
         <div>
           <h2 className="text-lg font-bold">{t('country.title')}</h2>
-          <p className="mt-1 text-sm text-slate-300">{t('country.help')}</p>
+          <p className="mt-1 text-sm text-ink/80">{t('country.help')}</p>
         </div>
 
         <select
@@ -122,11 +122,11 @@ export default function SettingsScreen() {
           <option value={OTHER}>{t('country.other')}</option>
         </select>
 
-        {selected && <p className="font-semibold text-emerald-300">{t('country.number', { number: selected.number })}</p>}
+        {selected && <p className="font-semibold text-tone-green">{t('country.number', { number: selected.number })}</p>}
 
         {country === OTHER && (
           <div>
-            <label htmlFor="settings-own" className="mb-1 block text-sm font-semibold text-slate-200">
+            <label htmlFor="settings-own" className="mb-1 block text-sm font-semibold text-ink">
               {t('country.own')}
             </label>
             <input
@@ -141,12 +141,12 @@ export default function SettingsScreen() {
         )}
 
         {error && (
-          <p role="alert" className="text-sm text-amber-200">
+          <p role="alert" className="text-sm text-tone-amber">
             {t(error)}
           </p>
         )}
         {message && (
-          <p role="status" className="text-sm text-slate-200">
+          <p role="status" className="text-sm text-ink">
             {t(message)}
           </p>
         )}
@@ -160,7 +160,7 @@ export default function SettingsScreen() {
           {t('set.save')}
         </button>
 
-        <p className="text-xs leading-relaxed text-slate-300">
+        <p className="text-xs leading-relaxed text-ink/80">
           {t('set.current', { number: getEmergencyNumber() })}
         </p>
       </section>

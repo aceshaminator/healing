@@ -358,16 +358,16 @@ export function OfflineManager() {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-6">
+      <div className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-6">
         <div>
-          <h2 className="text-xl font-bold text-white">{t('bak.title')}</h2>
-          <p className="mt-1 text-sm text-slate-300">{t('bak.sub')}</p>
+          <h2 className="text-xl font-bold text-ink">{t('bak.title')}</h2>
+          <p className="mt-1 text-sm text-ink/80">{t('bak.sub')}</p>
         </div>
         <div
           className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-bold ${
             isOnline
-              ? 'border-emerald-500/40 bg-emerald-500/20 text-emerald-200'
-              : 'border-amber-500/40 bg-amber-500/20 text-amber-200'
+              ? 'border-tone-green-line/40 bg-brand/20 text-tone-green'
+              : 'border-amber-500/40 bg-amber-500/20 text-tone-amber'
           }`}
         >
           {isOnline ? t('bak.online') : t('bak.offline')}
@@ -376,9 +376,9 @@ export function OfflineManager() {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Where your records are */}
-        <div className="space-y-4 rounded-2xl border border-slate-700 bg-slate-900 p-6">
-          <h3 className="text-sm font-semibold text-cyan-300">{t('bak.saved.title')}</h3>
-          <ul className="space-y-1 text-sm text-slate-100">
+        <div className="space-y-4 rounded-2xl border border-line bg-surface p-6">
+          <h3 className="text-sm font-semibold text-tone-cyan">{t('bak.saved.title')}</h3>
+          <ul className="space-y-1 text-sm text-ink">
             {rows.map((r) => (
               <li key={r.label} className="flex justify-between gap-3">
                 <span>{r.label}</span>
@@ -386,25 +386,25 @@ export function OfflineManager() {
               </li>
             ))}
           </ul>
-          <p className="rounded-lg border border-amber-400/40 bg-amber-400/10 p-3 text-sm leading-relaxed text-amber-100">
+          <p className="rounded-lg border border-warn/40 bg-warn/10 p-3 text-sm leading-relaxed text-ink">
             {t('bak.warn')}
           </p>
         </div>
 
         {/* Local Export Card */}
-        <div className="space-y-4 rounded-2xl border border-slate-700 bg-slate-900 p-6">
-          <h3 className="text-sm font-semibold text-cyan-300">{t('bak.copy.title')}</h3>
-          <p className="text-sm leading-relaxed text-slate-300">{t('bak.copy.text')}</p>
+        <div className="space-y-4 rounded-2xl border border-line bg-surface p-6">
+          <h3 className="text-sm font-semibold text-tone-cyan">{t('bak.copy.title')}</h3>
+          <p className="text-sm leading-relaxed text-ink/80">{t('bak.copy.text')}</p>
           <button
             type="button"
             onClick={handleExportData}
             disabled={countAll(records) === 0}
-            className="min-h-[48px] w-full rounded-xl border border-slate-500 bg-slate-800 py-2.5 text-sm font-bold text-slate-100 transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-[48px] w-full rounded-xl border border-muted/50 bg-line/40 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-line/70 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {t('bak.export')}
           </button>
           {exportMsg && (
-            <p role="status" className="text-sm text-slate-200">
+            <p role="status" className="text-sm text-ink">
               {t(exportMsg.key, exportMsg.vars)}
             </p>
           )}
@@ -412,16 +412,16 @@ export function OfflineManager() {
       </div>
 
       {/* Restore Card */}
-      <div className="space-y-4 rounded-2xl border border-slate-700 bg-slate-900 p-6">
-        <h3 className="text-sm font-semibold text-cyan-300">{t('bak.restore.title')}</h3>
-        <p className="text-sm leading-relaxed text-slate-300">{t('bak.restore.text')}</p>
-        <label className="flex min-h-[48px] cursor-pointer items-center justify-center rounded-xl border border-slate-500 bg-slate-800 px-4 py-2.5 text-sm font-bold text-slate-100 transition-colors hover:bg-slate-700">
+      <div className="space-y-4 rounded-2xl border border-line bg-surface p-6">
+        <h3 className="text-sm font-semibold text-tone-cyan">{t('bak.restore.title')}</h3>
+        <p className="text-sm leading-relaxed text-ink/80">{t('bak.restore.text')}</p>
+        <label className="flex min-h-[48px] cursor-pointer items-center justify-center rounded-xl border border-muted/50 bg-line/40 px-4 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-line/70">
           {t('bak.choose')}
           <input type="file" accept="application/json,.json" onChange={handleFile} className="sr-only" />
         </label>
 
         {pending && (
-          <div className="space-y-3 rounded-lg border border-slate-600 bg-slate-950 p-4 text-sm text-slate-100">
+          <div className="space-y-3 rounded-lg border border-muted/40 bg-canvas p-4 text-sm text-ink">
             <p className="font-semibold">{pending.name}</p>
             {pending.plan.added === 0 ? (
               <p>{t('bak.pending.none')}</p>
@@ -436,7 +436,7 @@ export function OfflineManager() {
                 {pending.plan.newRoute !== null && <li>{t('bak.pending.route')}</li>}
               </ul>
             )}
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-ink/80">
               {t(pending.plan.skipped === 1 ? 'bak.pending.skipped.one' : 'bak.pending.skipped.many', {
                 n: pending.plan.skipped,
               })}
@@ -453,7 +453,7 @@ export function OfflineManager() {
               <button
                 type="button"
                 onClick={() => setPending(null)}
-                className="min-h-[48px] rounded-xl border border-slate-500 px-5 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                className="min-h-[48px] rounded-xl border border-muted/50 px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-line/40"
               >
                 {t('bak.cancel')}
               </button>
@@ -462,7 +462,7 @@ export function OfflineManager() {
         )}
 
         {restoreMsg && (
-          <p role="status" className="text-sm text-slate-200">
+          <p role="status" className="text-sm text-ink">
             {t(restoreMsg.key, restoreMsg.vars)}
           </p>
         )}

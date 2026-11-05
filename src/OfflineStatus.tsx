@@ -33,14 +33,14 @@ export default function OfflineStatus() {
 
   if (!online) {
     return (
-      <p role="status" className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">
+      <p role="status" className="rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm text-ink">
         {t('app.offline')}
       </p>
     );
   }
   if (ready) {
     return (
-      <p role="status" className="text-xs font-medium text-emerald-300">
+      <p role="status" className="text-xs font-medium text-tone-green">
         {t('app.offlineReady')}
       </p>
     );

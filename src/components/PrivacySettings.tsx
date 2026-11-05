@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider';
 import { canUsePin, eraseEverything, pinIsSet, removePin, setPin } from '../lib/pin';
 
-const card = 'space-y-3 rounded-2xl border border-slate-700 bg-[#0B132B] p-5';
+const card = 'space-y-3 rounded-2xl border border-line bg-surface p-5';
 const field =
-  'min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-canvas px-3 py-2 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export default function PrivacySettings() {
   const { t } = useI18n();
@@ -54,23 +54,23 @@ export default function PrivacySettings() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-5 text-slate-100">
+    <div className="mx-auto max-w-2xl space-y-5 text-ink">
       <section className={card}>
         <h2 className="text-lg font-bold">{t('priv.title')}</h2>
-        <h3 className="text-sm font-semibold text-cyan-300">{t('priv.saved.title')}</h3>
-        <p className="text-sm leading-relaxed text-slate-200">{t('priv.saved.body')}</p>
-        <h3 className="text-sm font-semibold text-cyan-300">{t('priv.leaves.title')}</h3>
-        <p className="text-sm leading-relaxed text-slate-200">{t('priv.leaves.body')}</p>
-        <h3 className="text-sm font-semibold text-amber-200">{t('priv.limits.title')}</h3>
-        <p className="text-sm leading-relaxed text-slate-200">{t('priv.limits.body')}</p>
+        <h3 className="text-sm font-semibold text-tone-cyan">{t('priv.saved.title')}</h3>
+        <p className="text-sm leading-relaxed text-ink">{t('priv.saved.body')}</p>
+        <h3 className="text-sm font-semibold text-tone-cyan">{t('priv.leaves.title')}</h3>
+        <p className="text-sm leading-relaxed text-ink">{t('priv.leaves.body')}</p>
+        <h3 className="text-sm font-semibold text-tone-amber">{t('priv.limits.title')}</h3>
+        <p className="text-sm leading-relaxed text-ink">{t('priv.limits.body')}</p>
       </section>
 
       <section className={card}>
         <h3 className="text-base font-bold">{t('priv.pin.title')}</h3>
-        <p className="text-sm text-slate-300">{t('priv.pin.body')}</p>
+        <p className="text-sm text-ink/80">{t('priv.pin.body')}</p>
         <form onSubmit={savePin} className="space-y-3">
           <div>
-            <label htmlFor="pin-new" className="mb-1 block text-sm text-slate-200">
+            <label htmlFor="pin-new" className="mb-1 block text-sm text-ink">
               {hasPin ? t('priv.pin.change') : t('priv.pin.set')}
             </label>
             <input
@@ -84,7 +84,7 @@ export default function PrivacySettings() {
             />
           </div>
           <div>
-            <label htmlFor="pin-repeat" className="mb-1 block text-sm text-slate-200">
+            <label htmlFor="pin-repeat" className="mb-1 block text-sm text-ink">
               {t('priv.pin.confirm')}
             </label>
             <input
@@ -108,7 +108,7 @@ export default function PrivacySettings() {
               <button
                 type="button"
                 onClick={turnOffPin}
-                className="min-h-[48px] rounded-xl border border-slate-500 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                className="min-h-[48px] rounded-xl border border-muted/50 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-line/40"
               >
                 {t('priv.pin.remove')}
               </button>
@@ -116,26 +116,26 @@ export default function PrivacySettings() {
           </div>
         </form>
         {msg && (
-          <p role="status" className="text-sm text-slate-200">
+          <p role="status" className="text-sm text-ink">
             {msg}
           </p>
         )}
       </section>
 
-      <section className="space-y-3 rounded-2xl border border-red-500/40 bg-red-950/30 p-5">
-        <h3 className="text-base font-bold text-red-200">{t('priv.erase.title')}</h3>
-        <p className="text-sm leading-relaxed text-slate-200">{t('priv.erase.body')}</p>
+      <section className="space-y-3 rounded-2xl border border-danger/40 bg-danger/15 p-5">
+        <h3 className="text-base font-bold text-tone-red">{t('priv.erase.title')}</h3>
+        <p className="text-sm leading-relaxed text-ink">{t('priv.erase.body')}</p>
         {!showErase ? (
           <button
             type="button"
             onClick={() => setShowErase(true)}
-            className="min-h-[48px] rounded-xl border border-red-400/60 px-4 py-2.5 text-sm font-semibold text-red-100 transition hover:bg-red-900/40"
+            className="min-h-[48px] rounded-xl border border-tone-red-line/60 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-red-900/40"
           >
             {t('priv.erase.btn')}
           </button>
         ) : (
           <div className="space-y-3">
-            <label htmlFor="erase-word" className="block text-sm text-slate-200">
+            <label htmlFor="erase-word" className="block text-sm text-ink">
               {t('priv.erase.type', { word: t('priv.erase.word') })}
             </label>
             <input
@@ -157,7 +157,7 @@ export default function PrivacySettings() {
               <button
                 type="button"
                 onClick={() => setShowErase(false)}
-                className="min-h-[48px] rounded-xl border border-slate-500 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+                className="min-h-[48px] rounded-xl border border-muted/50 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-line/40"
               >
                 {t('priv.erase.cancel')}
               </button>

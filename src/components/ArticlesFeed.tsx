@@ -150,22 +150,22 @@ export default function ArticlesFeed() {
   const age = news ? daysOld(news.generatedAt) : null;
 
   return (
-    <div className="space-y-8 text-slate-100">
-      <div className="border-b border-slate-700 pb-4">
-        <h2 className="text-xl font-bold text-emerald-300">{t('info.title')}</h2>
-        <p className="mt-1 text-sm text-slate-300">{t('info.sub')}</p>
+    <div className="space-y-8 text-ink">
+      <div className="border-b border-line pb-4">
+        <h2 className="text-xl font-bold text-tone-green">{t('info.title')}</h2>
+        <p className="mt-1 text-sm text-ink/80">{t('info.sub')}</p>
       </div>
 
       {/* Latest news from official sources */}
       <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">{t('info.news.title')}</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider text-ink">{t('info.news.title')}</h3>
           {NEWS_URL && (
             <button
               type="button"
               onClick={load}
               disabled={status === 'loading'}
-              className="min-h-[44px] rounded-lg border border-slate-500 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-700 disabled:opacity-60"
+              className="min-h-[44px] rounded-lg border border-muted/50 bg-line/40 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-line/70 disabled:opacity-60"
             >
               {status === 'loading' ? t('info.news.checking') : t('info.news.check')}
             </button>
@@ -173,10 +173,10 @@ export default function ArticlesFeed() {
         </div>
 
         {!NEWS_URL ? (
-          <p className="rounded-xl border border-slate-600 bg-slate-950 p-4 text-sm text-slate-200">{t('info.news.notset')}</p>
+          <p className="rounded-xl border border-muted/40 bg-canvas p-4 text-sm text-ink">{t('info.news.notset')}</p>
         ) : (
           <>
-            <p className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm leading-relaxed text-amber-100">
+            <p className="rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm leading-relaxed text-ink">
               {t('info.news.disclaimer')}{' '}
               <a href={`tel:${emergencyNumber}`} className="font-bold underline">
                 {emergencyNumber}
@@ -193,10 +193,10 @@ export default function ArticlesFeed() {
                 </>
               )}
             </p>
-            <p className="text-xs text-slate-300">{t('info.news.srclang')}</p>
+            <p className="text-xs text-ink/80">{t('info.news.srclang')}</p>
 
             {status === 'error' && (
-              <p role="status" className="rounded-xl border border-slate-600 bg-slate-950 p-3 text-sm text-slate-200">
+              <p role="status" className="rounded-xl border border-muted/40 bg-canvas p-3 text-sm text-ink">
                 {news
                   ? t('info.news.errsaved', { when: showTime(news.fetchedAt, lang, unknown) })
                   : t('info.news.errnone')}
@@ -204,7 +204,7 @@ export default function ArticlesFeed() {
             )}
 
             {news && (
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-ink/80">
                 {t('info.news.updated', {
                   updated: showTime(news.generatedAt, lang, unknown),
                   checked: showTime(news.fetchedAt, lang, unknown),
@@ -213,7 +213,7 @@ export default function ArticlesFeed() {
             )}
 
             {age !== null && age >= 3 && (
-              <p role="status" className="rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">
+              <p role="status" className="rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm text-ink">
                 {t('info.news.stale', { days: age })}
               </p>
             )}
@@ -225,7 +225,7 @@ export default function ArticlesFeed() {
                   aria-pressed={!onlyOutbreaks}
                   onClick={() => setOnlyOutbreaks(false)}
                   className={`min-h-[44px] rounded-lg border px-4 py-2 text-sm font-semibold ${
-                    !onlyOutbreaks ? 'border-emerald-400 bg-emerald-500/20 text-emerald-100' : 'border-slate-600 text-slate-200'
+                    !onlyOutbreaks ? 'border-brand bg-brand/20 text-ink' : 'border-muted/40 text-ink'
                   }`}
                 >
                   {t('info.filter.all')}
@@ -235,7 +235,7 @@ export default function ArticlesFeed() {
                   aria-pressed={onlyOutbreaks}
                   onClick={() => setOnlyOutbreaks(true)}
                   className={`min-h-[44px] rounded-lg border px-4 py-2 text-sm font-semibold ${
-                    onlyOutbreaks ? 'border-emerald-400 bg-emerald-500/20 text-emerald-100' : 'border-slate-600 text-slate-200'
+                    onlyOutbreaks ? 'border-brand bg-brand/20 text-ink' : 'border-muted/40 text-ink'
                   }`}
                 >
                   {t('info.filter.outbreak')}
@@ -244,34 +244,34 @@ export default function ArticlesFeed() {
             )}
 
             {news && shown.length === 0 && (
-              <p className="rounded-xl border border-slate-600 bg-slate-950 p-4 text-sm text-slate-200">
+              <p className="rounded-xl border border-muted/40 bg-canvas p-4 text-sm text-ink">
                 {t('info.filter.empty')}
               </p>
             )}
 
             <div className="grid grid-cols-1 gap-4">
               {shown.map((item) => (
-                <article key={item.id} className="rounded-2xl border border-slate-700 bg-[#0B132B] p-5 shadow-lg">
-                  <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300">
+                <article key={item.id} className="rounded-2xl border border-line bg-surface p-5 shadow-lg">
+                  <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs text-ink/80">
                     <span
                       className={`rounded-full border px-2 py-0.5 font-semibold ${
                         item.kind === 'outbreak'
-                          ? 'border-amber-400/60 bg-amber-400/10 text-amber-200'
-                          : 'border-slate-500 text-slate-200'
+                          ? 'border-warn/60 bg-warn/10 text-tone-amber'
+                          : 'border-muted/50 text-ink'
                       }`}
                     >
                       {item.kind === 'outbreak' ? t('info.badge.outbreak') : t('info.badge.news')}
                     </span>
                     <span>{showDate(item.date, lang, t('info.nodate'))}</span>
                   </div>
-                  <h4 className="mb-1 text-base font-bold text-slate-100">{item.title}</h4>
-                  <p className="mb-2 text-xs text-slate-300">{t('info.source', { name: item.source || unknown })}</p>
-                  {item.summary && <p className="mb-3 text-sm leading-relaxed text-slate-200">{item.summary}</p>}
+                  <h4 className="mb-1 text-base font-bold text-ink">{item.title}</h4>
+                  <p className="mb-2 text-xs text-ink/80">{t('info.source', { name: item.source || unknown })}</p>
+                  {item.summary && <p className="mb-3 text-sm leading-relaxed text-ink">{item.summary}</p>}
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] items-center rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-500/20"
+                    className="inline-flex min-h-[44px] items-center rounded-lg border border-tone-cyan-line/40 bg-tone-cyan-line/10 px-4 py-2 text-sm font-semibold text-tone-cyan transition hover:bg-tone-cyan-line/20"
                   >
                     {t('info.read.official')}
                   </a>
@@ -284,18 +284,18 @@ export default function ArticlesFeed() {
 
       {/* Health basics: written into the app, works offline */}
       <section className="space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">{t('info.basics')}</h3>
+        <h3 className="text-sm font-bold uppercase tracking-wider text-ink">{t('info.basics')}</h3>
         <div className="grid grid-cols-1 gap-4">
           {ARTICLES.map((art) => {
             const open = openId === art.id;
             return (
-              <article key={art.id} className="rounded-2xl border border-slate-700 bg-[#0B132B] p-5 shadow-lg">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-emerald-300">{t(art.cat)}</div>
-                <h4 className="mb-2 text-base font-bold text-slate-100">{t(`art.${art.id}.title`)}</h4>
-                <p className="mb-3 text-sm leading-relaxed text-slate-200">{t(`art.${art.id}.excerpt`)}</p>
+              <article key={art.id} className="rounded-2xl border border-line bg-surface p-5 shadow-lg">
+                <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-tone-green">{t(art.cat)}</div>
+                <h4 className="mb-2 text-base font-bold text-ink">{t(`art.${art.id}.title`)}</h4>
+                <p className="mb-3 text-sm leading-relaxed text-ink">{t(`art.${art.id}.excerpt`)}</p>
 
                 {open && (
-                  <p className="mb-3 rounded-xl border border-slate-700 bg-slate-900/80 p-4 text-sm leading-relaxed text-slate-100">
+                  <p className="mb-3 rounded-xl border border-line bg-surface/80 p-4 text-sm leading-relaxed text-ink">
                     {t(`art.${art.id}.content`)}
                   </p>
                 )}
@@ -304,7 +304,7 @@ export default function ArticlesFeed() {
                   type="button"
                   aria-expanded={open}
                   onClick={() => setOpenId(open ? null : art.id)}
-                  className="min-h-[44px] rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-500/20"
+                  className="min-h-[44px] rounded-lg border border-tone-green-line/40 bg-brand/10 px-4 py-2 text-sm font-semibold text-tone-green transition hover:bg-brand/20"
                 >
                   {open ? t('info.close') : t('info.read')}
                 </button>
@@ -316,8 +316,8 @@ export default function ArticlesFeed() {
 
       {/* Official sources */}
       <section className="space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">{t('info.official.title')}</h3>
-        <p className="text-sm text-slate-300">{t('info.official.help')}</p>
+        <h3 className="text-sm font-bold uppercase tracking-wider text-ink">{t('info.official.title')}</h3>
+        <p className="text-sm text-ink/80">{t('info.official.help')}</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {SOURCES.filter((s) => !s.nigeriaOnly || nigeria).map((s) => (
             <a
@@ -325,10 +325,10 @@ export default function ArticlesFeed() {
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block min-h-[56px] rounded-2xl border border-slate-600 bg-[#0B132B] p-4 transition hover:border-cyan-400/60"
+              className="block min-h-[56px] rounded-2xl border border-muted/40 bg-surface p-4 transition hover:border-tone-cyan-line/60"
             >
-              <span className="block text-sm font-bold text-cyan-300">{t(`info.src.${s.id}.name`)} ↗</span>
-              <span className="mt-1 block text-sm leading-relaxed text-slate-200">{t(`info.src.${s.id}.desc`)}</span>
+              <span className="block text-sm font-bold text-tone-cyan">{t(`info.src.${s.id}.name`)} ↗</span>
+              <span className="mt-1 block text-sm leading-relaxed text-ink">{t(`info.src.${s.id}.desc`)}</span>
             </a>
           ))}
         </div>

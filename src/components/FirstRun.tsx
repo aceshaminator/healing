@@ -5,7 +5,7 @@ import { DICTIONARIES } from '../i18n/locales';
 import { COUNTRIES, OTHER, saveRegion, validNumber } from '../i18n/regions';
 
 const fieldClass =
-  'min-h-[48px] w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2 text-base text-slate-100 placeholder-slate-400 focus:border-emerald-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-canvas px-3 py-2 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void }) {
   const { t, setLang } = useI18n();
@@ -31,7 +31,7 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
   if (step === 1) {
     return (
       <div className="space-y-6 text-center">
-        <p className="text-sm leading-relaxed text-slate-300">
+        <p className="text-sm leading-relaxed text-ink/80">
         {PICKABLE.map((l) => DICTIONARIES[l.code]?.['lang.title'] ?? DICTIONARIES.en['lang.title']).join(' · ')}
         </p>
         <div className="grid grid-cols-2 gap-3">
@@ -45,7 +45,7 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
                 setLang(l.code);
                 setStep(2);
               }}
-              className="min-h-[56px] rounded-2xl border border-slate-600 bg-slate-900 px-3 py-3 text-lg font-semibold text-slate-100 transition hover:border-emerald-400/60 hover:bg-slate-800"
+              className="min-h-[56px] rounded-2xl border border-muted/40 bg-surface px-3 py-3 text-lg font-semibold text-ink transition hover:border-brand/60 hover:bg-line/40"
             >
               {l.native}
             </button>
@@ -58,8 +58,8 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
   return (
     <div className="space-y-5 text-left">
       <div>
-        <h2 className="text-xl font-semibold text-slate-100">{t('country.title')}</h2>
-        <p className="mt-1 text-sm text-slate-300">{t('country.help')}</p>
+        <h2 className="text-xl font-semibold text-ink">{t('country.title')}</h2>
+        <p className="mt-1 text-sm text-ink/80">{t('country.help')}</p>
       </div>
 
       <select
@@ -80,11 +80,11 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
         <option value={OTHER}>{t('country.other')}</option>
       </select>
 
-      {selected && <p className="text-base font-semibold text-emerald-300">{t('country.number', { number: selected.number })}</p>}
+      {selected && <p className="text-base font-semibold text-tone-green">{t('country.number', { number: selected.number })}</p>}
 
       {isOther && (
         <div>
-          <label htmlFor="own-number" className="mb-1 block text-sm font-semibold text-slate-200">
+          <label htmlFor="own-number" className="mb-1 block text-sm font-semibold text-ink">
             {t('country.own')}
           </label>
           <input
@@ -99,7 +99,7 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
       )}
 
       {error && (
-        <p role="alert" className="text-sm text-amber-200">
+        <p role="alert" className="text-sm text-tone-amber">
           {error}
         </p>
       )}
@@ -116,7 +116,7 @@ export default function FirstRun({ onDone }: { onDone: (reload: boolean) => void
         <button
           type="button"
           onClick={() => onDone(false)}
-          className="min-h-[48px] rounded-2xl border border-slate-600 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
+          className="min-h-[48px] rounded-2xl border border-muted/40 px-6 py-3 text-sm font-semibold text-ink transition hover:bg-line/40"
         >
           {t('common.skip')}
         </button>
