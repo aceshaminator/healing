@@ -40,7 +40,6 @@ function FloatingSos() {
 }
 
 function Shell() {
-    if (window.location.hash === '#crash') throw new Error('test crash');
   const { t } = useI18n();
   const [inPortal, setInPortal] = useState(false);
   const [setupDone, setSetupDone] = useState<boolean>(readSetupDone);
