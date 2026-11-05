@@ -3,6 +3,7 @@
 //   node scripts/theme-convert.mjs --check src/components/MedicationTracker.tsx
 //   node scripts/theme-convert.mjs src/components/MedicationTracker.tsx src/components/AppointmentTracker.tsx
 // A folder can be given instead of a file, and every .tsx file inside it is used.
+// A file that has the words "theme-skip" in a comment is left alone (for screens that keep their own colors).
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -23,6 +24,7 @@ const RULES = [
   plain('bg-slate-700', 'bg-line/70'),
   // borders
   plain('border-slate-700', 'border-line'),
+  plain('border-slate-800', 'border-line'),
   plain('border-slate-600', 'border-muted/40'),
   plain('border-slate-500', 'border-muted/50'),
   plain('border-slate-400', 'border-muted/60'),
@@ -140,6 +142,10 @@ if (files.length === 0) {
 let total = 0;
 for (const file of files) {
   const src = readFileSync(file, 'utf8');
+  if (src.includes('theme-skip')) {
+    console.log(`${file}: skipped (marked theme-skip)`);
+    continue;
+  }
   const { out, changes } = convert(src);
   total += changes;
   const left = leftovers(out);

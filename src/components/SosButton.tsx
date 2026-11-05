@@ -1,3 +1,5 @@
+// theme-skip: this emergency window keeps its own dark red colors in every theme.
+  import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider';
 import { getEmergencyNumber, getExtraNumbers, numberIsSet } from '../i18n/regions';
@@ -69,13 +71,13 @@ export default function SosButton({
         SOS
       </button>
 
-      {open && (
+        {open && createPortal(
         <div
           role="alertdialog"
           aria-modal="true"
           aria-labelledby="sos-title"
           aria-describedby="sos-message"
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-red-950/95 p-4"
+          className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-red-950/95 p-4"
         >
           <div className="w-full max-w-md rounded-3xl border border-red-500/60 bg-[#1a0a0d] p-8 text-center shadow-2xl">
             <h2 id="sos-title" className="text-2xl font-extrabold tracking-wide text-red-300">
@@ -145,8 +147,9 @@ export default function SosButton({
             >
               {t('sos.close')}
             </button>
-          </div>
-        </div>
+                    </div>
+        </div>,
+        document.body,
       )}
     </>
   );
