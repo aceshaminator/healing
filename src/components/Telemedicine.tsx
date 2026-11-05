@@ -67,21 +67,21 @@ export default function Telemedicine({ onNavigate }: { onNavigate?: (tab: string
   };
 
   return (
-    <div className="mx-auto max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-100 shadow-xl">
+    <div className="mx-auto max-w-2xl rounded-2xl border border-line bg-surface p-6 text-ink shadow-xl">
       <div className="mb-6 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold text-indigo-300">{t('doc.title')}</h2>
-          <p className="text-sm text-slate-300">{t('doc.sub')}</p>
+          <p className="text-sm text-ink/80">{t('doc.sub')}</p>
         </div>
-        <span className="shrink-0 rounded-full border border-amber-600/50 bg-amber-950/60 px-3 py-1 text-xs font-semibold text-amber-300">
+        <span className="shrink-0 rounded-full border border-amber-600/50 bg-warn/15 px-3 py-1 text-xs font-semibold text-tone-amber">
           {t('common.soon')}
         </span>
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-xl border border-red-500/50 bg-red-950/40 p-4">
-          <p className="mb-1 text-sm font-semibold text-red-200">{t('doc.emerg.title')}</p>
-          <p className="mb-3 text-xs text-slate-200">{t('doc.emerg.body')}</p>
+        <div className="rounded-xl border border-danger/50 bg-danger/15 p-4">
+          <p className="mb-1 text-sm font-semibold text-tone-red">{t('doc.emerg.title')}</p>
+          <p className="mb-3 text-xs text-ink">{t('doc.emerg.body')}</p>
           <a
             href={`tel:${number}`}
             className="flex min-h-[48px] items-center justify-center rounded-xl bg-red-600 py-3 font-bold text-white transition-colors hover:bg-red-500"
@@ -90,14 +90,14 @@ export default function Telemedicine({ onNavigate }: { onNavigate?: (tab: string
           </a>
         </div>
 
-        <div className="rounded-xl border border-slate-600 bg-slate-800/60 p-4">
-          <p className="mb-1 text-sm font-semibold text-slate-100">{t('doc.own.title')}</p>
-          <p className="mb-3 text-xs text-slate-300">{t('doc.own.body')}</p>
+        <div className="rounded-xl border border-muted/40 bg-line/40/60 p-4">
+          <p className="mb-1 text-sm font-semibold text-ink">{t('doc.own.title')}</p>
+          <p className="mb-3 text-xs text-ink/80">{t('doc.own.body')}</p>
           <div className="space-y-3">
             <button
               type="button"
               onClick={handleShare}
-              className="min-h-[48px] w-full rounded-xl bg-indigo-600 py-3 font-bold text-white transition-colors hover:bg-indigo-500"
+              className="min-h-[48px] w-full rounded-xl bg-indigo-600 py-3 font-bold text-ink transition-colors hover:bg-indigo-500"
             >
               {t('doc.share')}
             </button>
@@ -105,14 +105,14 @@ export default function Telemedicine({ onNavigate }: { onNavigate?: (tab: string
               <button
                 type="button"
                 onClick={() => onNavigate('exportreport')}
-                className="min-h-[48px] w-full rounded-xl border border-slate-500 py-3 text-sm font-semibold text-slate-100 transition-colors hover:bg-slate-700"
+                className="min-h-[48px] w-full rounded-xl border border-muted/50 py-3 text-sm font-semibold text-ink transition-colors hover:bg-line/70"
               >
                 {t('doc.summary')}
               </button>
             )}
           </div>
           {message && (
-            <p role="status" className="mt-3 text-xs text-slate-200">
+            <p role="status" className="mt-3 text-xs text-ink">
               {message}
             </p>
           )}

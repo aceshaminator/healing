@@ -16,10 +16,10 @@ export const Header: React.FC<HeaderProps> = ({
   onClose,
 }) => {
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-[#0B132B] border-b border-gray-800 text-white shadow-md">
+    <header className="flex items-center justify-between px-6 py-4 bg-surface border-b border-gray-800 text-ink shadow-md">
       {/* Brand Logo & Name */}
       <div className="flex items-center space-x-3">
-        <div className="w-10 h-10 rounded-xl overflow-hidden bg-teal-500/20 flex items-center justify-center border border-teal-500/30">
+        <div className="w-10 h-10 rounded-xl overflow-hidden bg-brand/20 flex items-center justify-center border border-teal-500/30">
           <img 
             src="/healing-Logo.jpeg" 
             alt="Healing Logo" 

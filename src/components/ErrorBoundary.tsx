@@ -49,13 +49,13 @@ export class ErrorBoundary extends React.Component<Props, State> {
     const text = TEXT[read('healing_language')] ?? TEXT.en;
 
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#070D1F] p-4 text-slate-100">
+      <div className="flex min-h-screen items-center justify-center bg-canvas p-4 text-ink">
         <div
           role="alert"
-          className="w-full max-w-md space-y-5 rounded-3xl border border-red-500/50 bg-[#0B132B] p-8 text-center shadow-xl"
+          className="w-full max-w-md space-y-5 rounded-3xl border border-danger/50 bg-surface p-8 text-center shadow-xl"
         >
-          <h1 className="text-2xl font-bold text-red-300">{text.title}</h1>
-          <p className="text-sm leading-relaxed text-slate-200">{text.body.replace('{number}', number)}</p>
+          <h1 className="text-2xl font-bold text-tone-red">{text.title}</h1>
+          <p className="text-sm leading-relaxed text-ink">{text.body.replace('{number}', number)}</p>
           <a
             href={`tel:${number}`}
             className="flex min-h-[52px] items-center justify-center rounded-xl bg-red-600 px-4 py-3 text-base font-bold text-white transition hover:bg-red-500"
@@ -65,7 +65,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="min-h-[48px] w-full rounded-xl border border-slate-500 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+            className="min-h-[48px] w-full rounded-xl border border-muted/50 px-4 py-3 text-sm font-semibold text-ink transition hover:bg-line/40"
           >
             {text.reload}
           </button>
