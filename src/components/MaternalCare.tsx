@@ -59,7 +59,7 @@ function trimesterKey(weeks: number) {
 }
 
 const fieldClass =
-  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-canvas px-3 py-2 text-base text-ink placeholder-muted focus:border-pink-400 focus:outline-none';
+  'min-h-[48px] w-full rounded-xl border border-muted/40 bg-canvas px-3 py-2 text-base text-ink placeholder-muted focus:border-brand focus:outline-none';
 
 export function MaternalCare({ onBack }: MaternalCareProps) {
   const { t } = useI18n();
@@ -116,9 +116,9 @@ export function MaternalCare({ onBack }: MaternalCareProps) {
       <div className="flex items-center justify-between gap-3 border-b border-line pb-4">
         <div>
           <div className="flex flex-wrap items-center gap-3">
-            <h2 className="text-2xl font-bold text-pink-300">{t('mat.title')}</h2>
+            <h2 className="text-2xl font-bold text-tone-red">{t('mat.title')}</h2>
             {weeksValid && (
-              <span className="rounded-full border border-pink-700/60 bg-pink-950/60 px-2.5 py-0.5 text-xs font-semibold text-pink-200">
+              <span className="rounded-full border border-tone-red-line/50 bg-danger/10 px-2.5 py-0.5 text-xs font-semibold text-tone-red">
                 {t(trimesterKey(weeksNum!))}
               </span>
             )}
@@ -199,7 +199,7 @@ export function MaternalCare({ onBack }: MaternalCareProps) {
                 onClick={() => toggle(key)}
                 className={`min-h-[56px] rounded-xl border p-3 text-left text-sm font-medium transition-all ${
                   checked[key]
-                    ? 'border-rose-400 bg-rose-950/50 text-rose-100'
+                    ? 'border-tone-red-line bg-danger/15 text-ink'
                     : 'border-muted/40 bg-canvas text-ink hover:border-muted/60'
                 }`}
               >
@@ -232,7 +232,7 @@ export function MaternalCare({ onBack }: MaternalCareProps) {
       {level === 'sameDay' && (
         <div role="status" className="space-y-2 rounded-xl border border-warn/60 bg-warn/15 p-4">
           <p className="text-base font-bold text-ink">{t('mat.sameday.title')}</p>
-          <p className="text-sm leading-relaxed text-amber-50">{t('mat.sameday.body', { number: emergencyNumber })}</p>
+          <p className="text-sm leading-relaxed text-ink">{t('mat.sameday.body', { number: emergencyNumber })}</p>
         </div>
       )}
 

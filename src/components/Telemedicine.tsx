@@ -70,7 +70,7 @@ export default function Telemedicine({ onNavigate }: { onNavigate?: (tab: string
     <div className="mx-auto max-w-2xl rounded-2xl border border-line bg-surface p-6 text-ink shadow-xl">
       <div className="mb-6 flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-indigo-300">{t('doc.title')}</h2>
+          <h2 className="text-2xl font-bold text-tone-cyan">{t('doc.title')}</h2>
           <p className="text-sm text-ink/80">{t('doc.sub')}</p>
         </div>
         <span className="shrink-0 rounded-full border border-amber-600/50 bg-warn/15 px-3 py-1 text-xs font-semibold text-tone-amber">

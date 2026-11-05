@@ -1,3 +1,4 @@
+  // theme-skip: unused file, not shown anywhere in the app.
 import React from 'react';
 
 interface HeaderProps {

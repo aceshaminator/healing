@@ -79,8 +79,16 @@ const WHITE = new RegExp(B + 'text-white' + E, 'g');
 const SOLID = new RegExp(B + 'bg-(?:red|emerald|cyan|teal|green|amber|blue)-[4-6]00(?![\\w/-])');
 
 // Colors that are left after the conversion and need a manual look.
+// Families the rules above do not cover (pink, rose, blue...) are listed in full, because they are not
+// converted. Very light or very dark text shades (such as text-amber-50) are listed too: they only read well on one theme.
+const OTHER_FAMILIES = 'pink|rose|fuchsia|purple|violet|indigo|blue|sky|orange|yellow|lime|green|zinc|gray|neutral|stone';
 const LEFTOVER = [
   /(?<![\w-])(?:[a-z]+:)*(?:bg|text|border|ring|divide|placeholder|accent|from|to|via)-slate-\d+/g,
+  new RegExp(
+    '(?<![\\w-])(?:[a-z]+:)*(?:bg|text|border|ring|divide|placeholder|accent|from|to|via)-(?:' + OTHER_FAMILIES + ')-\\d+',
+    'g',
+  ),
+  /(?<![\w-])(?:[a-z]+:)*text-(?:amber|red|emerald|cyan|teal)-(?:50|400|500|600|700|800|900|950)(?![\w-])/g,
   /(?<![\w-])(?:bg|text|border)-\[#[0-9a-fA-F]{3,8}\]/g,
   /\b(?:stroke|fill)="#[0-9a-fA-F]{3,8}"/g,
 ];
