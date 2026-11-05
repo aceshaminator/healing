@@ -1,3 +1,4 @@
+// theme-skip: this alarm window keeps its own dark red colors in every theme.
 import { useEffect, useRef, useState } from 'react';
 
 // Nigeria's national emergency number. Change it if the app is used in another country.

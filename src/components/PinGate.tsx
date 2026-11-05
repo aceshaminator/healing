@@ -65,10 +65,10 @@ function PinScreen({ onUnlock }: { onUnlock: () => void }) {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#070D1F] p-4 pb-24 text-slate-100">
-      <div className="w-full max-w-sm space-y-5 rounded-3xl border border-emerald-400/20 bg-[#0B132B] p-8 text-center shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
+      <div className="w-full max-w-sm space-y-5 rounded-3xl border border-brand/20 bg-surface p-8 text-center shadow-xl">
         <h1 className="text-2xl font-semibold">{t('pin.title')}</h1>
-        <p className="text-sm text-slate-300">{t('pin.sub')}</p>
+        <p className="text-sm text-ink/80">{t('pin.sub')}</p>
 
         <form onSubmit={submit} className="space-y-4">
           <label htmlFor="pin-input" className="sr-only">
@@ -83,15 +83,15 @@ function PinScreen({ onUnlock }: { onUnlock: () => void }) {
             value={pin}
             onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
             placeholder="••••"
-            className="min-h-[56px] w-full rounded-xl border border-slate-600 bg-slate-950 px-4 text-center text-2xl tracking-[0.5em] text-slate-100 focus:border-emerald-400 focus:outline-none"
+            className="min-h-[56px] w-full rounded-xl border border-muted/40 bg-canvas px-4 text-center text-2xl tracking-[0.5em] text-ink focus:border-brand focus:outline-none"
           />
           {error && (
-            <p role="alert" className="text-sm text-amber-200">
+            <p role="alert" className="text-sm text-tone-amber">
               {error}
             </p>
           )}
           {secondsLeft > 0 && (
-            <p role="status" className="text-sm text-amber-200">
+            <p role="status" className="text-sm text-tone-amber">
               {t('pin.wait', { s: secondsLeft })}
             </p>
           )}
@@ -112,7 +112,7 @@ function PinScreen({ onUnlock }: { onUnlock: () => void }) {
           {t('pin.emergency', { number })}
         </a>
 
-        <p className="text-xs leading-relaxed text-slate-300">{t('pin.forgot')}</p>
+        <p className="text-xs leading-relaxed text-ink/80">{t('pin.forgot')}</p>
       </div>
     </div>
   );
