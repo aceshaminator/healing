@@ -4,8 +4,12 @@ export type MotionPref = 'system' | 'reduce' | 'full';
 const THEME_KEY = 'healing_theme';
 const MOTION_KEY = 'healing_motion';
 
-// Flip to true only after every screen uses the theme colors (bg-canvas, text-ink...).
-export const LIGHT_READY: boolean = false;
+// Every screen now uses the theme colors, so the theme choice is on.
+// Set this back to false to lock the whole app to dark again.
+export const LIGHT_READY: boolean = true;
+
+// The colour of the phone's address bar, to match the page.
+const BAR_COLORS = { dark: '#070D1F', light: '#f8fafc' };
 
 // Keeps the choice for this visit even if the browser refuses to save it.
 let sessionTheme: ThemePref | null = null;
@@ -46,6 +50,9 @@ export function applyPrefs() {
   const systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
   const light = theme === 'light' || (theme === 'system' && systemLight);
   document.documentElement.dataset.theme = light ? 'light' : 'dark';
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', light ? BAR_COLORS.light : BAR_COLORS.dark);
 
   const motion = getMotionPref();
   const systemReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
