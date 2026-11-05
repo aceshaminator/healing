@@ -143,14 +143,17 @@ function Shell() {
 
         <Home onOpen={setSection} />
 
-        <p className="pb-6 text-center text-xs leading-relaxed text-ink/80">
-          {t('home.disclaimer')}{' '}
-          <a href={`tel:${emergencyNumber}`} className="font-semibold underline">
-            {t('sos.call', { number: emergencyNumber })}
-          </a>
-        </p>
-      </div>
+          <div className="space-y-2 pb-6">
+          <OfflineStatus variant="bottom" />
+          <p className="text-center text-xs leading-relaxed text-ink/80">
+            {t('home.disclaimer')}{' '}
+            <a href={`tel:${emergencyNumber}`} className="font-semibold underline">
+              {t('sos.call', { number: emergencyNumber })}
+            </a>
+          </p>
+        </div>
 
+      </div>
       <ModuleHost section={section} onClose={() => setSection(null)} />
       <FloatingSos />
     </div>

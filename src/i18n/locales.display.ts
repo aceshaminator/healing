@@ -16,6 +16,11 @@ export const DISP_EN: Dictionary = {
   'app.update.body': 'Finish what you are doing first. Your saved records stay on this phone.',
   'app.update.now': 'Update now',
   'app.update.later': 'Later',
+  'app.offlinePreparing': 'Saving Healing on this phone so it can work without internet. Keep this page open for a moment.',
+  'app.offlineNotReady':
+    'Healing is not saved for use without internet yet. Open it once with a good connection and keep the page open.',
+  'app.offlineUnsupported':
+    'This browser cannot save Healing for use without internet, so Healing needs a connection to open.',
 };
 
 export const DISP_FR: Dictionary = {
@@ -34,4 +39,10 @@ export const DISP_FR: Dictionary = {
   'app.update.body': "Terminez d'abord ce que vous faites. Vos données enregistrées restent sur ce téléphone.",
   'app.update.now': 'Mettre à jour',
   'app.update.later': 'Plus tard',
+  'app.offlinePreparing':
+    "Healing s'enregistre sur ce téléphone pour fonctionner sans internet. Gardez cette page ouverte un instant.",
+  'app.offlineNotReady':
+    "Healing n'est pas encore enregistré pour fonctionner sans internet. Ouvrez-le une fois avec une bonne connexion et gardez la page ouverte.",
+  'app.offlineUnsupported':
+    "Ce navigateur ne peut pas enregistrer Healing pour fonctionner sans internet : Healing a besoin d'une connexion pour s'ouvrir.",
 };
