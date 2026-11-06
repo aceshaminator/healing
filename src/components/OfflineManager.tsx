@@ -293,7 +293,9 @@ export function OfflineManager() {
       return;
     }
 
-    try {
+    if (!window.confirm(t('bak.confirm.export'))) return;
+
+       try {
       // The warning inside the file stays in English, because the file is data, not a screen.
       const payload = {
         app: 'Healing by VisionAce',

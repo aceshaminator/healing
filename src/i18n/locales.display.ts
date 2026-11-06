@@ -21,7 +21,9 @@ export const DISP_EN: Dictionary = {
     'Healing is not saved for use without internet yet. Open it once with a good connection and keep the page open.',
   'app.offlineUnsupported':
     'This browser cannot save Healing for use without internet, so Healing needs a connection to open.',
-};
+     'bak.confirm.export':
+       "This file is not encrypted and holds private health information. Anyone who gets it can read your records. Save it somewhere safe and don't share it publicly. Download it now?",
+  };
 
 export const DISP_FR: Dictionary = {
   'disp.title': 'Affichage',
@@ -45,4 +47,6 @@ export const DISP_FR: Dictionary = {
     "Healing n'est pas encore enregistré pour fonctionner sans internet. Ouvrez-le une fois avec une bonne connexion et gardez la page ouverte.",
   'app.offlineUnsupported':
     "Ce navigateur ne peut pas enregistrer Healing pour fonctionner sans internet : Healing a besoin d'une connexion pour s'ouvrir.",
-};
+     'bak.confirm.export':
+       "Ce fichier n'est pas chiffré et contient des informations de santé privées. Toute personne qui l'obtient peut lire vos données. Conservez-le dans un endroit sûr et ne le partagez pas publiquement. Le télécharger maintenant ?",
+  };
