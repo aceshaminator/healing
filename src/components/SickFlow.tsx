@@ -558,7 +558,7 @@ export function SickFlow({ onNavigate }: { onNavigate?: (tab: string) => void })
       )}
 
       {tab === 'new' && step === 3 && result && (
-        <div className={`${card} space-y-6`}>
+                <div className={`${card} space-y-6 ${result.urgency === 'emergency' ? '' : 'fade-in'}`}>
           {!result.hasInfo ? (
             <div className="space-y-4">
               <h3 className="text-base font-bold text-ink">{t('urg.noinfo.title')}</h3>

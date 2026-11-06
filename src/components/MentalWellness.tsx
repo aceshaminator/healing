@@ -221,7 +221,7 @@ export default function MentalWellness() {
         )}
 
         {support === 'gentle' && (
-          <div role="status" className="rounded-xl border border-tone-cyan-line/40 bg-tone-cyan-line/10 p-4">
+          <div role="status" className="fade-in rounded-xl border border-tone-cyan-line/40 bg-tone-cyan-line/10 p-4">
             <p className="text-sm font-bold text-ink">{t('mw.gentle.title')}</p>
             <p className="mt-1 text-sm leading-relaxed text-ink">{t('mw.gentle.body', { number: emergencyNumber })}</p>
             <button
