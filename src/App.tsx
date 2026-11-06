@@ -176,9 +176,11 @@ function Shell() {
 export default function App() {
   return (
     <I18nProvider>
-      <PinGate>
-        <Shell />
-      </PinGate>
+      <main>
+        <PinGate>
+          <Shell />
+        </PinGate>
+      </main>
       <UpdateBar />
     </I18nProvider>
   );
