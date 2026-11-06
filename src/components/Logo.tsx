@@ -5,7 +5,7 @@ export function Logo(props: any) {
     <div
       className={`${className} shrink-0 overflow-hidden rounded-xl border border-brand/30 bg-brand/10`}
     >
-      <img src="/healing-logo.jpeg" alt="Healing logo" className="h-full w-full object-cover" />
+
     </div>
   );
 }
