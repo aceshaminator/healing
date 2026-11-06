@@ -96,6 +96,16 @@ function Shell() {
       <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
         <div className="rise w-full max-w-md space-y-8 rounded-3xl border border-brand/20 bg-surface p-8 text-center shadow-xl">
           <Logo className="mx-auto h-16 w-16" />
+                    <svg viewBox="0 0 200 40" className="mx-auto h-8 w-48 text-brand" fill="none" aria-hidden="true">
+            <path
+              d="M0 20 H36 q6 -8 12 0 H60 l4 4 l6 -22 l8 34 l4 -16 H100 q8 -10 16 0 H200"
+              pathLength="1"
+              className="heartbeat"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
           <div className="rise rise-2 space-y-3">
             <h1 className="text-4xl font-light tracking-tight">{t('welcome.title')}</h1>
             <p className="text-xs font-medium uppercase tracking-widest text-muted">by VisionAce</p>

@@ -95,3 +95,18 @@ select:focus {
 .rise-3 {
   animation-delay: 0.24s;
 }
+/* The heartbeat line on the welcome screen is drawn once. With Reduce motion on, it simply shows. */
+.heartbeat {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: healing-trace 1.8s ease-out 0.5s 1 both;
+}
+
+@keyframes healing-trace {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
