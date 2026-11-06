@@ -30,6 +30,12 @@ export const DISP_EN: Dictionary = {
   'bak.share.title': 'Healing records backup',
   'bak.msg.shared': 'Copy shared. Keep the file somewhere private.',
   'bak.msg.sharefail': 'This phone could not share the copy. Use the download button instead.',
+  'bak.last': 'Last copy made: {date}.',
+  'bak.last.never': 'You have not made a copy yet.',
+  'bak.remind.never':
+    'Your records are saved on this phone only. Make a backup copy, so you do not lose them if the phone is lost or reset.',
+  'bak.remind.old': 'Your last backup copy was {days} days ago. Make a new one so your recent records are safe.',
+  'bak.remind.open': 'Open Backup',
 };
 
 export const DISP_FR: Dictionary = {
@@ -63,4 +69,11 @@ export const DISP_FR: Dictionary = {
   'bak.share.title': 'Sauvegarde des données Healing',
   'bak.msg.shared': 'Copie partagée. Gardez le fichier dans un endroit privé.',
   'bak.msg.sharefail': "Ce téléphone n'a pas pu partager la copie. Utilisez plutôt le bouton de téléchargement.",
+  'bak.last': 'Dernière copie : {date}.',
+  'bak.last.never': "Vous n'avez pas encore fait de copie.",
+  'bak.remind.never':
+    'Vos données sont enregistrées sur ce téléphone uniquement. Faites une copie de sauvegarde pour ne pas les perdre si le téléphone est perdu ou réinitialisé.',
+  'bak.remind.old':
+    'Votre dernière copie de sauvegarde date de {days} jours. Faites-en une nouvelle pour protéger vos données récentes.',
+  'bak.remind.open': 'Ouvrir la sauvegarde',
 };

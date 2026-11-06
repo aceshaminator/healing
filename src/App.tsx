@@ -10,6 +10,7 @@ import { getEmergencyNumber } from './i18n/regions';
 import type { SectionId } from './sections';
 import PinGate from './components/PinGate';
 import UpdateBar from './components/UpdateBar';
+  import BackupReminder from './components/BackupReminder';
 
 const LOGO_SRC = '/healing-logo.jpeg';
 const SETUP_KEY = 'healing_setup_done';
@@ -141,7 +142,9 @@ function Shell() {
           </div>
         )}
 
-        <Home onOpen={setSection} />
+                  <Home onOpen={setSection} />
+
+          <BackupReminder />
 
           <div className="space-y-2 pb-6">
           <OfflineStatus variant="bottom" />

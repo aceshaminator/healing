@@ -1,3 +1,4 @@
+   import { formatDay, lastBackup, markBackupDone } from '../lib/backupReminder';
 import React, { useEffect, useState } from 'react';
 import { StorageService } from '../services/storageService';
 import type { HealthCheckIn } from '../services/storageService';
@@ -264,7 +265,7 @@ function applyImport(plan: ImportPlan): boolean {
 }
 
 export function OfflineManager() {
-  const { t } = useI18n();
+  const  { t, lang } = useI18n();
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
   const [records, setRecords] = useState<Records>(collect);
   const [exportMsg, setExportMsg] = useState<Msg | null>(null);
@@ -328,7 +329,8 @@ export function OfflineManager() {
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setExportMsg({ key: 'bak.msg.exported' });
+         markBackupDone();
+         setExportMsg({ key: 'bak.msg.exported' });
     } catch {
       setExportMsg({ key: 'bak.msg.exportfail' });
     }
@@ -363,7 +365,10 @@ export function OfflineManager() {
       }
       navigator
         .share({ files: [file], title: t('bak.share.title') })
-        .then(() => setExportMsg({ key: 'bak.msg.shared' }))
+           .then(() => {
+             markBackupDone();
+             setExportMsg({ key: 'bak.msg.shared' });
+           })
         .catch((err: unknown) => {
           if ((err as DOMException)?.name !== 'AbortError') setExportMsg({ key: 'bak.msg.sharefail' });
         });
@@ -405,6 +410,8 @@ export function OfflineManager() {
     );
   };
 
+       const last = lastBackup();
+     const lastText = last ? t('bak.last', { date: formatDay(last, lang) }) : t('bak.last.never');
   const rows: { label: string; count: number }[] = [
     ...LIST_KEYS.map((k) => ({ label: t(`bak.lbl.${k}`), count: records[k].length })),
     { label: t('bak.lbl.plan'), count: records.emergencyPlan.entries.length },
@@ -450,6 +457,7 @@ export function OfflineManager() {
         <div className="space-y-4 rounded-2xl border border-line bg-surface p-6">
           <h3 className="text-sm font-semibold text-tone-cyan">{t('bak.copy.title')}</h3>
           <p className="text-sm leading-relaxed text-ink/80">{t('bak.copy.text')}</p>
+                       <p className="text-xs font-medium text-ink/80">{lastText}</p>
           <button
             type="button"
             onClick={handleExportData}
