@@ -270,6 +270,22 @@ export function OfflineManager() {
   const [exportMsg, setExportMsg] = useState<Msg | null>(null);
   const [pending, setPending] = useState<{ name: string; plan: ImportPlan } | null>(null);
   const [restoreMsg, setRestoreMsg] = useState<Msg | null>(null);
+  const [canShare, setCanShare] = useState(false);
+  const [sharing, setSharing] = useState(false);
+
+  // The share button only appears on phones and browsers that can share a file.
+  useEffect(() => {
+    try {
+      const probe = new File(['{}'], 'probe.txt', { type: 'text/plain' });
+      setCanShare(
+        typeof navigator.canShare === 'function' &&
+          typeof navigator.share === 'function' &&
+          navigator.canShare({ files: [probe] }),
+      );
+    } catch {
+      setCanShare(false);
+    }
+  }, []);
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -318,6 +334,43 @@ export function OfflineManager() {
     }
   };
 
+    // Shares the same records through the phone's share menu (Drive, email, WhatsApp...).
+  // It is sent as a .txt copy because phones accept plain text more reliably than .json. Restoring it works the same way.
+  // Nothing is awaited before sharing, because the browser only allows it right after a tap.
+  const handleShare = () => {
+    setSharing(false);
+    const fresh = collect();
+    setRecords(fresh);
+    if (countAll(fresh) === 0) {
+      setExportMsg({ key: 'bak.msg.nothing' });
+      return;
+    }
+    try {
+      const payload = {
+        app: 'Healing by VisionAce',
+        exportedAt: new Date().toISOString(),
+        warning: 'This file is not encrypted and contains private health information. Keep it somewhere safe.',
+        ...fresh,
+      };
+      const file = new File(
+        [JSON.stringify(payload, null, 2)],
+        `Healing_Health_Export_${new Date().toISOString().split('T')[0]}.json.txt`,
+        { type: 'text/plain' },
+      );
+      if (!navigator.canShare({ files: [file] })) {
+        setExportMsg({ key: 'bak.msg.sharefail' });
+        return;
+      }
+      navigator
+        .share({ files: [file], title: t('bak.share.title') })
+        .then(() => setExportMsg({ key: 'bak.msg.shared' }))
+        .catch((err: unknown) => {
+          if ((err as DOMException)?.name !== 'AbortError') setExportMsg({ key: 'bak.msg.sharefail' });
+        });
+    } catch {
+      setExportMsg({ key: 'bak.msg.sharefail' });
+    }
+  };
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = ''; // lets the same file be chosen again
@@ -405,6 +458,37 @@ export function OfflineManager() {
           >
             {t('bak.export')}
           </button>
+                    {canShare &&
+            (sharing ? (
+              <div className="space-y-3 rounded-lg border border-warn/40 bg-warn/10 p-3 text-sm text-ink">
+                <p>{t('bak.share.warn')}</p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    className="min-h-[48px] rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-emerald-400"
+                  >
+                    {t('bak.share.go')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSharing(false)}
+                    className="min-h-[48px] rounded-xl border border-muted/50 px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-line/40"
+                  >
+                    {t('bak.cancel')}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setSharing(true)}
+                disabled={countAll(records) === 0}
+                className="min-h-[48px] w-full rounded-xl border border-muted/50 bg-line/40 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-line/70 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {t('bak.share')}
+              </button>
+            ))}
           {exportMsg && (
             <p role="status" className="text-sm text-ink">
               {t(exportMsg.key, exportMsg.vars)}
@@ -419,7 +503,7 @@ export function OfflineManager() {
         <p className="text-sm leading-relaxed text-ink/80">{t('bak.restore.text')}</p>
         <label className="flex min-h-[48px] cursor-pointer items-center justify-center rounded-xl border border-muted/50 bg-line/40 px-4 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-line/70">
           {t('bak.choose')}
-          <input type="file" accept="application/json,.json" onChange={handleFile} className="sr-only" />
+          <input type="file" accept="application/json,.json,text/plain,.txt" onChange={handleFile} className="sr-only" />
         </label>
 
         {pending && (

@@ -21,9 +21,16 @@ export const DISP_EN: Dictionary = {
     'Healing is not saved for use without internet yet. Open it once with a good connection and keep the page open.',
   'app.offlineUnsupported':
     'This browser cannot save Healing for use without internet, so Healing needs a connection to open.',
-     'bak.confirm.export':
-       "This file is not encrypted and holds private health information. Anyone who gets it can read your records. Save it somewhere safe and don't share it publicly. Download it now?",
-  };
+  'bak.confirm.export':
+    "This file is not encrypted and holds private health information. Anyone who gets it can read your records. Save it somewhere safe and don't share it publicly. Download it now?",
+  'bak.share': 'Share a copy…',
+  'bak.share.warn':
+    'This file is not encrypted and holds private health information. Anyone who gets it can read your records. Send it only to yourself or to someone you trust.',
+  'bak.share.go': 'Share now',
+  'bak.share.title': 'Healing records backup',
+  'bak.msg.shared': 'Copy shared. Keep the file somewhere private.',
+  'bak.msg.sharefail': 'This phone could not share the copy. Use the download button instead.',
+};
 
 export const DISP_FR: Dictionary = {
   'disp.title': 'Affichage',
@@ -31,7 +38,7 @@ export const DISP_FR: Dictionary = {
   'disp.theme.dark': 'Sombre',
   'disp.theme.light': 'Clair',
   'disp.theme.system': 'Comme mon téléphone',
-  'disp.theme.note': "Le thème clair est nouveau. Si un écran est difficile à lire, revenez au thème sombre.",
+  'disp.theme.note': 'Le thème clair est nouveau. Si un écran est difficile à lire, revenez au thème sombre.',
   'disp.motion': 'Animations',
   'disp.motion.system': 'Comme mon téléphone',
   'disp.motion.reduce': 'Réduire les animations',
@@ -47,6 +54,13 @@ export const DISP_FR: Dictionary = {
     "Healing n'est pas encore enregistré pour fonctionner sans internet. Ouvrez-le une fois avec une bonne connexion et gardez la page ouverte.",
   'app.offlineUnsupported':
     "Ce navigateur ne peut pas enregistrer Healing pour fonctionner sans internet : Healing a besoin d'une connexion pour s'ouvrir.",
-     'bak.confirm.export':
-       "Ce fichier n'est pas chiffré et contient des informations de santé privées. Toute personne qui l'obtient peut lire vos données. Conservez-le dans un endroit sûr et ne le partagez pas publiquement. Le télécharger maintenant ?",
-  };
+  'bak.confirm.export':
+    "Ce fichier n'est pas chiffré et contient des informations de santé privées. Toute personne qui l'obtient peut lire vos données. Conservez-le dans un endroit sûr et ne le partagez pas publiquement. Le télécharger maintenant ?",
+  'bak.share': 'Partager une copie…',
+  'bak.share.warn':
+    "Ce fichier n'est pas chiffré et contient des informations de santé privées. Toute personne qui l'obtient peut lire vos données. Envoyez-le uniquement à vous-même ou à une personne de confiance.",
+  'bak.share.go': 'Partager maintenant',
+  'bak.share.title': 'Sauvegarde des données Healing',
+  'bak.msg.shared': 'Copie partagée. Gardez le fichier dans un endroit privé.',
+  'bak.msg.sharefail': "Ce téléphone n'a pas pu partager la copie. Utilisez plutôt le bouton de téléchargement.",
+};
