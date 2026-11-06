@@ -108,9 +108,7 @@ export default function SosButton({
             <a
               ref={callRef}
               href={`tel:${number}`}
-              className={`mt-6 block rounded-xl bg-red-600 py-4 text-lg font-bold text-white transition hover:bg-red-500 ${
-                ready ? 'animate-pulse' : ''
-              }`}
+                            className="mt-6 block rounded-xl bg-red-600 py-4 text-lg font-bold text-white transition hover:bg-red-500"
             >
               {t('sos.call', { number })}
             </a>
