@@ -26,7 +26,7 @@ function readSetupDone(): boolean {
 function Logo({ className = 'h-16 w-16' }: { className?: string }) {
   return (
     <div className={`${className} shrink-0 overflow-hidden rounded-2xl border border-brand/30 bg-brand/10`}>
-        <img src={LOGO_SRC} alt="Healing logo" width={128} height={128} className="h-full w-full object-cover" />
+      <img src={LOGO_SRC} alt="Healing logo" className="h-full w-full object-cover" />
     </div>
   );
 }
