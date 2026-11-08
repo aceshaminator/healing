@@ -1,5 +1,5 @@
 // theme-skip: this emergency window keeps its own dark red colors in every theme.
-  import { createPortal } from 'react-dom';
+import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider';
 import { getEmergencyNumber, getExtraNumbers, numberIsSet } from '../i18n/regions';
