@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function readStored<T>(key: string, initialValue: T): T {
   try {
@@ -18,15 +18,22 @@ function readStored<T>(key: string, initialValue: T): T {
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => readStored(key, initialValue));
   const [saveFailed, setSaveFailed] = useState(false);
+  const failedBefore = useRef(false);
 
   // Save whenever the value changes. If the browser refuses (storage full or blocked),
-  // remember it and announce it so the menu can warn the person.
+  // remember it and announce it so the menu can warn the person. When a save that failed
+  // earlier works again, announce that too so the warning can go away.
   useEffect(() => {
     try {
       window.localStorage.setItem(key, JSON.stringify(storedValue));
       setSaveFailed(false);
+      if (failedBefore.current) {
+        failedBefore.current = false;
+        window.dispatchEvent(new CustomEvent('healing:storage-ok', { detail: { key } }));
+      }
     } catch (error) {
       console.error(`Error setting localStorage key "${key}":`, error);
+      failedBefore.current = true;
       setSaveFailed(true);
       window.dispatchEvent(new CustomEvent('healing:storage-error', { detail: { key } }));
     }

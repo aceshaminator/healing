@@ -40,19 +40,39 @@ function FloatingSos() {
   );
 }
 
+function keyOf(e: Event): string {
+  const detail = (e as CustomEvent<{ key?: string }>).detail;
+  return detail?.key ?? 'unknown';
+}
+
 function Shell() {
   const { t } = useI18n();
   const [inPortal, setInPortal] = useState(false);
   const [setupDone, setSetupDone] = useState<boolean>(readSetupDone);
-  const [storageError, setStorageError] = useState(false);
+  const [failedKeys, setFailedKeys] = useState<string[]>([]);
   const [section, setSection] = useState<SectionId | null>(null);
   const emergencyNumber = getEmergencyNumber();
+  const storageError = failedKeys.length > 0;
 
   // Any screen that fails to save on this phone announces it, and we warn the person here.
+  // When that same screen saves successfully later, the warning for it goes away.
   useEffect(() => {
-    const onError = () => setStorageError(true);
+    const onError = (e: Event) => {
+      const key = keyOf(e);
+      setFailedKeys((prev) => (prev.includes(key) ? prev : [...prev, key]));
+    };
+    const onOk = (e: Event) => {
+      const key = keyOf(e);
+      setFailedKeys((prev) => prev.filter((k) => k !== key));
+    };
     window.addEventListener('healing:storage-error', onError);
-    return () => window.removeEventListener('healing:storage-error', onError);
+    window.addEventListener('healing:storage-ok', onOk);
+    window.addEventListener('healing:checkins-saved', onOk);
+    return () => {
+      window.removeEventListener('healing:storage-error', onError);
+      window.removeEventListener('healing:storage-ok', onOk);
+      window.removeEventListener('healing:checkins-saved', onOk);
+    };
   }, []);
 
   useEffect(() => {
