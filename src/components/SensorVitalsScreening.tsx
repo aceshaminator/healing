@@ -31,6 +31,17 @@ function readConsent(): boolean {
   }
 }
 
+// Test mode only: packs the recorded light levels as compact text, one entry per frame:
+// [milliseconds since the scan started, red level, green level].
+function packScan(raw: number[][]): string {
+  if (!raw.length) return '';
+  const t0 = raw[0][0];
+  return JSON.stringify({
+    n: raw.length,
+    s: raw.map((r) => [Math.round(r[0] - t0), Math.round(r[1] * 10) / 10, Math.round(r[2] * 10) / 10]),
+  });
+}
+
 export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: string) => void }) {
   const { t } = useI18n();
   const emergencyNumber = getEmergencyNumber();
@@ -45,6 +56,8 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
   const [quality, setQuality] = useState('');
   const [result, setResult] = useState<VitalReading | null>(null);
   const [manual, setManual] = useState({ pulse: '', sys: '', dia: '', temp: '' });
+  const [scanData, setScanData] = useState('');
+  const [copied, setCopied] = useState(false);
   const stopRef = useRef<() => void>(() => {});
 
   useEffect(() => () => stopRef.current(), []);
@@ -71,6 +84,17 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
     setProgress(0);
     setHint('');
     setHintExtra('');
+    setScanData('');
+    setCopied(false);
+  };
+
+  const copyScan = async () => {
+    try {
+      await navigator.clipboard.writeText(scanData);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
   };
 
   const cancel = () => {
@@ -139,6 +163,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
     }
 
     let samples: Sample[] = [];
+    let raw: number[][] = [];
     let startT = 0;
     let lastPct = -1;
     setMode('pulse');
@@ -149,6 +174,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       setMode('idle');
       setHint('');
       setHintExtra('');
+      if (DEBUG) setScanData(packScan(raw));
       const est = estimatePulse(samples);
       if (!est) {
         let extra = '';
@@ -188,6 +214,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       if (!covered) {
         if (startT) {
           samples = [];
+          raw = [];
           startT = 0;
           lastPct = -1;
           setProgress(0);
@@ -197,6 +224,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       } else {
         if (!startT) startT = now;
         samples.push({ t: now, v: r });
+        raw.push([now, r, g]);
         const p = Math.min(1, (now - startT) / (SCAN_SECONDS * 1000));
         const pct = Math.floor(p * 100);
         if (pct !== lastPct) {
@@ -361,6 +389,22 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           {t(error)}
           {errorExtra}
         </p>
+      )}
+
+      {DEBUG && scanData && (
+        <div className={`${card} space-y-3`}>
+          <p className="text-sm text-ink">Test mode: scan data ({scanData.length} characters)</p>
+          <textarea
+            readOnly
+            value={scanData}
+            rows={3}
+            onFocus={(e) => e.currentTarget.select()}
+            className={`${field} font-mono text-xs`}
+          />
+          <button type="button" onClick={copyScan} className={ghost}>
+            {copied ? 'Copied' : 'Copy scan data'}
+          </button>
+        </div>
       )}
 
       {result && view && (
