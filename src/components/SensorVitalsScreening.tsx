@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-import { addVital, analyzeMotion, estimatePulse, noteItemsFor } from '../lib/vitals';
+import { addVital, analyzeMotion, estimatePulse, explainPulse, noteItemsFor } from '../lib/vitals';
 import type { VitalReading } from '../lib/vitals';
 import { useI18n } from '../i18n/I18nProvider';
 import { getEmergencyNumber } from '../i18n/regions';
@@ -158,7 +158,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           const vals = samples.map((s) => s.v);
           const lo = n ? Math.round(Math.min(...vals)) : 0;
           const hi = n ? Math.round(Math.max(...vals)) : 0;
-          extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, red level ${lo} to ${hi})`;
+          extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, red level ${lo} to ${hi}; ${explainPulse(samples)})`;
         }
         fail('vit.err.noclear', extra);
         return;
