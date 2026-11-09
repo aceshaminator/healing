@@ -10,9 +10,9 @@ import { getEmergencyNumber } from './i18n/regions';
 import type { SectionId } from './sections';
 import PinGate from './components/PinGate';
 import UpdateBar from './components/UpdateBar';
-  import BackupReminder from './components/BackupReminder';
+import BackupReminder from './components/BackupReminder';
 
-const LOGO_SRC = '/healing-logo.jpeg';
+const LOGO_SRC = '/healing-logo.webp';
 const SETUP_KEY = 'healing_setup_done';
 
 function readSetupDone(): boolean {
@@ -96,7 +96,7 @@ function Shell() {
       <div className="flex min-h-screen items-center justify-center bg-canvas p-4 pb-24 text-ink">
         <div className="rise w-full max-w-md space-y-8 rounded-3xl border border-brand/20 bg-surface p-8 text-center shadow-xl">
           <Logo className="mx-auto h-16 w-16" />
-                    <svg viewBox="0 0 200 40" className="mx-auto h-8 w-48 text-brand" fill="none" aria-hidden="true">
+          <svg viewBox="0 0 200 40" className="mx-auto h-8 w-48 text-brand" fill="none" aria-hidden="true">
             <path
               d="M0 20 H36 q6 -8 12 0 H60 l4 4 l6 -22 l8 34 l4 -16 H100 q8 -10 16 0 H200"
               pathLength="1"
@@ -152,11 +152,11 @@ function Shell() {
           </div>
         )}
 
-                  <Home onOpen={setSection} />
+        <Home onOpen={setSection} />
 
-          <BackupReminder />
+        <BackupReminder />
 
-          <div className="space-y-2 pb-6">
+        <div className="space-y-2 pb-6">
           <OfflineStatus variant="bottom" />
           <p className="text-center text-xs leading-relaxed text-ink/80">
             {t('home.disclaimer')}{' '}
@@ -165,7 +165,6 @@ function Shell() {
             </a>
           </p>
         </div>
-
       </div>
       <ModuleHost section={section} onClose={() => setSection(null)} />
       <FloatingSos />
