@@ -157,45 +157,117 @@ type PulseAnalysis = {
   info: string;
 };
 
-// Does the pulse analysis and also records which check a failed scan did not pass.
-function analyzePulse(samples: Sample[]): PulseAnalysis {
-  if (samples.length < 100) return { result: null, info: `only ${samples.length} frames` };
-  const hz = 30;
-  const sig = resample(samples, hz);
-  if (sig.length < hz * 10) return { result: null, info: `signal too short (${sig.length} points)` };
+// How the fingertip pulse is found: the heartbeat makes a tiny, repeating change in the red level.
+// Slow drift is much bigger than that change, so instead of looking for single beats we look for
+// one repeating rhythm in the 42 to 180 beats a minute range, and require the same rhythm to show
+// up in three overlapping stretches of the scan.
+const PULSE_HZ = 30;
+const BAND_LO = 0.7; // 42 beats a minute
+const BAND_HI = 3.0; // 180 beats a minute
+const FREQ_STEP = 0.05;
+const SETTLE_MS = 3000; // finger settling and camera exposure adjusting
+const MIN_CLARITY = 15; // how many times stronger the rhythm must be than the background
+const MAX_DRIFT_HZ = 0.1; // how far the three stretches may disagree
 
-  const trend = movingAverage(sig, 45);
-  const hp = sig.map((v, i) => v - trend[i]);
-  const sm = movingAverage(hp, 5);
-  const mean = sm.reduce((a, b) => a + b, 0) / sm.length;
-  const std = Math.sqrt(sm.reduce((a, b) => a + (b - mean) ** 2, 0) / sm.length);
-  if (std < 1e-6) return { result: null, info: 'signal is flat' };
+function bandSpectrum(x: number[], hz: number): { freqs: number[]; power: number[] } {
+  const n = x.length;
+  const mean = x.reduce((a, b) => a + b, 0) / n;
+  const freqs: number[] = [];
+  const power: number[] = [];
+  for (let f = BAND_LO; f <= BAND_HI + 1e-9; f += FREQ_STEP) {
+    let re = 0;
+    let im = 0;
+    for (let i = 0; i < n; i++) {
+      const w = 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (n - 1));
+      const ang = (2 * Math.PI * f * i) / hz;
+      const v = (x[i] - mean) * w;
+      re += v * Math.cos(ang);
+      im += v * Math.sin(ang);
+    }
+    freqs.push(f);
+    power.push(re * re + im * im);
+  }
+  return { freqs, power };
+}
 
-  const minGap = Math.round(0.35 * hz);
-  const peaks: number[] = [];
-  for (let i = 2; i < sm.length - 2; i++) {
-    const v = sm[i];
-    if (v > 0.3 * std && v >= sm[i - 1] && v >= sm[i + 1] && v >= sm[i - 2] && v >= sm[i + 2]) {
-      const last = peaks[peaks.length - 1];
-      if (last === undefined || i - last >= minGap) peaks.push(i);
-      else if (v > sm[last]) peaks[peaks.length - 1] = i;
+// Picks the strongest rhythm. If a rhythm at half that frequency is also strong, the strong one was
+// probably the second echo of the heartbeat, so the slower one is used.
+function pickRhythm(freqs: number[], power: number[]): { f: number; clarity: number } {
+  let k = 0;
+  for (let i = 1; i < power.length; i++) if (power[i] > power[k]) k = i;
+  let f = freqs[k];
+  const half = f / 2;
+  if (half >= BAND_LO) {
+    let m = -1;
+    for (let i = 0; i < freqs.length; i++) {
+      if (Math.abs(freqs[i] - half) <= 0.1 && (m < 0 || power[i] > power[m])) m = i;
+    }
+    if (m >= 0 && power[m] >= 0.5 * power[k]) {
+      k = m;
+      f = freqs[m];
     }
   }
+  const rest = power.filter((_, i) => Math.abs(freqs[i] - f) > 0.2).sort((a, b) => a - b);
+  const background = rest.length ? rest[Math.floor(rest.length / 2)] : 0;
+  let peak = 0;
+  for (let i = 0; i < freqs.length; i++) if (Math.abs(freqs[i] - f) <= 0.05) peak = Math.max(peak, power[i]);
+  return { f, clarity: background > 0 ? peak / background : 0 };
+}
 
-  const intervals: number[] = [];
-  for (let i = 1; i < peaks.length; i++) intervals.push((peaks[i] - peaks[i - 1]) / hz);
-  const valid = intervals.filter((x) => x >= 0.4 && x <= 1.5);
-  const base = `beat ripple ${std.toFixed(2)}, peaks found ${peaks.length}, usable beats ${valid.length} of ${intervals.length}`;
-  if (valid.length < 8) return { result: null, info: `${base}; at least 8 usable beats are needed` };
-
-  const sorted = [...valid].sort((a, b) => a - b);
+// Cleans the red-level trace: skips the settling seconds, keeps only the changes from frame to
+// frame (which removes slow drift), and clips sudden jolts.
+function pulseTrace(samples: Sample[]): number[] {
+  if (samples.length < 2) return [];
+  const t0 = samples[0].t;
+  const settled = samples.filter((s) => s.t - t0 >= SETTLE_MS);
+  const sig = resample(settled, PULSE_HZ);
+  if (sig.length < 10) return [];
+  const smooth = movingAverage(sig, 3);
+  const diff: number[] = [];
+  for (let i = 1; i < smooth.length; i++) diff.push(smooth[i] - smooth[i - 1]);
+  const sorted = [...diff].sort((a, b) => a - b);
   const med = sorted[Math.floor(sorted.length / 2)];
-  const close = valid.filter((x) => Math.abs(x - med) / med <= 0.2).length;
-  const share = close / intervals.length;
-  const info = `${base}, typical beat ${med.toFixed(2)}s, steady share ${Math.round(share * 100)}%`;
-  if (share < 0.6) return { result: null, info: `${info}; 60% or more is needed` };
+  const dev = diff.map((v) => Math.abs(v - med)).sort((a, b) => a - b);
+  const sigma = Math.max(1.4826 * dev[Math.floor(dev.length / 2)], 1e-6);
+  return diff.map((v) => Math.max(-4 * sigma, Math.min(4 * sigma, v)));
+}
 
-  return { result: { bpm: Math.round(60 / med), quality: share >= 0.8 ? 'good' : 'fair' }, info };
+function analyzePulse(samples: Sample[]): PulseAnalysis {
+  if (samples.length < 100) return { result: null, info: `only ${samples.length} frames` };
+  const x = pulseTrace(samples);
+  if (x.length < PULSE_HZ * 12) {
+    return { result: null, info: `too little steady signal (${Math.round(x.length / PULSE_HZ)}s after settling)` };
+  }
+
+  const full = bandSpectrum(x, PULSE_HZ);
+  const main = pickRhythm(full.freqs, full.power);
+
+  const win = PULSE_HZ * 10;
+  const gap = Math.floor((x.length - win) / 2);
+  const seen: number[] = [];
+  for (let s = 0; s < 3; s++) {
+    const part = x.slice(s * gap, s * gap + win);
+    const sp = bandSpectrum(part, PULSE_HZ);
+    seen.push(pickRhythm(sp.freqs, sp.power).f);
+  }
+  const bpmOf = (f: number) => Math.round(f * 60);
+  const spread = Math.max(...seen.map((f) => Math.abs(f - main.f)));
+  const info = `rhythm ${bpmOf(main.f)} per min, clarity ${main.clarity.toFixed(1)}, windows ${seen.map(bpmOf).join('/')}`;
+
+  if (main.f < BAND_LO + 0.1 || main.f > BAND_HI - 0.1) {
+    return { result: null, info: `${info}; rhythm at the edge of the range, probably not a heartbeat` };
+  }
+  if (main.clarity < MIN_CLARITY) {
+    return { result: null, info: `${info}; no clear rhythm (clarity needs ${MIN_CLARITY} or more)` };
+  }
+  if (spread > MAX_DRIFT_HZ) {
+    return { result: null, info: `${info}; the rhythm changed during the scan` };
+  }
+
+  return {
+    result: { bpm: bpmOf(main.f), quality: main.clarity >= 25 && spread <= 0.07 ? 'good' : 'fair' },
+    info,
+  };
 }
 
 export function estimatePulse(samples: Sample[]): { bpm: number; quality: 'good' | 'fair' } | null {
