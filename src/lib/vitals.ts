@@ -27,11 +27,14 @@ export function loadVitals(): VitalReading[] {
 
 export function addVital(r: Omit<VitalReading, 'id' | 'date'>): VitalReading {
   const full: VitalReading = { id: Date.now(), date: new Date().toISOString(), ...r };
+  let saved = false;
   try {
     localStorage.setItem(KEY, JSON.stringify([full, ...loadVitals()].slice(0, 500)));
+    saved = true;
   } catch {
-    /* storage unavailable: the reading is still shown on screen */
+    /* storage unavailable: the reading is still shown on screen, and the app warns the person below */
   }
+  window.dispatchEvent(new CustomEvent(saved ? 'healing:storage-ok' : 'healing:storage-error', { detail: { key: 'vitals' } }));
   return full;
 }
 
@@ -149,18 +152,24 @@ function movingAverage(x: number[], w: number): number[] {
   });
 }
 
-export function estimatePulse(samples: Sample[]): { bpm: number; quality: 'good' | 'fair' } | null {
-  if (samples.length < 100) return null;
+type PulseAnalysis = {
+  result: { bpm: number; quality: 'good' | 'fair' } | null;
+  info: string;
+};
+
+// Does the pulse analysis and also records which check a failed scan did not pass.
+function analyzePulse(samples: Sample[]): PulseAnalysis {
+  if (samples.length < 100) return { result: null, info: `only ${samples.length} frames` };
   const hz = 30;
   const sig = resample(samples, hz);
-  if (sig.length < hz * 10) return null;
+  if (sig.length < hz * 10) return { result: null, info: `signal too short (${sig.length} points)` };
 
   const trend = movingAverage(sig, 45);
   const hp = sig.map((v, i) => v - trend[i]);
   const sm = movingAverage(hp, 5);
   const mean = sm.reduce((a, b) => a + b, 0) / sm.length;
   const std = Math.sqrt(sm.reduce((a, b) => a + (b - mean) ** 2, 0) / sm.length);
-  if (std < 1e-6) return null;
+  if (std < 1e-6) return { result: null, info: 'signal is flat' };
 
   const minGap = Math.round(0.35 * hz);
   const peaks: number[] = [];
@@ -176,15 +185,26 @@ export function estimatePulse(samples: Sample[]): { bpm: number; quality: 'good'
   const intervals: number[] = [];
   for (let i = 1; i < peaks.length; i++) intervals.push((peaks[i] - peaks[i - 1]) / hz);
   const valid = intervals.filter((x) => x >= 0.4 && x <= 1.5);
-  if (valid.length < 8) return null;
+  const base = `beat ripple ${std.toFixed(2)}, peaks found ${peaks.length}, usable beats ${valid.length} of ${intervals.length}`;
+  if (valid.length < 8) return { result: null, info: `${base}; at least 8 usable beats are needed` };
 
   const sorted = [...valid].sort((a, b) => a - b);
   const med = sorted[Math.floor(sorted.length / 2)];
   const close = valid.filter((x) => Math.abs(x - med) / med <= 0.2).length;
   const share = close / intervals.length;
-  if (share < 0.6) return null;
+  const info = `${base}, typical beat ${med.toFixed(2)}s, steady share ${Math.round(share * 100)}%`;
+  if (share < 0.6) return { result: null, info: `${info}; 60% or more is needed` };
 
-  return { bpm: Math.round(60 / med), quality: share >= 0.8 ? 'good' : 'fair' };
+  return { result: { bpm: Math.round(60 / med), quality: share >= 0.8 ? 'good' : 'fair' }, info };
+}
+
+export function estimatePulse(samples: Sample[]): { bpm: number; quality: 'good' | 'fair' } | null {
+  return analyzePulse(samples).result;
+}
+
+// Plain-language note on why a scan did or did not give a pulse. Used by the test mode only.
+export function explainPulse(samples: Sample[]): string {
+  return analyzePulse(samples).info;
 }
 
 // A rhythm is only reported when one frequency clearly stands out from the rest.
