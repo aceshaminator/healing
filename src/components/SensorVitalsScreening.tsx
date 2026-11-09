@@ -10,7 +10,7 @@ const SCAN_SECONDS = 20;
 const MOTION_SECONDS = 15;
 
 // Set to true only while developing. Shows raw sensor numbers on screen.
-const DEBUG = false;
+const DEBUG = true;
 
 type Mode = 'idle' | 'pulse' | 'motion';
 type Sample = { t: number; v: number };
