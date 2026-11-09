@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Healing storage check</title>
+<style>
+  body{margin:0;padding:16px;background:#070D1F;color:#e2e8f0;font-family:system-ui,sans-serif}
+  h1{font-size:18px;margin:0 0 12px}
+  pre{white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.5;margin:0}
+</style>
+</head>
+<body>
+<h1>Healing storage check</h1>
+<pre id="out">Running…</pre>
+<script>
+(function () {
+  var out = [];
+  function log(s) {
+    out.push(s);
+    document.getElementById('out').textContent = out.join('\n');
+  }
+
+  log('Browser: ' + navigator.userAgent);
+  var standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  log('Opened as installed app: ' + (standalone ? 'yes' : 'no (normal tab)'));
+
+  var canWrite = false;
+  try {
+    localStorage.setItem('__t', '1');
+    localStorage.removeItem('__t');
+    canWrite = true;
+    log('Write test: OK');
+  } catch (e) {
+    log('Write test: FAILED (' + e.name + ')');
+  }
+
+  try {
+    var total = 0;
+    var rows = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      var size = k.length + (localStorage.getItem(k) || '').length;
+      total += size;
+      rows.push([k, size]);
+    }
+    rows.sort(function (a, b) { return b[1] - a[1]; });
+    log('Keys stored: ' + rows.length + ', about ' + total + ' characters in total');
+    rows.slice(0, 5).forEach(function (r) { log('  ' + r[0] + ': ' + r[1]); });
+  } catch (e) {
+    log('Could not read keys (' + e.name + ')');
+  }
+
+  if (canWrite) {
+    var chunk = new Array(100001).join('x');
+    var best = 0;
+    try {
+      for (var n = 1; n <= 50; n++) {
+        localStorage.setItem('__probe', chunk.repeat(n));
+        best = n * 100000;
+      }
+    } catch (e) {
+      /* reached the limit */
+    }
+    try { localStorage.removeItem('__probe'); } catch (e) {}
+    log('Room left to add: about ' + best + ' characters' + (best >= 5000000 ? ' (5 million or more)' : ''));
+  }
+
+  if (navigator.storage && navigator.storage.estimate) {
+    navigator.storage.estimate().then(function (s) {
+      log('Site storage used: ' + Math.round((s.usage || 0) / 1024) + ' KB of ' + Math.round((s.quota || 0) / 1048576) + ' MB');
+    });
+  }
+})();
+</script>
+</body>
+</html>
