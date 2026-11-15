@@ -10,7 +10,7 @@ const SCAN_SECONDS = 20;
 const MOTION_SECONDS = 15;
 
 // Set to true only while developing. Shows raw sensor numbers on screen.
-const DEBUG = false;
+const DEBUG = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug');
 
 type Mode = 'idle' | 'pulse' | 'motion';
 type Sample = { t: number; v: number };
@@ -122,8 +122,10 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       fail('vit.err.camera.denied');
       return;
     }
+        let torchOk = false;
     try {
       await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: true } as any] });
+      torchOk = true;
     } catch {
       /* no flash on this device: the scan can still work in bright light, but less well */
     }
@@ -184,7 +186,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           const vals = samples.map((s) => s.v);
           const lo = n ? Math.round(Math.min(...vals)) : 0;
           const hi = n ? Math.round(Math.max(...vals)) : 0;
-          extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, red level ${lo} to ${hi}; ${explainPulse(samples)})`;
+                    extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, flash ${torchOk ? 'on' : 'FAILED'}, red level ${lo} to ${hi}; ${explainPulse(samples)})`;
         }
         fail('vit.err.noclear', extra);
         return;
