@@ -130,6 +130,10 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
       /* no flash on this device: the scan can still work in bright light, but less well */
     }
 
+    const trk: any = stream.getVideoTracks()[0];
+    const caps: any = trk.getCapabilities?.() ?? {};
+    const sets: any = trk.getSettings?.() ?? {};
+    const camInfo = `exposure ${(caps.exposureMode ?? []).join('|') || 'n/a'}, fps ${sets.frameRate ?? '?'}`;
     const video = document.createElement('video');
     video.muted = true;
     video.playsInline = true;
@@ -186,8 +190,9 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           const vals = samples.map((s) => s.v);
           const lo = n ? Math.round(Math.min(...vals)) : 0;
           const hi = n ? Math.round(Math.max(...vals)) : 0;
-                    extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, flash ${torchOk ? 'on' : 'FAILED'}, red level ${lo} to ${hi}; ${explainPulse(samples)})`;
-        }
+                    extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, flash ${torchOk ? 'on' : 'FAILED'}, red level ${lo} to ${hi}; ${camInfo} ${explainPulse(samples)})`;
+                    
+      }
         fail('vit.err.noclear', extra);
         return;
       }
