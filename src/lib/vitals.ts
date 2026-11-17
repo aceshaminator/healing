@@ -167,6 +167,7 @@ const BAND_HI = 3.0; // 180 beats a minute
 const FREQ_STEP = 0.05;
 const SETTLE_MS = 3000; // finger settling and camera exposure adjusting
 const MIN_CLARITY = 15; // how many times stronger the rhythm must be than the background
+const MIN_CLARITY_STEADY = 9; // allowed when all three stretches agree
 const MAX_DRIFT_HZ = 0.1; // how far a stretch may differ and still count as agreeing
 const STRONG_CLARITY = 25; // a very clear rhythm may be accepted when one stretch disagrees
 
@@ -259,16 +260,17 @@ function analyzePulse(samples: Sample[]): PulseAnalysis {
   if (main.f < BAND_LO + 0.1 || main.f > BAND_HI - 0.1) {
     return { result: null, info: `${info}; rhythm at the edge of the range, probably not a heartbeat` };
   }
-  if (main.clarity < MIN_CLARITY) {
-    return { result: null, info: `${info}; no clear rhythm (clarity needs ${MIN_CLARITY} or more)` };
+    const need = agree === 3 ? MIN_CLARITY_STEADY : MIN_CLARITY;
+  if (main.clarity < need) {
+    return { result: null, info: `${info}; no clear rhythm (clarity needs ${need} or more)` };
   }
-  // All three stretches must agree. One stretch may disagree only when the rhythm is very clear overall.
-  if (agree < 3 && !(agree === 2 && main.clarity >= STRONG_CLARITY)) {
+  // At least two of the three stretches must agree with the overall rhythm.
+  if (agree < 2) {
     return { result: null, info: `${info}; the rhythm changed during the scan` };
   }
 
   return {
-    result: { bpm: bpmOf(main.f), quality: agree === 3 && main.clarity >= 25 && spread <= 0.07 ? 'good' : 'fair' },
+    result: { bpm: bpmOf(main.f), quality: agree === 3 && main.clarity >= STRONG_CLARITY && spread <= 0.07 ? 'good' : 'fair' },
     info,
   };
 }
