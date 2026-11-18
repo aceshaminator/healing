@@ -134,6 +134,8 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
     const caps: any = trk.getCapabilities?.() ?? {};
     const sets: any = trk.getSettings?.() ?? {};
     const camInfo = `exposure ${(caps.exposureMode ?? []).join('|') || 'n/a'}, fps ${sets.frameRate ?? '?'}`;
+    let lockNote = 'not tried';
+    let locked = false;
     const video = document.createElement('video');
     video.muted = true;
     video.playsInline = true;
@@ -190,7 +192,7 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           const vals = samples.map((s) => s.v);
           const lo = n ? Math.round(Math.min(...vals)) : 0;
           const hi = n ? Math.round(Math.max(...vals)) : 0;
-                    extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, flash ${torchOk ? 'on' : 'FAILED'}, red level ${lo} to ${hi}; ${camInfo} ${explainPulse(samples)})`;
+                              extra = ` (test info: ${n} frames in ${secs.toFixed(0)}s, flash ${torchOk ? 'on' : 'FAILED'}, red level ${lo} to ${hi}; ${camInfo}; lock ${lockNote}; ${explainPulse(samples)})`;
                     
       }
         fail('vit.err.noclear', extra);
@@ -226,10 +228,29 @@ export function SensorVitalsScreening({ onNavigate }: { onNavigate?: (tab: strin
           lastPct = -1;
           setProgress(0);
         }
+                  if (locked) {
+            locked = false;
+            trk.applyConstraints({ advanced: [{ exposureMode: 'continuous' }] }).catch(() => {});
+          }
         setHint('vit.hint.cover');
         if (DEBUG) setHintExtra(` (R ${Math.round(r)}, G ${Math.round(g)}, B ${Math.round(b)})`);
       } else {
         if (!startT) startT = now;
+                if (!locked && now - startT > 1500) {
+          locked = true;
+          const s: any = trk.getSettings?.() ?? {};
+          const adv: any = { exposureMode: 'manual' };
+          if (s.exposureTime) adv.exposureTime = s.exposureTime;
+          if (s.iso) adv.iso = s.iso;
+          trk
+            .applyConstraints({ advanced: [adv] })
+            .then(() => {
+              lockNote = `locked (time ${s.exposureTime ?? '?'}, iso ${s.iso ?? '?'})`;
+            })
+            .catch(() => {
+              lockNote = 'lock FAILED';
+            });
+        }
         samples.push({ t: now, v: r });
         raw.push([now, r, g]);
         const p = Math.min(1, (now - startT) / (SCAN_SECONDS * 1000));
